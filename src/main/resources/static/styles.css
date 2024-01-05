@@ -1,0 +1,59 @@
+@font-face{
+    font-family:'Pixel';
+    src:url('https://static1.squarespace.com/static/635fe9a25a0434686a7689f3/t/635fef674523c7290c9c4c82/1667231591615/VCR_OSD_MONO_1.001.ttf')
+}
+html,body{
+    background-color: black;
+    color: red;
+    position: fixed;
+    overflow-y: auto;
+    height: 100%;
+}
+.main-label{
+    text-align: center;
+}
+.main-pic {
+    display: flex;
+    align-items: center;
+    background-color: black; /* Цвет фона, можете заменить на ваш желаемый цвет */
+    padding: 10px;
+}
+
+.main-part {
+    display: flex;
+    align-items: center;
+    margin-left: 300px; /* Добавляем отступ для "ORDER" вправо на 300px */
+}
+
+.main-part h5 {
+    color: white; /* Устанавливаем белый цвет текста */
+    margin: 0; /* Убираем внешние отступы у h5 элементов */
+}
+
+
+.main-part h5 + h5 + h5 {
+    margin-left: 175px; /* Добавляем отступ между двумя h5 элементами */
+}
+.about-us{
+    text-align: center;
+}
+.about-us-description {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.image-with-text {
+    text-align: left;
+    margin: 20px;
+    width: 100%;
+}
+
+.image-with-text img {
+    width: 100%;
+    height: auto;
+}
+
+.text-container {
+    width: 100%;
+}

@@ -1,0 +1,13 @@
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    generate-unique-name: false
+    name: cyberpizza
+    url: jdbc:postgresql://localhost:5432/cyberpizza
+    username: postgres
+    password: postgres
+server:
+  port: 8081
