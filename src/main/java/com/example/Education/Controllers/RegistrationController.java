@@ -1,3 +1,4 @@
+/*
 package com.example.Education.Controllers;
 
 import com.example.Education.RegistrationForm;
@@ -29,3 +30,4 @@ public class RegistrationController {
         return "redirect:/login";
     }
 }
+*/

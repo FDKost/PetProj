@@ -1,10 +1,8 @@
+/*
 package com.example.Education.Config;
 
-import com.example.Education.Repositories.UserRepository;
-import com.example.Education.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -19,7 +17,8 @@ import static org.springframework.security.authorization.AuthorityAuthorizationM
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Bean
+   */
+/* @Bean
     UserDetailsService userDetailsService(UserRepository userRepo) {
         return username -> {
             User user = userRepo.findByUsername(username);
@@ -54,5 +53,7 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder(8);
-    }
+    }*//*
+
 }
+*/
