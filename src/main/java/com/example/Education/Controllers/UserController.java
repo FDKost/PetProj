@@ -17,7 +17,7 @@ public class UserController {
         return dao.createUser(user);
     }
     @GetMapping
-    public User createUser(@RequestParam Long id){
+    public User readUser(@RequestParam Long id){
 
         return dao.getUserById(id);
     }
