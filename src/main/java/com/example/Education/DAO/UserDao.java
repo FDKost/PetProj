@@ -15,7 +15,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class UserDao {
     private final NamedParameterJdbcTemplate template;
-    private final JdbcTemplate jdbcTemplate;
+    /*private final JdbcTemplate jdbcTemplate;*/
 
 
 
