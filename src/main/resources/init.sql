@@ -16,4 +16,26 @@ CREATE TABLE "product_cart"
     product_id      INTEGER         NOT NULL,
     id_cart         INTEGER         NOT NULL,
     quantity        INTEGER         NOT NULL
+);
+CREATE TABLE "address"
+(
+    id_address      BIGSERIAL       PRIMARY KEY,
+    id_user         INTEGER         NOT NULL ,
+    street          TEXT            NOT NULL ,
+    house           TEXT            NOT NULL ,
+    apartment       TEXT            NOT NULL
+);
+CREATE TABLE "payment"
+(
+    id_payment      BIGSERIAL       PRIMARY KEY ,
+    total           INTEGER         NOT NULL ,
+    check_URL       TEXT            NOT NULL
+);
+CREATE TABLE "product"
+(
+    product_id      BIGSERIAL       PRIMARY KEY ,
+    name            TEXT            NOT NULL ,
+    price           INTEGER         NOT NULL ,
+    details         TEXT            NOT NULL ,
+    image_URL       TEXT            NOT NULL
 )
