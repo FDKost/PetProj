@@ -1,3 +1,4 @@
+/*
 package com.example.Education.Controllers;
 
 import com.example.Education.DAO.ProductDao;
@@ -6,7 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
-@Repository
+@RestController
 @AllArgsConstructor
 public class ProductController {
     private final ProductDao dao;
@@ -27,3 +28,4 @@ public class ProductController {
         dao.deleteProduct(product_id);
     }
 }
+*/

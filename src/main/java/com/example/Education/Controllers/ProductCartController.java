@@ -1,4 +1,4 @@
-package com.example.Education.Controllers;
+/*package com.example.Education.Controllers;
 
 import com.example.Education.DAO.ProductCartDao;
 import com.example.Education.ProductCart;
@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
-@Repository
+@RestController
 @AllArgsConstructor
 public class ProductCartController {
     private final ProductCartDao dao;
@@ -28,4 +28,4 @@ public class ProductCartController {
     public void deleteProductCart(@RequestParam long cart_item_id){
         dao.deleteProductCart(cart_item_id);
     }
-}
+}*/

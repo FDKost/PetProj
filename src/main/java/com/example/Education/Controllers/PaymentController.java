@@ -1,3 +1,4 @@
+/*
 package com.example.Education.Controllers;
 
 import com.example.Education.DAO.PaymentDao;
@@ -27,3 +28,4 @@ public class PaymentController {
         dao.deletePayment(id_payment);
     }
 }
+*/

@@ -11,22 +11,28 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserDao dao;
 
-    @PostMapping
+    @PostMapping("/registry")
     public Long createUser(@RequestBody User user){
 
         return dao.createUser(user);
     }
-    @GetMapping
+    @GetMapping("/registry")
     public User readUser(@RequestParam Long id){
 
         return dao.getUserById(id);
     }
-    @PutMapping
+    @PutMapping("/registry")
     public void editUser(@RequestBody User user){
         dao.editUser(user);
     }
-    @DeleteMapping
+    @DeleteMapping("/registry")
     public void deleteUser(@RequestParam long id){
         dao.deleteUser(id);
     }
+
+    /*@GetMapping("/login")
+    public String createUserlog(){
+
+        return "login";
+    }*/
 }
