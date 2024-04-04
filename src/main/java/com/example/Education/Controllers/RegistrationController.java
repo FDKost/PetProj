@@ -1,33 +1,26 @@
-/*
 package com.example.Education.Controllers;
 
-import com.example.Education.RegistrationForm;
-import com.example.Education.Repositories.UserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.example.Education.DAO.UserDao;
+import com.example.Education.User;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/register")
+@RequestMapping("/registration")
 public class RegistrationController {
-        private UserRepository userRepo;
-        private PasswordEncoder passwordEncoder;
+    private UserDao dao;
 
-        public RegistrationController(
-                UserRepository userRepo, PasswordEncoder passwordEncoder){
-
-        }
     @GetMapping
     public String registerForm() {
         return "registration";
     }
+    /*@PostMapping
+    public Long createUser(@RequestBody User user) {
+        return dao.createUser(user);
+    }*/
 
-    @PostMapping
-    public String processRegistration(RegistrationForm form) {
-        userRepo.save(form.toUser(passwordEncoder));
-        return "redirect:/login";
-    }
+
+
 }
-*/

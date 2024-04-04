@@ -1,10 +1,12 @@
-<!--<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
   <title>Please Log In</title>
 </head>
 <body>
 <h1>Please Log In</h1>
+<p>New here? Click
+  <a th:href="@{/registration}">here</a> to register.</p>
 <div th:if="${param.error}">
   Invalid username and password.</div>
 <div th:if="${param.logout}">
@@ -19,4 +21,4 @@
   <input type="submit" value="Log in" />
 </form>
 </body>
-</html>-->
+</html>
