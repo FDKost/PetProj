@@ -1,6 +1,6 @@
 package com.example.Education.Config;
 
-import com.example.Education.Controllers.UserController;
+import com.example.Education.RestControllers.UserController;
 import com.example.Education.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -73,7 +73,7 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)*/
 
                 .authorizeHttpRequests(authorizeRequests ->authorizeRequests
-                        .requestMatchers("/home", "/static/**").authenticated()
+                        .requestMatchers("/home", "/static/**","/order").authenticated()
                         .requestMatchers("/","/login/*", "/static/**","/styles.css","/registration","/LogRegCSS.css","/images/**").permitAll()
 
 

@@ -1,4 +1,4 @@
-package com.example.Education.Controllers;
+package com.example.Education.RestControllers;
 
 
 import com.example.Education.DAO.UserDao;

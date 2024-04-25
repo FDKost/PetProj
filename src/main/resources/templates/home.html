@@ -6,12 +6,19 @@
     <!--<link rel="stylesheet" type="text/css" href="/styles.css"/>-->
     <link rel="stylesheet" th:href="@{/styles.css}"/>
 </head>
+<style>
+    /* Стили для ссылок */
+    a {
+        text-decoration: none; /* Убираем подчеркивание */
+        color: inherit; /* Наследуем цвет текста */
+    }
+</style>
 <body>
 <div class="main-pic" >
     <img th:src="@{https://drive.google.com/thumbnail?id=18TXcE9rAU2EYXnQFBE4haqnUGo4-Rtrj}" width="230px"/>
     <div class = "main-part">
         <H5 >
-            ORDER
+            <a th:href="@{order}">ORDER</a>
         </H5>
         <H5>
             CONTACT
@@ -29,6 +36,7 @@
         What can we offer and what do we do?
     </h1>
 </div>
+
 <div class="about-us-description">
     <div class="image-with-text">
         <img th:src="@{https://s0.rbk.ru/v6_top_pics/media/img/7/82/346934898382827.jpeg}" height="75px" />

@@ -6,7 +6,7 @@ import lombok.Data;
 public class Product {
     private Long product_id;
     private String name;
-    private Long price;
+    private Integer price;
     private String details;
     private String image_URL;
 }

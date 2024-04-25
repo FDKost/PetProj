@@ -30,7 +30,7 @@ public class ProductDao {
         return template.queryForObject(sql,parameterSource,(rs,rowNum)->{
            Product product = new Product();
            product.setName(rs.getString("name"));
-           product.setPrice(rs.getLong("price"));
+           product.setPrice(rs.getInt("price"));
            product.setImage_URL(rs.getString("image_URL"));
            product.setDetails(rs.getString("details"));
            return product;
