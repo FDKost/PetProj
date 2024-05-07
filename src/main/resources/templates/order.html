@@ -33,6 +33,20 @@
     Finish  your freebie pizza and delta from here
   </h1>
 </div>
+<div class="products">
+  <h2>Products</h2>
+  <ul>
+    <li th:each="product : ${products}">
+      <div class="product-item">
+        <h3 th:text="${product.name}"></h3>
+        <img th:src="${product.image_URL}" th:alt="${product.name}" width="300" height="300"/>
+        <p class="price" th:text="'Price: ' + ${product.price}"></p>
+        <p th:text="${product.details}"></p>
+      </div>
+    </li>
+  </ul>
+</div>
+
 
 <div class="about-us-description">
   <div class="image-with-text">

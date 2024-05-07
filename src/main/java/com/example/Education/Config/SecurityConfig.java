@@ -73,7 +73,7 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)*/
 
                 .authorizeHttpRequests(authorizeRequests ->authorizeRequests
-                        .requestMatchers("/home", "/static/**","/order").authenticated()
+                        .requestMatchers("/home", "/static/**","/order/**").authenticated()
                         .requestMatchers("/","/login/*", "/static/**","/styles.css","/registration","/LogRegCSS.css","/images/**").permitAll()
 
 
