@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Cybepizza</title>
+  <!--<link rel="stylesheet" type="text/css" href="/styles.css"/>-->
+  <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+<style>
+  /* Стили для ссылок */
+  a {
+    text-decoration: none; /* Убираем подчеркивание */
+    color: inherit; /* Наследуем цвет текста */
+  }
+</style>
+<body>
+<div class="main-pic" >
+  <img th:src="@{https://drive.google.com/thumbnail?id=18TXcE9rAU2EYXnQFBE4haqnUGo4-Rtrj}" width="230px"/>
+  <div class = "main-part">
+    <H5 >
+      <a th:href="@{order}">ORDER</a>
+    </H5>
+    <H5>
+      CONTACT
+    </H5>
+    <H5>
+      PROFILE
+    </H5>
+  </div>
+</div>
+<div class="main-label" >
+  <h1>Who are you SAMURAI?</h1>
+</div>
+    <div class="address-form">
+    <h2>Add Address</h2>
+    <form th:action="@{/profile/create}" th:method="post" >
+      <!--<label for="id_user">Your login:</label>
+      <input type="number" id="id_user" name="id_user" required><br>-->
+      <!--<input type="hidden" id="id_user" name="id_user" th:value="${login}">-->
+      <input type="hidden" id="user_id" name="user_id" th:value="${user_id}">
+      <label for="street">Street:</label>
+      <input type="text" id="street" name="street" required><br>
+
+      <label for="house">House:</label>
+      <input type="text" id="house" name="house" required><br>
+
+      <label for="apartment">Apartment:</label>
+      <input type="text" id="apartment" name="apartment" required><br>
+
+      <input type="submit" value="Add Address">
+    </form>
+  </div>
+</body>
+</html>

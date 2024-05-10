@@ -29,6 +29,11 @@ public class UserDao {
         return template.queryForObject(sql,parameterSource, Long.class);
     }
 
+    public Long getIdByUser(String login) {
+        String sql = "SELECT id FROM client WHERE login = :login";
+        SqlParameterSource parameterSource = new MapSqlParameterSource("login", login);
+        return template.queryForObject(sql, parameterSource, Long.class);
+    }
     public User getUserById(long id){
         String sql = "SELECT * FROM client WHERE client.id = :id";
         SqlParameterSource parameterSource = new MapSqlParameterSource("id",id);

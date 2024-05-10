@@ -24,20 +24,20 @@ public class UserController {
 
         return dao.createUser(user);
     }*/
-    @GetMapping
+    @GetMapping("/api/readUser")
     public User readUser(@RequestParam Long id){
 
         return dao.getUserById(id);
     }
-    @PutMapping
+    @PutMapping("/api/editUser")
     public void editUser(@RequestBody User user){
         dao.editUser(user);
     }
-    @DeleteMapping
+    @DeleteMapping("/api/deleteUser")
     public void deleteUser(@RequestParam long id){
         dao.deleteUser(id);
     }
-
+    @GetMapping("/api/readLogin")
     public User findByLogin(@RequestParam String login){
         return dao.getUserByLogin(login);
     }

@@ -4,8 +4,10 @@ import com.example.Education.RestControllers.UserController;
 import com.example.Education.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +16,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CsrfAuthenticationStrategy;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.Collection;
 import java.util.List;
@@ -68,13 +75,19 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    HttpSessionCsrfTokenRepository csrfTokenRepository = new HttpSessionCsrfTokenRepository();
         return http
-                /*.csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)*/
+                .cors(AbstractHttpConfigurer::disable)
+                .csrf(csrf ->
+                        csrf.csrfTokenRequestHandler(new XorCsrfTokenRequestAttributeHandler())
+                                .csrfTokenRepository(csrfTokenRepository)
+                                .sessionAuthenticationStrategy(new CsrfAuthenticationStrategy(csrfTokenRepository))
+                                .ignoringRequestMatchers(new AntPathRequestMatcher("/static/**"))
+                                /*.requireCsrfProtectionMatcher(new AntPathRequestMatcher("/profile/create"))*/)
 
                 .authorizeHttpRequests(authorizeRequests ->authorizeRequests
-                        .requestMatchers("/home", "/static/**","/order/**").authenticated()
-                        .requestMatchers("/","/login/*", "/static/**","/styles.css","/registration","/LogRegCSS.css","/images/**").permitAll()
+                        .requestMatchers("/home","/styles.css", "/static/**","/order/**","/profile/create","/profile/**","/api/**").authenticated()
+                        .requestMatchers("/login/**", "/static/**","/registration","/LogRegCSS.css","/images/**").permitAll()
 
 
                 )
