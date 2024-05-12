@@ -33,18 +33,32 @@
     Finish  your freebie pizza and delta from here
   </h1>
 </div>
+<form id="createCartForm" action="/api/cart_create" method="post">
+</form>
 <div class="products">
   <h2>Products</h2>
   <ul>
     <li th:each="product : ${products}">
       <div class="product-item">
-        <h3 th:text="${product.name}"></h3>
-        <img th:src="${product.image_URL}" th:alt="${product.name}" width="300" height="300"/>
-        <p class="price" th:text="'Price: ' + ${product.price}"></p>
-        <p th:text="${product.details}"></p>
+        <form th:action="@{/api/create_productCart}" method="post">
+          <h3 th:text="${product.name}"></h3>
+          <img th:src="${product.image_URL}" th:alt="${product.name}" width="300" height="300"/>
+          <p class="price" th:text="'Price: ' + ${product.price}"></p>
+          <p th:text="${product.details}"></p>
+          <input type="hidden" name="product_id" th:value="${product.product_id}">
+          <label for="quantity">Quantity:</label>
+          <input type="number" id="quantity" name="quantity" value="1" min="1">
+          <input type="hidden" name="product_id" th:value="${product.product_id}">
+          <input type="hidden" name="product_name" th:value="${product.name}">
+          <input type="hidden" name="product_image_URL" th:value="${product.image_URL}">
+          <input type="hidden" name="product_price" th:value="${product.price}">
+          <input type="hidden" name="product_details" th:value="${product.details}">
+          <button type="submit">Add to Cart</button>
+        </form>
       </div>
     </li>
   </ul>
+
 </div>
 
 
@@ -76,8 +90,6 @@
     </div>
   </div>
 </div>
-
-
 
 </body>
 </html>

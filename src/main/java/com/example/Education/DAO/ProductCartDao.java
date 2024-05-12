@@ -17,7 +17,7 @@ public class ProductCartDao {
     private final NamedParameterJdbcTemplate template;
 
     public Long createProductCart(ProductCart productCart){
-        String sql = "INSERT INTO product_cart (product_id,id_cart,quantity) VALUES(:product_id,id_cart,quantity) RETURN cart_item_id";
+        String sql = "INSERT INTO product_cart (product_id,id_cart,quantity) VALUES(:product_id,:id_cart,:quantity) RETURNING cart_item_id";
         Map<String,Object> map = new HashMap<>();
         map.put("product_id",productCart.getProduct_id());
         map.put("id_cart",productCart.getId_cart());
@@ -26,7 +26,7 @@ public class ProductCartDao {
     }
 
     public ProductCart getProductCartById(long cart_item_id){
-        String sql = "SELECT * FROM product_cart WHERE productCart.cart_item_id = :cart_item_id";
+        String sql = "SELECT * FROM product_cart WHERE cart_item_id = :cart_item_id";
         SqlParameterSource parameterSource = new MapSqlParameterSource("cart_item_id",cart_item_id);
         return template.queryForObject(sql,parameterSource,(rs,rowNum)->{
             ProductCart productCart = new ProductCart();
@@ -37,8 +37,9 @@ public class ProductCartDao {
             return productCart;
         });
     }
+
     public void editProductCart(ProductCart productCart){
-        String sql = "UPDATE product_cart SET (product_id,quantity) VALUES(:product_id,:quantity)";
+        String sql = "UPDATE product_cart SET product_id=:product_id,quantity=:quantity";
         SqlParameterSource parameterSource = new MapSqlParameterSource()
                 .addValue("product_id",productCart.getProduct_id())
                 .addValue("quantity",productCart.getQuantity());

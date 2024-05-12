@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/order")
 public class ProductController {
     private final ProductDao dao;
-    @PostMapping
+    @PostMapping("/order/createProduct")
     public Long createProduct(@RequestBody Product product){
         return dao.createProduct(product);
     }
@@ -22,7 +22,7 @@ public class ProductController {
         return dao.getProductById(product_id);
     }
 
-    @PutMapping
+    @PutMapping("/order/editProduct")
     public void editProduct(@RequestBody Product product){
         dao.editProduct(product);
     }
@@ -30,7 +30,7 @@ public class ProductController {
     public List<Product> readAllProducts() {
         return dao.getAllProducts();
     }
-    @DeleteMapping
+    @DeleteMapping("/order/deleteProduct")
     public void deleteProduct(@RequestParam long product_id){
         dao.deleteProduct(product_id);
     }

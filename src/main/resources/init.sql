@@ -20,7 +20,20 @@ CREATE TABLE "product"
     house      TEXT     NOT NULL ,
     apartment  TEXT     NOT NULL
 );*/
-ALTER TABLE "address"
+/*CREATE TABLE "product_cart"
+(
+    cart_item_id BIGSERIAL PRIMARY KEY,
+    product_id INT NOT NULL ,
+    id_cart INT NOT NULL ,
+    quantity INT NOT NULL
+)*/
+CREATE TABLE "cart"
+(
+    id_cart BIGSERIAL PRIMARY KEY ,
+    id_user INT NOT NULL ,
+    created_in DATE NOT NULL
+)
+/*ALTER TABLE "address"
     ADD CONSTRAINT fk_client_id
         FOREIGN KEY (id_user)
-            REFERENCES "client" (id);
+            REFERENCES "client" (id);*/

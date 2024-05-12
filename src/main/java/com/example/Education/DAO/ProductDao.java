@@ -37,10 +37,24 @@ public class ProductDao {
            return product;
         });
     }
+    public Product getProductByName(String name) {
+        String sql = "SELECT * FROM product WHERE name = :name";
+        SqlParameterSource parameterSource = new MapSqlParameterSource("name", name);
+        return template.queryForObject(sql, parameterSource, (rs, rowNum) -> {
+            Product product = new Product();
+            product.setProduct_id(rs.getLong("product_id"));
+            product.setName(rs.getString("name"));
+            product.setPrice(rs.getInt("price"));
+            product.setImage_URL(rs.getString("image_URL"));
+            product.setDetails(rs.getString("details"));
+            return product;
+        });
+    }
     public List<Product> getAllProducts() {
         String sql = "SELECT * FROM product";
         return template.query(sql, (rs, rowNum) -> {
             Product product = new Product();
+            product.setProduct_id(rs.getLong("product_id"));
             product.setName(rs.getString("name"));
             product.setPrice(rs.getInt("price"));
             product.setImage_URL(rs.getString("image_URL"));
