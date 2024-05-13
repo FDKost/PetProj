@@ -15,7 +15,7 @@
 </style>
 <body>
 <div class="main-pic" >
-  <img th:src="@{https://drive.google.com/thumbnail?id=18TXcE9rAU2EYXnQFBE4haqnUGo4-Rtrj}" width="230px"/>
+  <a th:href="@{home}"><img  th:src="@{https://drive.google.com/thumbnail?id=18TXcE9rAU2EYXnQFBE4haqnUGo4-Rtrj}" width="230px"/></a >
   <div class = "main-part">
     <H5 >
       <a th:href="@{order}">ORDER</a>
@@ -25,6 +25,11 @@
     </H5>
     <H5>
       PROFILE
+    </H5>
+  </div>
+  <div class="cart">
+    <H5>
+      <a th:href="@{cart}">CART</a>
     </H5>
   </div>
 </div>

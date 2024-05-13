@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cybepizza</title>
+    <!--<link rel="stylesheet" type="text/css" href="/styles.css"/>-->
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+<style>
+    /* Стили для ссылок */
+    a {
+        text-decoration: none; /* Убираем подчеркивание */
+        color: inherit; /* Наследуем цвет текста */
+    }
+</style>
+<body>
+<div class="main-pic" >
+    <a th:href="@{home}"><img  th:src="@{https://drive.google.com/thumbnail?id=18TXcE9rAU2EYXnQFBE4haqnUGo4-Rtrj}" width="230px"/></a >
+    <div class = "main-part">
+        <H5 >
+            <a th:href="@{order}">ORDER</a>
+        </H5>
+        <H5>
+            CONTACT
+        </H5>
+        <H5>
+            PROFILE
+        </H5>
+    </div>
+</div>
+<div class="main-label" >
+    <h1>Your cart SAMURAI</h1>
+</div>
+<div class="products-container">
+<div class="products">
+    <h2>Your cart</h2>
+    <ul>
+        <!-- Здесь будет цикл для вывода предметов из корзины -->
+        <li th:each="cartItem : ${cartItems}"> <!-- Предполагается, что у вас есть переменная cartItems, содержащая предметы корзины из базы данных -->
+            <div class="product-item">
+                <!-- Здесь можно добавить информацию о каждом предмете из корзины -->
+                <h3>Name: <span th:text="${cartItem.product.name}"></span></h3>
+                <img th:src="${cartItem.product.image_URL}" th:alt="${cartItem.product.name}" width="300" height="300"/>
+                <!--<p class="price" th:text="'Price: ' + ${cartItem.product_id.price}"></p>-->
+                <p th:text="'Quantity: ' + ${cartItem.quantity}"></p>
+                 <input type="hidden" name="product_id" th:value="${cartItem.product_id}">
+                 <input type="hidden" name="quantity" th:value="${cartItem.quantity}">
+                <!-- И так далее, в зависимости от вашего функционала -->
+            </div>
+        </li>
+    </ul>
+    <p>Total Amount: <span th:text="${totalAmount}"></span></p>
+</div>
+</div>
+
+</body>
+</html>

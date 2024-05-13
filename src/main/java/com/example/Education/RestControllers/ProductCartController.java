@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.Date;
+
 @RestController
 @AllArgsConstructor
 public class ProductCartController {
@@ -23,33 +25,16 @@ public class ProductCartController {
     private final UserDao userDao;
 
     @PostMapping("/api/create_productCart")
-    public ModelAndView createProductCart(@RequestParam Long product_id, ProductCart productCart, @AuthenticationPrincipal UserDetails userDetails){
+    public ModelAndView createProductCart(@RequestParam Long product_id,Cart cart ,ProductCart productCart, @AuthenticationPrincipal UserDetails userDetails){
         String username = userDetails.getUsername();
         User user = userDao.getUserByLogin(username);
-        Cart cart = cartDao.getCartByUserId(user.getId());
+        cart.setId_user(user.getId());
+        Date date = new Date();
+        cart.setCreated_in(date);
+        cartDao.createCart(cart);
+        cart = cartDao.getCartByUserId(user.getId());
         productCart.setId_cart(cart.getId_cart());
         productCart.setProduct_id(product_id);
-        /*List<Product> products = productDao.getAllProducts();
-
-        // Цикл для поиска продукта по имени
-        Product selectedProduct = null;
-        for (Product product : products) {
-            if (product.getName().equals(name)) {
-                selectedProduct = product;
-                break; // Прерываем цикл, если найден нужный продукт
-            }
-        }
-
-        // Если продукт найден, добавляем его в корзину
-        if (selectedProduct != null) {
-            // Добавляем информацию о продукте в объект productCart
-            productCart.setProduct_id(selectedProduct.getProduct_id());
-            // Создаем запись в корзине
-            return dao.createProductCart(productCart);
-        } else {
-            System.out.println("fucking null");
-            return null;
-        }*/
         dao.createProductCart(productCart);
         String orderUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/order").toUriString();
         return new ModelAndView("redirect:" + orderUrl);

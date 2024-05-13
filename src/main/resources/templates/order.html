@@ -15,7 +15,7 @@
 </style>
 <body>
 <div class="main-pic" >
-  <img th:src="@{https://drive.google.com/thumbnail?id=18TXcE9rAU2EYXnQFBE4haqnUGo4-Rtrj}" width="230px"/>
+  <a th:href="@{home}"><img  th:src="@{https://drive.google.com/thumbnail?id=18TXcE9rAU2EYXnQFBE4haqnUGo4-Rtrj}" width="230px"/></a >
   <div class = "main-part">
     <H5 >
       <a th:href="@{home}">HOME</a>
@@ -27,20 +27,27 @@
       LOGIN
     </H5>
   </div>
+  <div class="cart">
+    <H5>
+      <a th:href="@{cart}">CART</a>
+    </H5>
+  </div>
 </div>
 <div class = "about-us">
   <h1>
     Finish  your freebie pizza and delta from here
   </h1>
 </div>
-<form id="createCartForm" action="/api/cart_create" method="post">
-</form>
-<div class="products">
+<!--<form  th:action="@{/api/cart_create}" method="post">
+  <button type="submit">Create cart</button>
+</form>-->
+<div class="products" >
   <h2>Products</h2>
   <ul>
     <li th:each="product : ${products}">
       <div class="product-item">
         <form th:action="@{/api/create_productCart}" method="post">
+
           <h3 th:text="${product.name}"></h3>
           <img th:src="${product.image_URL}" th:alt="${product.name}" width="300" height="300"/>
           <p class="price" th:text="'Price: ' + ${product.price}"></p>
@@ -53,13 +60,14 @@
           <input type="hidden" name="product_image_URL" th:value="${product.image_URL}">
           <input type="hidden" name="product_price" th:value="${product.price}">
           <input type="hidden" name="product_details" th:value="${product.details}">
-          <button type="submit">Add to Cart</button>
+
+          <button  type="submit">Add to Cart</button>
         </form>
       </div>
     </li>
   </ul>
-
 </div>
+
 
 
 <div class="about-us-description">
@@ -90,6 +98,7 @@
     </div>
   </div>
 </div>
+
 
 </body>
 </html>

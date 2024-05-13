@@ -8,4 +8,5 @@ public class ProductCart {
     private Long product_id;
     private Long id_cart;
     private Long quantity;
+    private Product product;
 }

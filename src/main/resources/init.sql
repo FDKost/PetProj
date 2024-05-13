@@ -27,13 +27,17 @@ CREATE TABLE "product"
     id_cart INT NOT NULL ,
     quantity INT NOT NULL
 )*/
-CREATE TABLE "cart"
+/*CREATE TABLE "cart"
 (
     id_cart BIGSERIAL PRIMARY KEY ,
     id_user INT NOT NULL ,
     created_in DATE NOT NULL
-)
+)*/
 /*ALTER TABLE "address"
     ADD CONSTRAINT fk_client_id
         FOREIGN KEY (id_user)
             REFERENCES "client" (id);*/
+ALTER TABLE product_cart
+    ADD CONSTRAINT fk_product_id
+        FOREIGN KEY (product_id)
+            REFERENCES product (product_id);

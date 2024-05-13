@@ -86,7 +86,7 @@ public class SecurityConfig {
                                 /*.requireCsrfProtectionMatcher(new AntPathRequestMatcher("/profile/create"))*/)
 
                 .authorizeHttpRequests(authorizeRequests ->authorizeRequests
-                        .requestMatchers("/home","/styles.css", "/static/**","/order/**","/profile/create","/profile/**","/api/**").authenticated()
+                        .requestMatchers("/home","/styles.css", "/static/**","/order/**","/profile/create","/profile/**","/api/**","/cart").authenticated()
                         .requestMatchers("/login/**", "/static/**","/registration","/LogRegCSS.css","/images/**").permitAll()
 
 

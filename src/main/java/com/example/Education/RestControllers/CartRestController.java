@@ -15,11 +15,11 @@ import java.util.Date;
 
 @RestController
 @AllArgsConstructor
-public class CartController {
+public class CartRestController {
     private final CartDao dao;
     private final UserDao userDao;
 
-    @PostMapping("/api/cart_create")
+    /*@PostMapping("/api/cart_create")
     public ModelAndView createCart(Cart cart, @AuthenticationPrincipal UserDetails userDetails){
         String username = userDetails.getUsername();
         User user = userDao.getUserByLogin(username);
@@ -29,7 +29,7 @@ public class CartController {
         dao.createCart(cart);
         String orderUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/order").toUriString();
         return new ModelAndView("redirect:" + orderUrl);
-    }
+    }*/
 
     @GetMapping("/api/cart_read")
     public Cart readCart(@RequestParam Long id_cart){
