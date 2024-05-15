@@ -99,9 +99,11 @@ public class ProductCartDao {
                 .addValue("quantity",productCart.getQuantity());
         template.update(sql,parameterSource);
     }
-    public void deleteProductCart(long cart_item_id){
-        String sql = "DELETE FROM product_cart WHERE cart_item_id = :cart_item_id";
-        SqlParameterSource parameterSource = new MapSqlParameterSource("cart_item_id",cart_item_id);
-        template.update(sql,parameterSource);
+    public void deleteProductCart(long id_cart, long product_id){
+        String sql = "DELETE FROM product_cart WHERE id_cart = :id_cart AND product_id = :product_id";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("id_cart", id_cart);
+        paramMap.put("product_id", product_id);
+        template.update(sql, paramMap);
     }
 }

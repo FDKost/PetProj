@@ -47,8 +47,10 @@ public class ProductCartController {
     public void editProductCart(@RequestBody ProductCart productCart){
         dao.editProductCart(productCart);
     }
-    @DeleteMapping("/api/deleteProductCart")
-    public void deleteProductCart(@RequestParam long cart_item_id){
-        dao.deleteProductCart(cart_item_id);
+    @PostMapping("/api/deleteProductCart")
+    public ModelAndView deleteProductCart( Long id_cart,long product_id){
+        String cartUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/cart").toUriString();
+        dao.deleteProductCart(id_cart,product_id);
+        return new ModelAndView("redirect:"+cartUrl);
     }
 }

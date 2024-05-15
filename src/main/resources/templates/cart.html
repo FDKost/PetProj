@@ -45,6 +45,11 @@
                 <p th:text="'Quantity: ' + ${cartItem.quantity}"></p>
                  <input type="hidden" name="product_id" th:value="${cartItem.product_id}">
                  <input type="hidden" name="quantity" th:value="${cartItem.quantity}">
+                <form th:action="@{/api/deleteProductCart}" method="post">
+                    <input type="hidden" name="id_cart" th:value="${cartItem.id_cart}">
+                    <input type="hidden" name="product_id" th:value="${cartItem.product_id}">
+                    <input type="submit" value="Remove">
+                </form>
                 <!-- И так далее, в зависимости от вашего функционала -->
             </div>
         </li>
