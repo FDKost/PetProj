@@ -86,14 +86,13 @@ public class ProductCartDao {
             product.setPrice(rs.getInt("product_price"));
             product.setDetails(rs.getString("product_details"));
 
-            // Установка объекта Product в ProductCart
             productCart.setProduct(product);
 
             return productCart;
         });
     }
-    public void editProductCart(ProductCart productCart){
-        String sql = "UPDATE product_cart SET product_id=:product_id,quantity=:quantity";
+    public void editProductCart(ProductCart productCart,Long id_cart){
+        String sql = "UPDATE product_cart SET product_id=:product_id,quantity=:quantity WHERE id_cart=:id_cart";
         SqlParameterSource parameterSource = new MapSqlParameterSource()
                 .addValue("product_id",productCart.getProduct_id())
                 .addValue("quantity",productCart.getQuantity());
@@ -104,6 +103,12 @@ public class ProductCartDao {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("id_cart", id_cart);
         paramMap.put("product_id", product_id);
+        template.update(sql, paramMap);
+    }
+    public void deleteAllFromProductCart(long id_cart){
+        String sql = "DELETE FROM product_cart WHERE id_cart = :id_cart";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("id_cart", id_cart);
         template.update(sql, paramMap);
     }
 }

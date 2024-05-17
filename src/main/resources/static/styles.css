@@ -53,7 +53,7 @@ html, body {
 
 .image-with-text {
     text-align: left;
-    margin: 20px;
+    margin: 15px;
     width: 100%;
 }
 
@@ -128,8 +128,97 @@ html, body {
 .cart{
     margin-left: auto;
     margin-right: 50px;
-    color: white;
-    background-color: red; /* Set background color to red */
+    color: red;
+    background-color: black; /* Set background color to red */
     padding: 5px 50px; /* Add padding to create space around the text */
     border-radius: 5px; /* Add rounded corners to the block */
+    border: 2px solid red;
 }
+/*.cart:hover {
+    color: black; !* Изменяем цвет текста на черный при наведении *!
+    background-color: red; !* Изменяем фон кнопки на красный при наведении *!
+}*/
+.cartButton {
+    font-family: 'Pixel';
+    src: url('https://static1.squarespace.com/static/635fe9a25a0434686a7689f3/t/635fef674523c7290c9c4c82/1667231591615/VCR_OSD_MONO_1.001.ttf');
+    color: red; /* Установим цвет текста красным */
+    background-color: black; /* Установим фон кнопки чёрным */
+    padding: 10px 20px; /* Добавим отступы вокруг текста кнопки */
+    border: 2px solid red; /* Добавим красную обводку кнопки */
+    border-radius: 5px; /* Закруглим углы кнопки */
+    font-size: 18px; /* Установим размер шрифта */
+    cursor: pointer; /* Изменение курсора при наведении */
+    transition: all 0.3s ease; /* Плавное изменение всех свойств при наведении */
+}
+
+.cartButton:hover {
+    color: black; /* Изменяем цвет текста на черный при наведении */
+    background-color: red; /* Изменяем фон кнопки на красный при наведении */
+}
+.quantity-input {
+    font-family: 'Pixel', sans-serif; /* Используем пиксельный шрифт для всего текста */
+    color: red; /* Установим цвет текста красным */
+    background-color: black; /* Установим фон поля ввода чёрным */
+    border: 2px solid red; /* Добавим красную обводку */
+    border-radius: 5px; /* Закруглим углы */
+    padding: 2px 10px; /* Добавим отступы вокруг текста */
+    font-size: 14px; /* Установим размер шрифта */
+    width: 100px; /* Установим ширину поля ввода */
+}
+
+.quantity-input:focus {
+    outline: none; /* Уберём фокусировку */
+    border-color: red; /* Изменим цвет обводки при фокусировке */
+}
+.footer {
+    position: fixed; /* Фиксированное позиционирование */
+    bottom: 20px; /* Отступ от нижнего края */
+    left: 50%; /* Центрирование по горизонтали */
+    transform: translateX(-50%); /* Центрирование по горизонтали */
+    text-align: center; /* Выравнивание текста по центру */
+    width: 100%; /* Ширина 100% */
+    box-sizing: border-box; /* Учитываем рамки и отступы внутри блока */
+}
+.address-form {
+    max-width: 600px; /* Устанавливаем максимальную ширину формы */
+    margin: 0 auto; /* Центрируем форму по горизонтали */
+    padding: 20px; /* Добавляем внутренние отступы */
+    background-color: black; /* Цвет фона формы */
+    border-radius: 10px; /* Закругляем углы формы */
+    color: red; /* Цвет текста в форме */
+}
+
+.address-form h2 {
+    text-align: center; /* Центрируем заголовок формы */
+}
+
+.address-form label {
+    display: block; /* Каждая метка на новой строке */
+    margin-bottom: 10px; /* Отступ снизу метки */
+}
+
+.address-form input[type="text"] {
+    width: 100%; /* Ширина поля ввода на всю доступную ширину */
+    padding: 10px; /* Внутренние отступы вокруг текста в полях ввода */
+    margin-bottom: 20px; /* Отступ снизу поля ввода */
+    border: 2px solid red; /* Обводка поля ввода */
+    border-radius: 5px; /* Закругление углов поля ввода */
+    background-color: black; /* Цвет фона поля ввода */
+    color: red; /* Цвет текста в полях ввода */
+}
+
+.address-form input[type="submit"] {
+    background-color: red; /* Цвет фона кнопки отправки */
+    color: black; /* Цвет текста на кнопке отправки */
+    border: none; /* Убираем обводку кнопки */
+    padding: 10px 20px; /* Внутренние отступы вокруг текста на кнопке */
+    border-radius: 5px; /* Закругляем углы кнопки */
+    font-size: 16px; /* Размер шрифта на кнопке */
+    cursor: pointer; /* Изменяем курсор при наведении на кнопку */
+    transition: background-color 0.3s ease; /* Плавное изменение цвета фона кнопки при наведении */
+}
+
+.address-form input[type="submit"]:hover {
+    background-color: darkred; /* Изменяем цвет фона кнопки при наведении */
+}
+

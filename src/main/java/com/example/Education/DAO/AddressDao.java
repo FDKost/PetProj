@@ -40,9 +40,23 @@ public class AddressDao {
             return address;
         });
     }
+    public Address getAddressByUserId(long id_user){
+        String sql = "SELECT * FROM address WHERE id_user = :id_user";
+        SqlParameterSource parameterSource = new MapSqlParameterSource("id_user", id_user);
+        return template.queryForObject(sql, parameterSource, (rs, rowNum) -> {
+            Address address = new Address();
+            address.setId_address(rs.getLong("id_address"));
+            address.setId_user(rs.getInt("id_user"));
+            address.setHouse(rs.getString("house"));
+            address.setApartment(rs.getString("apartment"));
+            address.setStreet(rs.getString("street"));
+            return address;
+        });
+    }
     public void editAddress(Address address){
         String sql = "UPDATE address SET house=:house,apartment=:apartment,street=:street WHERE id_address=:id_address";
         SqlParameterSource parameterSource = new MapSqlParameterSource()
+                .addValue("id_address",address.getId_address())
                 .addValue("house",address.getHouse())
                 .addValue("apartment",address.getApartment())
                 .addValue("street",address.getStreet());

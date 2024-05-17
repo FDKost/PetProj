@@ -44,8 +44,8 @@ public class ProductCartController {
         return dao.getProductCartById(cart_item_id);
     }
     @PutMapping("/api/editProductCart")
-    public void editProductCart(@RequestBody ProductCart productCart){
-        dao.editProductCart(productCart);
+    public void editProductCart(ProductCart productCart,long id_cart){
+        dao.editProductCart(productCart,id_cart);
     }
     @PostMapping("/api/deleteProductCart")
     public ModelAndView deleteProductCart( Long id_cart,long product_id){

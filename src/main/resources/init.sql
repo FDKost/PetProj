@@ -37,7 +37,30 @@ CREATE TABLE "product"
     ADD CONSTRAINT fk_client_id
         FOREIGN KEY (id_user)
             REFERENCES "client" (id);*/
-ALTER TABLE product_cart
+/*ALTER TABLE product_cart
     ADD CONSTRAINT fk_product_id
         FOREIGN KEY (product_id)
-            REFERENCES product (product_id);
+            REFERENCES product (product_id);*/
+/*CREATE TABLE "order"
+(
+    id_order    BIGSERIAL PRIMARY KEY,
+    id_user     INT       NOT NULL ,
+    id_payment  INT       NOT NULL ,
+    id_address  INT       NOT NULL ,
+    date        DATE      NOT NULL
+);*/
+/*CREATE TABLE "products_in_order"
+(
+    order_item_id   BIGSERIAL NOT NULL ,
+    id_order    INT     NOT NULL ,
+    product_id  INT     NOT NULL ,
+    quantity    INT     NOT NULL
+)*/
+/*CREATE TABLE "payment"
+(
+    id_payment BIGSERIAL PRIMARY KEY ,
+    total       INT      NOT NULL ,
+    check_url   TEXT     NOT NULL
+)*/
+ALTER TABLE "products_in_order"
+    ADD CONSTRAINT pk_order_item_id PRIMARY KEY (order_item_id);

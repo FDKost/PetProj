@@ -36,7 +36,7 @@ public class SecurityConfig {
                 return new UserDetails() {
                     @Override
                     public Collection<? extends GrantedAuthority> getAuthorities() {
-                        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+                        return List.of(new SimpleGrantedAuthority(user.getRole()));
                     }
 
                     @Override
@@ -86,8 +86,10 @@ public class SecurityConfig {
                                 /*.requireCsrfProtectionMatcher(new AntPathRequestMatcher("/profile/create"))*/)
 
                 .authorizeHttpRequests(authorizeRequests ->authorizeRequests
-                        .requestMatchers("/home","/styles.css", "/static/**","/order/**","/profile/create","/profile/**","/api/**","/cart").authenticated()
-                        .requestMatchers("/login/**", "/static/**","/registration","/LogRegCSS.css","/images/**").permitAll()
+                        .requestMatchers( "/static/**","/order/**",
+                                        "/profile/create","/profile/**","/api/**","/cart","/orders/**","/payment/**","/productsInOrder/**").authenticated()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/styles.css","/home","/login/**", "/static/**","/registration","/LogRegCSS.css","/images/**","/contact").permitAll()
 
 
                 )

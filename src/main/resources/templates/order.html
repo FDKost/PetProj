@@ -12,20 +12,24 @@
     text-decoration: none; /* Убираем подчеркивание */
     color: inherit; /* Наследуем цвет текста */
   }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
 </style>
 <body>
 <div class="main-pic" >
   <a th:href="@{home}"><img  th:src="@{https://drive.google.com/thumbnail?id=18TXcE9rAU2EYXnQFBE4haqnUGo4-Rtrj}" width="230px"/></a >
-  <div class = "main-part">
-    <H5 >
-      <a th:href="@{home}">HOME</a>
-    </H5>
-    <H5>
-      CONTACT
-    </H5>
-    <H5>
-      LOGIN
-    </H5>
+  <div class="main-part">
+    <H5><a th:href="@{order}">ORDER</a></H5>
+    <H5><a th:href="@{contact}">CONTACT</a></H5>
+    <H5><a th:href="@{profile}">PROFILE</a></H5>
   </div>
   <div class="cart">
     <H5>
@@ -54,14 +58,14 @@
           <p th:text="${product.details}"></p>
           <input type="hidden" name="product_id" th:value="${product.product_id}">
           <label for="quantity">Quantity:</label>
-          <input type="number" id="quantity" name="quantity" value="1" min="1">
+          <input class="quantity-input" type="number" id="quantity" name="quantity" value="1" min="1">
           <input type="hidden" name="product_id" th:value="${product.product_id}">
           <input type="hidden" name="product_name" th:value="${product.name}">
           <input type="hidden" name="product_image_URL" th:value="${product.image_URL}">
           <input type="hidden" name="product_price" th:value="${product.price}">
           <input type="hidden" name="product_details" th:value="${product.details}">
 
-          <button  type="submit">Add to Cart</button>
+          <button class="cartButton" type="submit">Add to Cart</button>
         </form>
       </div>
     </li>
@@ -70,34 +74,7 @@
 
 
 
-<div class="about-us-description">
-  <div class="image-with-text">
-    <img th:src="@{https://s0.rbk.ru/v6_top_pics/media/img/7/82/346934898382827.jpeg}" height="75px" />
-    <div class="text-container">
-      <h3>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </h3>
-    </div>
-  </div>
-  <div class="image-with-text">
-    <img th:src="@{https://r2.erweima.ai/ideogram/1Vhm8sMdReW1FN9m4W5ALw.jpg}" height="75px" />
-    <div class="text-container">
-      <h3>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-      </h3>
-    </div>
-  </div>
-  <div class="image-with-text">
-    <img th:src="@{https://r2.erweima.ai/ideogram/rip88VRMRcC0Up9gunPHJA.jpg}" height="75px" />
-    <div class="text-container">
-      <h3>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit
-      </h3>
-    </div>
-  </div>
-</div>
+
 
 
 </body>
