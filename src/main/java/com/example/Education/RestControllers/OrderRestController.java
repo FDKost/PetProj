@@ -41,6 +41,7 @@ public class OrderRestController {
         Address address = addressDao.getAddressByUserId(user.getId());
         order.setId_address(address.getId_address());
         order.setDate(new java.util.Date());
+        order.setStatus(1L);
         Long orderId = orderDao.createOrder(order);
 
         List<ProductsInOrder> cartItems = new ArrayList<>();
@@ -63,13 +64,22 @@ public class OrderRestController {
         return orderDao.getOrderById(id_order);
     }
 
-    @PutMapping("/editOrder")
-    public void editOrder(@RequestBody Order order) {
-        orderDao.editOrder(order);
+    @PostMapping("/editOrder")
+    public ModelAndView editOrder(@RequestParam Long id_order, @RequestParam Long status) {
+        Order order = orderDao.getOrderById(id_order);
+        if (order != null) {
+            order.setStatus(status);
+            orderDao.editOrder(order);
+        }
+        return new ModelAndView("redirect:/admin/orders");
     }
 
     @DeleteMapping("/deleteOrder/{id_order}")
     public void deleteOrder(@PathVariable Long id_order) {
         orderDao.deleteOrder(id_order);
+    }
+    @GetMapping("/getAllOrders")
+    public List<Order> getAllOrders() {
+        return orderDao.getAllOrders();
     }
 }

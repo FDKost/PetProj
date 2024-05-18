@@ -11,4 +11,5 @@ public class Order {
     private Long id_payment;
     private Long id_address;
     private Date date;
+    private Long status;
 }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Manage Orders</title>
+  <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<div class="admin-container">
+  <h1>Manage Orders</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>User ID</th>
+      <th>Payment ID</th>
+      <th>Address ID</th>
+      <th>Date</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+      <td th:text="${order.id_order}"></td>
+      <td th:text="${order.id_user}"></td>
+      <td th:text="${order.id_payment}"></td>
+      <td th:text="${order.id_address}"></td>
+      <td th:text="${#dates.format(order.date, 'yyyy-MM-dd')}"></td>
+      <td>
+        <form th:action="@{/orders/editOrder}" method="post">
+          <input type="hidden" name="id_order" th:value="${order.id_order}"/>
+          <select name="status" th:value="${order.status}">
+            <option value="1" th:selected="${order.status == 1}">Pending</option>
+            <option value="2" th:selected="${order.status == 2}">Completed</option>
+          </select>
+          <button type="submit">Update Status</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

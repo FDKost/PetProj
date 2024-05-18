@@ -221,4 +221,29 @@ html, body {
 .address-form input[type="submit"]:hover {
     background-color: darkred; /* Изменяем цвет фона кнопки при наведении */
 }
+.logout-container {
+    display: flex;
+    justify-content: flex-end; /* Выравнивание по правому краю */
+    padding: 10px; /* Отступы */
+    margin-right: 20px; /* Отступ справа */
+}
+
+/* Стили для кнопки выхода */
+.logout-button {
+    font-family: 'Pixel';
+    src: url('https://static1.squarespace.com/static/635fe9a25a0434686a7689f3/t/635fef674523c7290c9c4c82/1667231591615/VCR_OSD_MONO_1.001.ttf');
+    color: red; /* Установим цвет текста красным */
+    background-color: black; /* Установим фон кнопки чёрным */
+    padding: 10px 20px; /* Добавим отступы вокруг текста кнопки */
+    border: 2px solid red; /* Добавим красную обводку кнопки */
+    border-radius: 5px; /* Закруглим углы кнопки */
+    font-size: 18px; /* Установим размер шрифта */
+    cursor: pointer; /* Изменение курсора при наведении */
+    transition: all 0.3s ease; /* Плавное изменение всех свойств при наведении */
+}
+
+.logout-button:hover {
+    color: black; /* Изменяем цвет текста на черный при наведении */
+    background-color: red; /* Изменяем фон кнопки на красный при наведении */
+}
 

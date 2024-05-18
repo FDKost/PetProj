@@ -17,12 +17,13 @@ public class OrderDao {
     private final NamedParameterJdbcTemplate template;
 
     public Long createOrder(Order order) {
-        String sql = "INSERT INTO orders (id_user, id_payment, id_address, date) VALUES (:id_user, :id_payment, :id_address, :date) RETURNING id_order";
+        String sql = "INSERT INTO orders (id_user, id_payment, id_address, date,status) VALUES (:id_user, :id_payment, :id_address, :date,:status) RETURNING id_order";
         Map<String, Object> map = new HashMap<>();
         map.put("id_user", order.getId_user());
         map.put("id_payment", order.getId_payment());
         map.put("id_address", order.getId_address());
         map.put("date", order.getDate());
+        map.put("status",1);
         return template.queryForObject(sql, map, Long.class);
     }
 
@@ -36,6 +37,7 @@ public class OrderDao {
             order.setId_payment(rs.getLong("id_payment"));
             order.setId_address(rs.getLong("id_address"));
             order.setDate(rs.getDate("date"));
+            order.setStatus(rs.getLong("status"));
             return order;
         });
     }
@@ -49,19 +51,16 @@ public class OrderDao {
             order.setId_payment(rs.getLong("id_payment"));
             order.setId_address(rs.getLong("id_address"));
             order.setDate(rs.getDate("date"));
+            order.setStatus(rs.getLong("status"));
             return order;
         });
     }
 
     public void editOrder(Order order) {
-        String sql = "UPDATE orders SET id_user = :id_user, id_payment = :id_payment, id_address = :id_address, date = :date WHERE id_order = :id_order";
+        String sql = "UPDATE orders SET status = :status WHERE id_order = :id_order";
         SqlParameterSource parameterSource = new MapSqlParameterSource()
-                .addValue("id_user", order.getId_user())
-                .addValue("id_payment", order.getId_payment())
-                .addValue("id_address", order.getId_address())
-                .addValue("date", order.getDate())
+                .addValue("status", order.getStatus())
                 .addValue("id_order", order.getId_order());
-
         template.update(sql, parameterSource);
     }
 

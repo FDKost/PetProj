@@ -17,7 +17,7 @@ public class ProductDao {
     private final NamedParameterJdbcTemplate template;
 
     public Long createProduct(Product product){
-        String sql = "INSERT INTO product (name,price,details,image_URL) VALUES (:name,:price,:details,:image_URL)";
+        String sql = "INSERT INTO product (name,price,details,image_URL) VALUES (:name,:price,:details,:image_URL) RETURNING product_id";
         Map<String,Object>map = new HashMap<>();
         map.put("name",product.getName());
         map.put("price",product.getPrice());
