@@ -21,14 +21,14 @@
     </thead>
     <tbody>
     <tr th:each="order : ${orders}">
-      <td th:text="${order.id_order}"></td>
-      <td th:text="${order.id_user}"></td>
-      <td th:text="${order.id_payment}"></td>
-      <td th:text="${order.id_address}"></td>
+      <td th:text="${order.orderId}"></td>
+      <td th:text="${order.userId}"></td>
+      <td th:text="${order.paymentId}"></td>
+      <td th:text="${order.addressId}"></td>
       <td th:text="${#dates.format(order.date, 'yyyy-MM-dd')}"></td>
       <td>
         <form th:action="@{/orders/editOrder}" method="post">
-          <input type="hidden" name="id_order" th:value="${order.id_order}"/>
+          <input type="hidden" name="orderId" th:value="${order.orderId}"/>
           <select name="status" th:value="${order.status}">
             <option value="1" th:selected="${order.status == 1}">Pending</option>
             <option value="2" th:selected="${order.status == 2}">Completed</option>

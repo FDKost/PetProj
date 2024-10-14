@@ -33,11 +33,11 @@
             <li th:each="cartItem : ${cartItems}">
                 <div class="product-item">
                     <h3>Name: <span th:text="${cartItem.product.name}"></span></h3>
-                    <img th:src="${cartItem.product.image_URL}" th:alt="${cartItem.product.name}" width="300" height="300"/>
+                    <img th:src="${cartItem.product.imageURL}" th:alt="${cartItem.product.name}" width="300" height="300"/>
                     <p th:text="'Quantity: ' + ${cartItem.quantity}"></p>
                     <form th:action="@{/api/deleteProductCart}" method="post">
-                        <input type="hidden" name="id_cart" th:value="${cartItem.id_cart}">
-                        <input type="hidden" name="product_id" th:value="${cartItem.product_id}">
+                        <input type="hidden" name="id_cart" th:value="${cartItem.cartId}">
+                        <input type="hidden" name="product_id" th:value="${cartItem.productId}">
                         <input type="submit" class="cartButton" value="Remove">
                     </form>
                 </div>
@@ -50,7 +50,7 @@
     <form th:action="@{/orders/createOrder}" method="post" >
         <input type="hidden" name="totalAmount" th:value="${totalAmount}"/>
         <div th:each="cartItem, iter : ${cartItems}">
-            <input type="hidden" name="productIds" th:value="${cartItem.product_id}"/>
+            <input type="hidden" name="productIds" th:value="${cartItem.productId}"/>
             <input type="hidden" name="quantities" th:value="${cartItem.quantity}"/>
         </div>
         <input type="submit" class="cartButton" value="Place Order" />

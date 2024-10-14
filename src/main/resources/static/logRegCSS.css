@@ -1,0 +1,58 @@
+@font-face {
+    font-family: 'Pixel';
+    src: url('https://static1.squarespace.com/static/635fe9a25a0434686a7689f3/t/635fef674523c7290c9c4c82/1667231591615/VCR_OSD_MONO_1.001.ttf');
+}
+
+html, body {
+    background-color: black;
+    color: red;
+    position: fixed;
+    overflow-y: auto;
+    height: 100%;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 47%;
+    padding-left: 27%;
+}
+
+.form-container {
+    width: 100vw;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.main-logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1, p, input[type="submit"] {
+    font-family: 'Pixel', sans-serif;
+    margin: 0;
+}
+
+form {
+    width: 100%;
+}
+
+input[type="text"], input[type="password"], input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 2px solid red;
+    background-color: black;
+    color: red;
+}
+
+input[type="text"]::placeholder, input[type="password"]::placeholder {
+    color: red;
+    opacity: 0.5;
+}

@@ -3,14 +3,12 @@
         xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Cybepizza</title>
-  <!--<link rel="stylesheet" type="text/css" href="/styles.css"/>-->
   <link rel="stylesheet" th:href="@{/styles.css}"/>
 </head>
 <style>
-  /* Стили для ссылок */
   a {
-    text-decoration: none; /* Убираем подчеркивание */
-    color: inherit; /* Наследуем цвет текста */
+    text-decoration: none;
+    color: inherit;
   }
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
@@ -42,28 +40,27 @@
     Finish  your freebie pizza and delta from here
   </h1>
 </div>
-<!--<form  th:action="@{/api/cart_create}" method="post">
-  <button type="submit">Create cart</button>
+
 </form>-->
 <div class="products" >
   <h2>Products</h2>
   <ul>
     <li th:each="product : ${products}">
       <div class="product-item">
-        <form th:action="@{/api/create_productCart}" method="post">
+        <form th:action="@{/api/createProductCart}" method="post">
 
           <h3 th:text="${product.name}"></h3>
-          <img th:src="${product.image_URL}" th:alt="${product.name}" width="300" height="300"/>
+          <img th:src="${product.imageURL}" th:alt="${product.name}" width="300" height="300"/>
           <p class="price" th:text="'Price: ' + ${product.price}"></p>
           <p th:text="${product.details}"></p>
-          <input type="hidden" name="product_id" th:value="${product.product_id}">
+          <input type="hidden" name="product_id" th:value="${product.productId}">
           <label for="quantity">Quantity:</label>
           <input class="quantity-input" type="number" id="quantity" name="quantity" value="1" min="1">
-          <input type="hidden" name="product_id" th:value="${product.product_id}">
-          <input type="hidden" name="product_name" th:value="${product.name}">
-          <input type="hidden" name="product_image_URL" th:value="${product.image_URL}">
-          <input type="hidden" name="product_price" th:value="${product.price}">
-          <input type="hidden" name="product_details" th:value="${product.details}">
+          <input type="hidden" name="productId" th:value="${product.productId}">
+          <input type="hidden" name="productName" th:value="${product.name}">
+          <input type="hidden" name="productImageURL" th:value="${product.imageURL}">
+          <input type="hidden" name="productPrice" th:value="${product.price}">
+          <input type="hidden" name="productDetails" th:value="${product.details}">
 
           <button class="cartButton" type="submit">Add to Cart</button>
         </form>
