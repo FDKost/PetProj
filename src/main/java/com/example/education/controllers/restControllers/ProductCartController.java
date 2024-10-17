@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Date;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -25,7 +26,7 @@ public class ProductCartController {
     private final UserDao userDao;
 
     @PostMapping("/api/createProductCart")
-    public ModelAndView createProductCart(@RequestParam Long productId,Cart cart ,ProductCart productCart, @AuthenticationPrincipal UserDetails userDetails){
+    public ModelAndView createProductCart(@RequestParam UUID productId, Cart cart , ProductCart productCart, @AuthenticationPrincipal UserDetails userDetails){
         String username = userDetails.getUsername();
         User user = userDao.getUserByLogin(username);
 
@@ -35,7 +36,7 @@ public class ProductCartController {
         cartDao.createCart(cart);
 
         cart = cartDao.getCartByUserId(user.getId());
-        productCart.setCartId(cart.getCartId());
+        productCart.setCartId(cart.getId());
         productCart.setProductId(productId);
         productCartDao.createProductCart(productCart);
 
@@ -43,15 +44,15 @@ public class ProductCartController {
         return new ModelAndView("redirect:" + orderUrl);
     }
     @GetMapping("/api/getProductCart")
-    public ProductCart readProductCart(@RequestParam long cartItemId){
+    public ProductCart readProductCart(@RequestParam UUID cartItemId){
         return productCartDao.getProductCartById(cartItemId);
     }
     @PutMapping("/api/editProductCart")
-    public void editProductCart(ProductCart productCart,long cartId){
+    public void editProductCart(ProductCart productCart,UUID cartId){
         productCartDao.editProductCart(productCart,cartId);
     }
     @PostMapping("/api/deleteProductCart")
-    public ModelAndView deleteProductCart( Long cartId,long productId){
+    public ModelAndView deleteProductCart( UUID cartId,UUID productId){
         String cartUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/cart").toUriString();
         productCartDao.deleteProductCart(cartId,productId);
         return new ModelAndView("redirect:"+cartUrl);

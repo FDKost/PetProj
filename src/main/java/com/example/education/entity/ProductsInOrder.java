@@ -2,10 +2,12 @@ package com.example.education.entity;
 
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class ProductsInOrder {
-    private Long orderItemId;
-    private Long orderId;
-    private Long productId;
+    private UUID id;
+    private UUID orderId;
+    private UUID productId;
     private Long quantity;
 }

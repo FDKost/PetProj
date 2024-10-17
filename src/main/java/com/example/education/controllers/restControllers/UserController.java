@@ -8,19 +8,21 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.UUID;
+
 @RestController
 @AllArgsConstructor
 public class UserController {
     private final UserDao userDao;
     @PostMapping("/registration")
     public ModelAndView createUser(User user) {
-        Long userId = userDao.createUser(user);
+        UUID userId = userDao.createUser(user);
         String loginUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/login").toUriString();
         return new ModelAndView("redirect:" + loginUrl);
     }
 
     @GetMapping("/api/readUser")
-    public User readUser(@RequestParam Long id){
+    public User readUser(@RequestParam UUID id){
 
         return userDao.getUserById(id);
     }
@@ -29,7 +31,7 @@ public class UserController {
         userDao.editUser(user);
     }
     @DeleteMapping("/api/deleteUser")
-    public void deleteUser(@RequestParam long id){
+    public void deleteUser(@RequestParam UUID id){
         userDao.deleteUser(id);
     }
     @GetMapping("/api/readLogin")

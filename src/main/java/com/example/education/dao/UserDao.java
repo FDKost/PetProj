@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,25 +20,26 @@ public class UserDao {
 
 
 
-    public Long createUser(User user){
-        String sql = "INSERT INTO client (login, password) VALUES(:login,:password) RETURNING id ";
+    public UUID createUser(User user){
+        String sql = "INSERT INTO client (id,login, password) VALUES(:id,:login,:password) RETURNING id ";
         SqlParameterSource parameterSource = new MapSqlParameterSource()
+                .addValue("id", UUID.randomUUID())
                 .addValue("login",user.getLogin())
                 .addValue("password",encoder.encode(user.getPassword()));
-        return template.queryForObject(sql,parameterSource, Long.class);
+        return template.queryForObject(sql,parameterSource, UUID.class);
     }
 
-    public Long getIdByUser(String login) {
+    public UUID getIdByUser(String login) {
         String sql = "SELECT id FROM client WHERE login = :login";
         SqlParameterSource parameterSource = new MapSqlParameterSource("login", login);
-        return template.queryForObject(sql, parameterSource, Long.class);
+        return template.queryForObject(sql, parameterSource, UUID.class);
     }
-    public User getUserById(long id){
+    public User getUserById(UUID id){
         String sql = "SELECT * FROM client WHERE client.id = :id";
         SqlParameterSource parameterSource = new MapSqlParameterSource("id",id);
         return template.queryForObject(sql,parameterSource,(rs, rowNum)-> {
             User user = new User();
-            user.setId(rs.getLong("id"));
+            user.setId(UUID.fromString(rs.getString("id")));
             user.setLogin(rs.getString("login"));
             user.setPassword(rs.getString("password"));
             return user;
@@ -48,7 +50,7 @@ public class UserDao {
         SqlParameterSource parameterSource = new MapSqlParameterSource("login",login);
         List<User> users = template.query(sql, parameterSource, (rs, rowNum)-> {
             User user = new User();
-            user.setId(rs.getLong("id"));
+            user.setId(UUID.fromString(rs.getString("id")));
             user.setLogin(rs.getString("login"));
             user.setPassword(rs.getString("password"));
             user.setRole(rs.getString("role"));
@@ -69,7 +71,7 @@ public class UserDao {
                 .addValue("password",user.getPassword());
         template.update(sql,parameterSource);
     }
-    public void deleteUser(long id){
+    public void deleteUser(UUID id){
         String sql = "DELETE FROM client WHERE id = :id";
         SqlParameterSource parameterSource = new MapSqlParameterSource("id",id);
         template.update(sql,parameterSource);

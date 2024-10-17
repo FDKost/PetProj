@@ -21,21 +21,23 @@
     </thead>
     <tbody>
     <tr th:each="order : ${orders}">
-      <td th:text="${order.orderId}"></td>
+      <td th:text="${order.id}"></td>
       <td th:text="${order.userId}"></td>
       <td th:text="${order.paymentId}"></td>
       <td th:text="${order.addressId}"></td>
       <td th:text="${#dates.format(order.date, 'yyyy-MM-dd')}"></td>
+      <td th:text="${order.status}"></td>
       <td>
         <form th:action="@{/orders/editOrder}" method="post">
-          <input type="hidden" name="orderId" th:value="${order.orderId}"/>
-          <select name="status" th:value="${order.status}">
-            <option value="1" th:selected="${order.status == 1}">Pending</option>
-            <option value="2" th:selected="${order.status == 2}">Completed</option>
-          </select>
+          <input type="hidden" name="orderId" th:value="${order.id}"/>
+          <label>
+            <select name="status" th:value="${order.status}">
+              <option value="d896b4b7-4876-4de4-a5ed-604ac1442ab2" th:selected="${order.status == 'd896b4b7-4876-4de4-a5ed-604ac1442ab2'}">Pending</option>
+              <option value="e451f19b-f880-4d66-8afc-db15eeb20643" th:selected="${order.status == 'e451f19b-f880-4d66-8afc-db15eeb20643'}">Completed</option>
+            </select>
+          </label>
           <button type="submit">Update Status</button>
         </form>
-      </td>
     </tr>
     </tbody>
   </table>

@@ -3,11 +3,12 @@ package com.example.education.entity;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 public class Cart {
 
-    private Long cartId;
-    private Long userId;
+    private UUID id;
+    private UUID userId;
     private Date createdIn;
 }

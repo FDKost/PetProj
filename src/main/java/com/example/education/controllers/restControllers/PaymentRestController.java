@@ -5,6 +5,8 @@ import com.example.education.entity.Payment;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/payment")
@@ -12,12 +14,12 @@ public class PaymentRestController {
     private final PaymentDao paymentDao;
 
     @PostMapping
-    public Long createPayment(@RequestBody Payment payment){
+    public UUID createPayment(@RequestBody Payment payment){
         return paymentDao.createPayment(payment);
     }
 
     @GetMapping
-    public Payment readPayment(@RequestParam Long paymentId){
+    public Payment readPayment(@RequestParam UUID paymentId){
         return paymentDao.getPaymentById(paymentId);
     }
 
@@ -27,7 +29,7 @@ public class PaymentRestController {
     }
 
     @DeleteMapping
-    public void deletePayment(@RequestParam long paymentId){
+    public void deletePayment(@RequestParam UUID paymentId){
         paymentDao.deletePayment(paymentId);
     }
 }

@@ -10,52 +10,54 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Repository
 @AllArgsConstructor
 public class CartDao {
     private final NamedParameterJdbcTemplate template;
 
-    public Long createCart(Cart cart) {
-        String sqlCheckCart = "SELECT cartId FROM cart WHERE userId = :userId";
+    public UUID createCart(Cart cart) {
+        String sqlCheckCart = "SELECT id FROM cart WHERE userId = :userId";
         Map<String, Object> paramsCheckCart = new HashMap<>();
         paramsCheckCart.put("userId", cart.getUserId());
 
         try {
             // Пытаемся выполнить запрос для получения id_cart
-            Long existingCartId = template.queryForObject(sqlCheckCart, paramsCheckCart, Long.class);
+            UUID existingCartId = template.queryForObject(sqlCheckCart, paramsCheckCart, UUID.class);
             System.out.println("Cart already exists with id: " + existingCartId);
             return existingCartId; // Возвращаем id_cart существующей корзины
         } catch (EmptyResultDataAccessException e) {
             // Если корзина не найдена, создаем новую
-            String sqlCreateCart = "INSERT INTO cart (userid, createdin) VALUES (:userId, :createdIn) RETURNING cartid";
+            String sqlCreateCart = "INSERT INTO cart (id,userid, createdin) VALUES (:id,:userId, :createdIn) RETURNING id";
             Map<String, Object> paramsCreateCart = new HashMap<>();
+            paramsCreateCart.put("id", UUID.randomUUID());
             paramsCreateCart.put("userId", cart.getUserId());
             paramsCreateCart.put("createdIn", cart.getCreatedIn());
 
-            return template.queryForObject(sqlCreateCart, paramsCreateCart, Long.class);
+            return template.queryForObject(sqlCreateCart, paramsCreateCart, UUID.class);
         }
     }
 
-    public Cart getCartById(long cartId){
-        String sql = "SELECT * FROM cart WHERE cart.cartid = :cartId";
-        SqlParameterSource parameterSource = new MapSqlParameterSource("cartId",cartId);
+    public Cart getCartById(UUID cartId){
+        String sql = "SELECT * FROM cart WHERE cart.id = :cartId";
+        SqlParameterSource parameterSource = new MapSqlParameterSource("id",cartId);
         return template.queryForObject(sql,parameterSource,(rs,rowNum)->{
             Cart cart = new Cart();
-            cart.setUserId(rs.getLong("userId"));
+            cart.setUserId(UUID.fromString(rs.getString("userId")));
             cart.setCreatedIn(rs.getDate("createdIn"));
             return cart;
         });
     }
-    public Cart getCartByUserId(long userId) {
+    public Cart getCartByUserId(UUID userId) {
         String sql = "SELECT * FROM cart WHERE userid = :userId";
         SqlParameterSource parameterSource = new MapSqlParameterSource("userId", userId);
 
         try {
             return template.queryForObject(sql, parameterSource, (rs, rowNum) -> {
                 Cart cart = new Cart();
-                cart.setCartId(rs.getLong("cartId"));
-                cart.setUserId(rs.getLong("userId"));
+                cart.setId(UUID.fromString(rs.getString("id")));
+                cart.setUserId(UUID.fromString(rs.getString("userId")));
                 cart.setCreatedIn(rs.getDate("createdIn"));
                 return cart;
             });
@@ -65,14 +67,14 @@ public class CartDao {
     }
 
     public void editCart(Cart cart){
-        String sql = "UPDATE cart SET createdin = :createdIn WHERE cartid = :cartId";
+        String sql = "UPDATE cart SET createdin = :createdIn WHERE id = :cartId";
         SqlParameterSource parameterSource = new MapSqlParameterSource()
                 .addValue("createdIn",cart.getCreatedIn());
         template.update(sql,parameterSource);
     }
-    public void deleteCart(long cartId){
-        String sql = "DELETE FROM cart WHERE cartid = :cartId";
-        SqlParameterSource parameterSource = new MapSqlParameterSource("cartId",cartId);
+    public void deleteCart(UUID cartId){
+        String sql = "DELETE FROM cart WHERE id = :cartId";
+        SqlParameterSource parameterSource = new MapSqlParameterSource("id",cartId);
         template.update(sql,parameterSource);
     }
 }

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.UUID;
+
 
 @RestController
 @AllArgsConstructor
@@ -26,13 +28,12 @@ public class AddressController {
 
         // Найти пользователя по его имени
         User user = userDao.getUserByLogin(username);
-        address.setUserId(user.getId().intValue());
 
         // Проверить, существует ли уже адрес для данного пользователя
-        Address existingAddress = addressDao.getAddressByUserId(user.getId().intValue());
+        Address existingAddress = addressDao.getAddressByUserId(user.getId());
         if(existingAddress != null) {
             // Если адрес уже существует, обновить его данные
-            address.setAddressId(existingAddress.getAddressId());
+            address.setId(existingAddress.getId());
             addressDao.editAddress(address);
         } else {
             // Если адрес не существует, создать новый адрес
@@ -43,7 +44,7 @@ public class AddressController {
     }
 
     @GetMapping("/profile/read")
-    public Address readAddress(@RequestParam Long addressId){
+    public Address readAddress(@RequestParam UUID addressId){
         return addressDao.getAddressById(addressId);
     }
     @PutMapping("/profile/edit")
@@ -51,7 +52,7 @@ public class AddressController {
         addressDao.editAddress(address);
     }
     @DeleteMapping("/profile/delete")
-    public void deleteAddress(@RequestParam long addressId){
+    public void deleteAddress(@RequestParam UUID addressId){
         addressDao.deleteAddress(addressId);
     }
 }

@@ -3,10 +3,12 @@ package com.example.education.dto;
 import lombok.Data;
 import lombok.Value;
 
+import java.util.UUID;
+
 
 @Value
 public class OrderRequestDTO {
-    private Long[] productIds;
+    private UUID[] productIds;
     private Integer[] quantities;
     private Double totalAmount;
 }

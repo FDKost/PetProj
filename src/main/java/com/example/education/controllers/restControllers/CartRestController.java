@@ -6,6 +6,8 @@ import com.example.education.dao.UserDao;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @AllArgsConstructor
 public class CartRestController {
@@ -25,7 +27,7 @@ public class CartRestController {
     }*/
 
     @GetMapping("/api/cart_read")
-    public Cart readCart(@RequestParam Long cartId){
+    public Cart readCart(@RequestParam UUID cartId){
         return cartDao.getCartById(cartId);
     }
 
@@ -35,7 +37,7 @@ public class CartRestController {
     }
 
     @DeleteMapping("/api/cart_delete")
-    public void deleteCart(@RequestParam long cartId){
+    public void deleteCart(@RequestParam UUID cartId){
         cartDao.deleteCart(cartId);
     }
 }

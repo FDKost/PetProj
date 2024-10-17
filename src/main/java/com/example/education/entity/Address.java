@@ -2,10 +2,12 @@ package com.example.education.entity;
 
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class Address {
-    private Long addressId;
-    private Integer userId;
+    private UUID id;
+    private UUID userId;
     private String street;
     private String house;
     private String apartment;

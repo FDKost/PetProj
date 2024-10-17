@@ -10,29 +10,31 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Repository
 @AllArgsConstructor
 public class ProductsInOrderDao {
     private final NamedParameterJdbcTemplate template;
 
-    public Long createProductsInOrder(ProductsInOrder productsInOrder) {
-        String sql = "INSERT INTO products_in_order (orderid, productid, quantity) VALUES (:orderId, :productId, :quantity) RETURNING orderitemid";
+    public UUID createProductsInOrder(ProductsInOrder productsInOrder) {
+        String sql = "INSERT INTO products_in_order (id,orderid, productid, quantity) VALUES (:id,:orderId, :productId, :quantity) RETURNING id";
         Map<String, Object> map = new HashMap<>();
+        map.put("id", UUID.randomUUID());
         map.put("orderId", productsInOrder.getOrderId());
         map.put("productId", productsInOrder.getProductId());
         map.put("quantity", productsInOrder.getQuantity());
-        return template.queryForObject(sql, map, Long.class);
+        return template.queryForObject(sql, map, UUID.class);
     }
 
-    public ProductsInOrder getProductsInOrderById(Long orderItemId) {
-        String sql = "SELECT * FROM products_in_order WHERE orderitemid = :orderItemId";
-        SqlParameterSource parameterSource = new MapSqlParameterSource("orderItemId", orderItemId);
+    public ProductsInOrder getProductsInOrderById(UUID orderItemId) {
+        String sql = "SELECT * FROM products_in_order WHERE id = :orderItemId";
+        SqlParameterSource parameterSource = new MapSqlParameterSource("id", orderItemId);
         return template.queryForObject(sql, parameterSource, (rs, rowNum) -> {
             ProductsInOrder productsInOrder = new ProductsInOrder();
-            productsInOrder.setOrderItemId(rs.getLong("orderItemId"));
-            productsInOrder.setOrderId(rs.getLong("orderId"));
-            productsInOrder.setProductId(rs.getLong("productId"));
+            productsInOrder.setId(UUID.fromString(rs.getString("orderItemId")));
+            productsInOrder.setOrderId(UUID.fromString(rs.getString("orderId")));
+            productsInOrder.setProductId(UUID.fromString(rs.getString("productId")));
             productsInOrder.setQuantity(rs.getLong("quantity"));
             return productsInOrder;
         });
@@ -42,17 +44,18 @@ public class ProductsInOrderDao {
         String sql = "SELECT * FROM products_in_order";
         return template.query(sql, (rs, rowNum) -> {
             ProductsInOrder productsInOrder = new ProductsInOrder();
-            productsInOrder.setOrderItemId(rs.getLong("orderItemId"));
-            productsInOrder.setOrderId(rs.getLong("orderId"));
-            productsInOrder.setProductId(rs.getLong("productId"));
+            productsInOrder.setId(UUID.fromString(rs.getString("orderItemId")));
+            productsInOrder.setOrderId(UUID.fromString(rs.getString("orderId")));
+            productsInOrder.setProductId(UUID.fromString(rs.getString("productId")));
             productsInOrder.setQuantity(rs.getLong("quantity"));
             return productsInOrder;
         });
     }
-    public void addProductsFromCart(Long orderId, List<ProductsInOrder> cartItems) {
-        String sql = "INSERT INTO products_in_order (orderid, productid, quantity) VALUES (:orderId, :productId, :quantity)";
+    public void addProductsFromCart(UUID orderId, List<ProductsInOrder> cartItems) {
+        String sql = "INSERT INTO products_in_order (id,orderid, productid, quantity) VALUES (:id,:orderId, :productId, :quantity)";
         for (ProductsInOrder item : cartItems) {
             Map<String, Object> map = new HashMap<>();
+            map.put("id", UUID.randomUUID());
             map.put("orderId", orderId);
             map.put("productId", item.getProductId());
             map.put("quantity", item.getQuantity());
@@ -61,19 +64,19 @@ public class ProductsInOrderDao {
     }
 
     public void editProductsInOrder(ProductsInOrder productsInOrder) {
-        String sql = "UPDATE products_in_order SET orderid = :orderId, productid = :productId, quantity = :quantity WHERE orderitemid = :orderItemId";
+        String sql = "UPDATE products_in_order SET orderid = :orderId, productid = :productId, quantity = :quantity WHERE id = :orderItemId";
         SqlParameterSource parameterSource = new MapSqlParameterSource()
                 .addValue("orderId", productsInOrder.getOrderId())
                 .addValue("productId", productsInOrder.getProductId())
                 .addValue("quantity", productsInOrder.getQuantity())
-                .addValue("orderItemId", productsInOrder.getOrderItemId());
+                .addValue("id", productsInOrder.getId());
 
         template.update(sql, parameterSource);
     }
 
-    public void deleteProductsInOrder(Long orderItemId) {
-        String sql = "DELETE FROM products_in_order WHERE orderitemid = :orderItemId";
-        SqlParameterSource parameterSource = new MapSqlParameterSource("orderItemId", orderItemId);
+    public void deleteProductsInOrder(UUID orderItemId) {
+        String sql = "DELETE FROM products_in_order WHERE id = :orderItemId";
+        SqlParameterSource parameterSource = new MapSqlParameterSource("id", orderItemId);
         template.update(sql, parameterSource);
     }
 }

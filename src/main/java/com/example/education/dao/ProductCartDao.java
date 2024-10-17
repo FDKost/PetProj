@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Repository
 @AllArgsConstructor
@@ -18,53 +19,54 @@ public class ProductCartDao {
 
     private final NamedParameterJdbcTemplate template;
 
-    public Long createProductCart(ProductCart productCart){
-        String sql = "INSERT INTO product_cart (productid,cartid,quantity) VALUES(:productId,:cartId,:quantity) RETURNING cartitemid";
+    public UUID createProductCart(ProductCart productCart){
+        String sql = "INSERT INTO product_cart (id,productid,cartid,quantity) VALUES(:id,:productId,:cartId,:quantity) RETURNING id";
         Map<String,Object> map = new HashMap<>();
+        map.put("id",UUID.randomUUID());
         map.put("productId",productCart.getProductId());
         map.put("cartId",productCart.getCartId());
         map.put("quantity",productCart.getQuantity());
-        return template.queryForObject(sql,map,Long.class);
+        return template.queryForObject(sql,map,UUID.class);
     }
 
-    public ProductCart getProductCartById(long cartItemId){
-        String sql = "SELECT * FROM product_cart WHERE cartitemid = :cartItemId";
-        SqlParameterSource parameterSource = new MapSqlParameterSource("cartItemId",cartItemId);
+    public ProductCart getProductCartById(UUID cartItemId){
+        String sql = "SELECT * FROM product_cart WHERE id = :cartItemId";
+        SqlParameterSource parameterSource = new MapSqlParameterSource("id",cartItemId);
         return template.queryForObject(sql,parameterSource,(rs,rowNum)->{
             ProductCart productCart = new ProductCart();
-            productCart.setProductId(rs.getLong("productId"));
+            productCart.setProductId(UUID.fromString(rs.getString("productId")));
             productCart.setQuantity(rs.getLong("quantity"));
-            productCart.setCartId(rs.getLong("cartId"));
-            productCart.setCartItemId(rs.getLong("cartItemId"));
+            productCart.setCartId(UUID.fromString(rs.getString("cartId")));
+            productCart.setId(UUID.fromString(rs.getString("cartItemId")));
             return productCart;
         });
     }
-    public ProductCart getProductCartByIdCart(long cartId) {
+    public ProductCart getProductCartByIdCart(UUID cartId) {
         String sql = "SELECT * FROM product_cart WHERE cartid = :cartId";
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue("cartId", cartId);
         return template.queryForObject(sql, parameterSource, (rs, rowNum) -> {
             ProductCart productCart = new ProductCart();
-            productCart.setProductId(rs.getLong("productId"));
+            productCart.setProductId(UUID.fromString(rs.getString("productId")));
             productCart.setQuantity(rs.getLong("quantity"));
-            productCart.setCartId(rs.getLong("cartId"));
-            productCart.setCartItemId(rs.getLong("cartItemId"));
+            productCart.setCartId(UUID.fromString(rs.getString("cartId")));
+            productCart.setId(UUID.fromString(rs.getString("cartItemId")));
             return productCart;
         });
     }
 
-    public List<ProductCart> getAllProductCartsByIdCart(long cartId) {
+    public List<ProductCart> getAllProductCartsByIdCart(UUID cartId) {
         String sql = "SELECT pc.*, p.name AS productName, p.imageurl AS productImageURL, p.price AS productPrice, p.details AS productDetails " +
                 "FROM product_cart pc " +
-                "JOIN product p ON pc.productid = p.productid " +
+                "JOIN product p ON pc.productid = p.id " +
                 "WHERE pc.cartid = :cartId";
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue("cartId", cartId);
         return template.query(sql, parameterSource, (rs, rowNum) -> {
             ProductCart productCart = new ProductCart();
-            productCart.setProductId(rs.getLong("productId"));
+            productCart.setProductId(UUID.fromString(rs.getString("productId")));
             productCart.setQuantity(rs.getLong("quantity"));
-            productCart.setCartId(rs.getLong("cartId"));
+            productCart.setCartId(UUID.fromString(rs.getString("cartId")));
             // Другие поля productCart
 
             // Создание объекта Product и установка его значений
@@ -79,21 +81,21 @@ public class ProductCartDao {
             return productCart;
         });
     }
-    public void editProductCart(ProductCart productCart,Long cartId){
+    public void editProductCart(ProductCart productCart,UUID cartId){
         String sql = "UPDATE product_cart SET productid=:productId,quantity=:quantity WHERE cartid=:cartId";
         SqlParameterSource parameterSource = new MapSqlParameterSource()
                 .addValue("productId",productCart.getProductId())
                 .addValue("quantity",productCart.getQuantity());
         template.update(sql,parameterSource);
     }
-    public void deleteProductCart(long cartId, long productId){
+    public void deleteProductCart(UUID cartId, UUID productId){
         String sql = "DELETE FROM product_cart WHERE cartid = :cartId AND productid = :productId";
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("cartId", cartId);
         paramMap.put("productId", productId);
         template.update(sql, paramMap);
     }
-    public void deleteAllFromProductCart(long cartId){
+    public void deleteAllFromProductCart(UUID cartId){
         String sql = "DELETE FROM product_cart WHERE cartid = :cartId";
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("cartId", cartId);

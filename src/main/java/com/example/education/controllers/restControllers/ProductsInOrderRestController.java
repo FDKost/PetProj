@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -14,12 +15,12 @@ public class ProductsInOrderRestController {
     private final ProductsInOrderDao productsInOrderDao;
 
     @PostMapping("/create")
-    public Long createProductsInOrder(@RequestBody ProductsInOrder productsInOrder) {
+    public UUID createProductsInOrder(@RequestBody ProductsInOrder productsInOrder) {
         return productsInOrderDao.createProductsInOrder(productsInOrder);
     }
 
     @GetMapping("/read/{orderItemId}")
-    public ProductsInOrder readProductsInOrder(@PathVariable Long orderItemId) {
+    public ProductsInOrder readProductsInOrder(@PathVariable UUID orderItemId) {
         return productsInOrderDao.getProductsInOrderById(orderItemId);
     }
 
@@ -34,7 +35,7 @@ public class ProductsInOrderRestController {
     }
 
     @DeleteMapping("/delete/{orderItemId}")
-    public void deleteProductsInOrder(@PathVariable Long orderItemId) {
+    public void deleteProductsInOrder(@PathVariable UUID orderItemId) {
         productsInOrderDao.deleteProductsInOrder(orderItemId);
     }
 }

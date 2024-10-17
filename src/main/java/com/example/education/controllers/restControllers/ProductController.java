@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -19,7 +20,7 @@ public class ProductController {
         return new ModelAndView("redirect:/admin/menu");
     }
     @GetMapping("/read")
-    public Product readProduct(@RequestParam Long productId){
+    public Product readProduct(@RequestParam UUID productId){
         return productDao.getProductById(productId);
     }
 
@@ -32,7 +33,7 @@ public class ProductController {
         return productDao.getAllProducts();
     }
     @DeleteMapping("/deleteProduct")
-    public void deleteProduct(@RequestParam long productId){
+    public void deleteProduct(@RequestParam UUID productId){
         productDao.deleteProduct(productId);
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -33,16 +34,15 @@ public class OrderRestController {
         Payment payment = new Payment();
         payment.setTotal(orderRequestDTO.getTotalAmount().longValue());  // Преобразуем Double в Long
         payment.setUserId(user.getId());
-        Long paymentId = paymentDao.createPayment(payment);
+        UUID paymentId = paymentDao.createPayment(payment);
 
         Order order = new Order();
         order.setUserId(user.getId());
         order.setPaymentId(paymentId);
         Address address = addressDao.getAddressByUserId(user.getId());
-        order.setAddressId(address.getAddressId());
+        order.setAddressId(address.getId());
         order.setDate(new java.util.Date());
-        order.setStatus(1L);
-        Long orderId = orderDao.createOrder(order);
+        UUID orderId = orderDao.createOrder(order);
 
         List<ProductsInOrder> cartItems = new ArrayList<>();
         for (int i = 0; i < orderRequestDTO.getProductIds().length; i++) {
@@ -53,19 +53,19 @@ public class OrderRestController {
         }
         Cart cart = cartDao.getCartByUserId(user.getId());
         productsInOrderDao.addProductsFromCart(orderId, cartItems);
-        productCartDao.deleteAllFromProductCart(cart.getCartId());
+        productCartDao.deleteAllFromProductCart(cart.getId());
 
         return new ModelAndView("redirect:/home");
 
     }
 
     @GetMapping("/readOrder/{orderId}")
-    public Order readOrder(@PathVariable Long orderId) {
+    public Order readOrder(@PathVariable UUID orderId) {
         return orderDao.getOrderById(orderId);
     }
 
     @PostMapping("/editOrder")
-    public ModelAndView editOrder(@RequestParam Long orderId, @RequestParam Long status) {
+    public ModelAndView editOrder(@RequestParam UUID orderId, @RequestParam UUID status) {
         Order order = orderDao.getOrderById(orderId);
         if (order != null) {
             order.setStatus(status);
@@ -75,7 +75,7 @@ public class OrderRestController {
     }
 
     @DeleteMapping("/deleteOrder/{orderId}")
-    public void deleteOrder(@PathVariable Long orderId) {
+    public void deleteOrder(@PathVariable UUID orderId) {
         orderDao.deleteOrder(orderId);
     }
     @GetMapping("/getAllOrders")

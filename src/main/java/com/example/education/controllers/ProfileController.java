@@ -21,7 +21,7 @@ public class ProfileController {
     public String profile(@AuthenticationPrincipal UserDetails userDetails, Model model){
         String login = userDetails.getUsername();
         User user = dao.getUserByLogin(login);
-        model.addAttribute("user_id",user.getId().intValue());
+        model.addAttribute("userId",user.getId());
         return "profile";
     }
 }

@@ -28,7 +28,7 @@ public class CartController {
         String username = userDetails.getUsername();
         User user = userDao.getUserByLogin(username);
         Cart cart = cartDao.getCartByUserId(user.getId());
-        List<ProductCart> cartItems = dao.getAllProductCartsByIdCart(cart.getCartId());
+        List<ProductCart> cartItems = dao.getAllProductCartsByIdCart(cart.getId());
         double totalAmount = 0;
         for (ProductCart cartItem : cartItems) {
             totalAmount += cartItem.getProduct().getPrice() * cartItem.getQuantity();
