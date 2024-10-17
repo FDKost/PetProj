@@ -3,6 +3,8 @@
 ---
 <div style="text-align: center;"><img src="src/main/resources/static/images/Logo.png" width="100%"></div>
 
+[EN](README.md)|[RU](README_RU.md)
+
 This project exists for my training in java and spring framework. Currently the application has the following frameworks:
 + ✅Spring
     + JDBC
@@ -27,7 +29,11 @@ $git clone https://github.com/FDKost/PetProj
 ```postgresql
 CREATE DATABASE cyberpizzaTest;
 ```
-3. Run application with **EducationApplication** class in com/example/education;
+3. Run application with:
+    ```
+    C:\Users\yfili\Desktop\IdeaProjects\Education>mvn
+    C:\Users\yfili\Desktop\IdeaProjects\Education>mvn spring-boot:run
+   ```
 
 4. Login to your local server (using localhost:8080/ url standard);
 
