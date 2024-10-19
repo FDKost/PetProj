@@ -1,5 +1,6 @@
 package com.example.education.repositories;
 
+import com.example.education.entity.Product;
 import com.example.education.entity.ProductsInOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,7 +14,9 @@ public interface ProductsInOrderRepository extends JpaRepository<ProductsInOrder
 
     List<ProductsInOrder> getAllProductsInOrder();
 
-    void addProductsFromCart(UUID orderId,List<ProductsInOrder> cartItems);
+    /*Optional<ProductsInOrder> addProductsFromCart(UUID orderId,List<Product> cartItems);*/
+
 
     void deleteProductsInOrderById(UUID id);
+
 }

@@ -141,8 +141,8 @@
 				<version>3.3</version>
 				<configuration>
 					<compilerVersion>1.8</compilerVersion>
-					<source>9</source>
-					<target>9</target>
+					<source>16</source>
+					<target>16</target>
 					<annotationProcessors>
 						<annotationProcessor>lombok.launch.AnnotationProcessorHider$AnnotationProcessor
 						</annotationProcessor>

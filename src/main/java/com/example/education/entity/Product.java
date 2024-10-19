@@ -24,7 +24,7 @@ public class Product {
     @Column(name = "name",nullable = false)
     private String name;
     @Column(name = "price",nullable = false)
-    private Integer price;
+    private Long price;
     @Column(name = "details",nullable = false)
     private String details;
     @Column(name = "imageurl",nullable = false)

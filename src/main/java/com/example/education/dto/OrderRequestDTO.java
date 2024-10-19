@@ -1,6 +1,5 @@
 package com.example.education.dto;
 
-import lombok.Data;
 import lombok.Value;
 
 import java.util.UUID;
