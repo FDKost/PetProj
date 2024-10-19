@@ -1,6 +1,6 @@
 package com.example.education.config;
 
-import com.example.education.controllers.restControllers.UserController;
+import com.example.education.controllers.UserController;
 import com.example.education.entity.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -108,5 +108,4 @@ public class SecurityConfig {
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder(8);
     }
-
 }

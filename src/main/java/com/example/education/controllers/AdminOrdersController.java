@@ -14,6 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AdminOrdersController {
     private final OrderDao orderDao;
+
     @GetMapping("/admin/orders")
     public String manageOrders(Model model) {
         List<Order> orders = orderDao.getAllOrders();

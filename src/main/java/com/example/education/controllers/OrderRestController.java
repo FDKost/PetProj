@@ -1,4 +1,4 @@
-package com.example.education.controllers.restControllers;
+package com.example.education.controllers;
 
 import com.example.education.dao.*;
 import com.example.education.dto.OrderRequestDTO;
@@ -56,7 +56,6 @@ public class OrderRestController {
         productCartDao.deleteAllFromProductCart(cart.getId());
 
         return new ModelAndView("redirect:/home");
-
     }
 
     @GetMapping("/readOrder/{orderId}")
@@ -78,6 +77,7 @@ public class OrderRestController {
     public void deleteOrder(@PathVariable UUID orderId) {
         orderDao.deleteOrder(orderId);
     }
+
     @GetMapping("/getAllOrders")
     public List<Order> getAllOrders() {
         return orderDao.getAllOrders();

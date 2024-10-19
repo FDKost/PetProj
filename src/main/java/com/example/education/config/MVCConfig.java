@@ -12,9 +12,9 @@ public class MVCConfig implements WebMvcConfigurer {
         resourceHandlerRegistry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
     }
+
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login");
     }
-
 }

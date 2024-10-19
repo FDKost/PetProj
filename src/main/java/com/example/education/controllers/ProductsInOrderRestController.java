@@ -1,4 +1,4 @@
-package com.example.education.controllers.restControllers;
+package com.example.education.controllers;
 
 import com.example.education.dao.ProductsInOrderDao;
 import com.example.education.entity.ProductsInOrder;

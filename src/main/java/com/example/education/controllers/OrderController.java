@@ -1,7 +1,6 @@
 package com.example.education.controllers;
 
 import com.example.education.entity.Product;
-import com.example.education.controllers.restControllers.ProductController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +13,7 @@ import java.util.List;
 @RequestMapping("/order")
 public class OrderController {
     private final ProductController productController;
+
     @Autowired
     public OrderController(ProductController productController) {
         this.productController = productController;

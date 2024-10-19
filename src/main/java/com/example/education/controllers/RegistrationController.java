@@ -14,11 +14,9 @@ public class RegistrationController {
     public String registerForm() {
         return "registration";
     }
+
     /*@PostMapping
     public Long createUser(@RequestBody User user) {
         return dao.createUser(user);
     }*/
-
-
-
 }

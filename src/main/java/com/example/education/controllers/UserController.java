@@ -1,4 +1,4 @@
-package com.example.education.controllers.restControllers;
+package com.example.education.controllers;
 
 
 import com.example.education.dao.UserDao;
@@ -14,6 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserController {
     private final UserDao userDao;
+
     @PostMapping("/registration")
     public ModelAndView createUser(User user) {
         UUID userId = userDao.createUser(user);
@@ -26,17 +27,19 @@ public class UserController {
 
         return userDao.getUserById(id);
     }
+
     @PutMapping("/api/editUser")
     public void editUser(@RequestBody User user){
         userDao.editUser(user);
     }
+
     @DeleteMapping("/api/deleteUser")
     public void deleteUser(@RequestParam UUID id){
         userDao.deleteUser(id);
     }
+
     @GetMapping("/api/readLogin")
     public User findByLogin(@RequestParam String login){
         return userDao.getUserByLogin(login);
     }
-
 }

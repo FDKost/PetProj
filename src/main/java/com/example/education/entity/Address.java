@@ -1,16 +1,32 @@
 package com.example.education.entity;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
+@Table(name = "address")
+@Builder
+@Entity
 public class Address {
+    @Id
+    @Column(name = "id")
     private UUID id;
-    private UUID userId;
+    @Column(name = "street")
     private String street;
+    @Column(name = "house")
     private String house;
+    @Column(name = "apartment")
     private String apartment;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userid")
+    private User user;
 
 }

@@ -23,6 +23,7 @@ public class CartController {
     private final ProductCartDao dao;
     private final UserDao userDao;
     private final CartDao cartDao;
+
     @GetMapping
     public String showCartPage(Model model,@AuthenticationPrincipal UserDetails userDetails) {
         String username = userDetails.getUsername();

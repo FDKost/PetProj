@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class ProfileController {
     private final UserDao dao;
-    private final AddressDao addressDao;
+
     @GetMapping
     public String profile(@AuthenticationPrincipal UserDetails userDetails, Model model){
         String login = userDetails.getUsername();

@@ -1,4 +1,4 @@
-package com.example.education.controllers.restControllers;
+package com.example.education.controllers;
 
 import com.example.education.dao.ProductDao;
 import com.example.education.entity.Product;
@@ -19,6 +19,7 @@ public class ProductController {
         productDao.createProduct(product);
         return new ModelAndView("redirect:/admin/menu");
     }
+
     @GetMapping("/read")
     public Product readProduct(@RequestParam UUID productId){
         return productDao.getProductById(productId);
@@ -28,10 +29,12 @@ public class ProductController {
     public void editProduct(@RequestBody Product product){
         productDao.editProduct(product);
     }
+
     @GetMapping("/readAll")
     public List<Product> readAllProducts() {
         return productDao.getAllProducts();
     }
+
     @DeleteMapping("/deleteProduct")
     public void deleteProduct(@RequestParam UUID productId){
         productDao.deleteProduct(productId);
