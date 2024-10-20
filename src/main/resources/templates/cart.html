@@ -32,12 +32,12 @@
         <ul th:unless="${cartItems.empty}">
             <li th:each="cartItem : ${cartItems}">
                 <div class="product-item">
-                    <h3>Name: <span th:text="${cartItem.product.name}"></span></h3>
-                    <img th:src="${cartItem.product.imageURL}" th:alt="${cartItem.product.name}" width="300" height="300"/>
-                    <p th:text="'Quantity: ' + ${cartItem.quantity}"></p>
+                    <h3>Name: <span th:text="${cartItem.getProductid().getName()}"></span></h3>
+                    <img th:src="${cartItem.getProductid().getImageURL()}" th:alt="${cartItem.getProductid().getName()}" width="300" height="300"/>
+                    <p th:text="'Quantity: ' + ${cartItem.getQuantity()}"></p>
                     <form th:action="@{/api/deleteProductCart}" method="post">
-                        <input type="hidden" name="id_cart" th:value="${cartItem.cartId}">
-                        <input type="hidden" name="product_id" th:value="${cartItem.productId}">
+                        <input type="hidden" name="cartid" th:value="${cartItem.getCartid().getId()}">
+                        <input type="hidden" name="productid" th:value="${cartItem.getProductid().getId()}">
                         <input type="submit" class="cartButton" value="Remove">
                     </form>
                 </div>
@@ -48,10 +48,18 @@
 <div class="footer">
     <p>Total Amount: <span th:text="${totalAmount}"></span></p>
     <form th:action="@{/orders/createOrder}" method="post" >
-        <input type="hidden" name="totalAmount" th:value="${totalAmount}"/>
         <div th:each="cartItem, iter : ${cartItems}">
-            <input type="hidden" name="productIds" th:value="${cartItem.productId}"/>
-            <input type="hidden" name="quantities" th:value="${cartItem.quantity}"/>
+            <input type="hidden" name="total" th:value="${totalAmount}">
+            <input type="hidden" name="checkurl" th:value="${checkurl}">
+            <input type="hidden" name="cartid" th:value="${cartItem.getCartid().getId()}">
+            <input type="hidden" name="productIds" th:value="${cartItem.getProductid()}"/>
+            <input type="hidden" name="quantities" th:value="${cartItem.getQuantity()}"/>
+            <input type="hidden" name="userid" th:value="${userid}">
+            <input type="hidden" name="paymentid" th:value="${paymentid}">
+            <input type="hidden" name="addressid" th:value="${addressid}">
+            <input type="hidden" name="date" th:value="${date}">
+            <input type="hidden" name="status" th:value="${status}">
+            <input type="hidden" name="totalAmount" th:value="${totalAmount}"/>
         </div>
         <input type="submit" class="cartButton" value="Place Order" />
     </form>

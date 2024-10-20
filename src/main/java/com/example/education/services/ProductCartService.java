@@ -2,6 +2,7 @@ package com.example.education.services;
 
 import com.example.education.dto.productcart.ProductCartCreateEditDTO;
 import com.example.education.dto.productcart.ProductCartReadDTO;
+import com.example.education.entity.Product;
 import com.example.education.mapper.productcart.ProductCartCreateEditMapper;
 import com.example.education.mapper.productcart.ProductCartReadMapper;
 import com.example.education.repositories.ProductCartRepository;
@@ -61,6 +62,28 @@ public class ProductCartService {
         return productCartRepository.findById(id)
                 .map(entity ->{
                     productCartRepository.delete(entity);
+                    productCartRepository.flush();
+                    return true;
+                })
+                .orElse(false);
+    }
+
+    @Transactional
+    public boolean deleteAllFromProductCartByCartId(UUID cartId){
+        return productCartRepository.findProductCartByCartId(cartId)
+                .map(entity -> {
+                    productCartRepository.deleteAllByCartId(entity.getCart().getId());
+                    productCartRepository.flush();
+                    return true;
+                })
+                .orElse(false);
+    }
+
+    @Transactional
+    public boolean deleteProductFromProductCart(UUID productId, UUID cartId) {
+        return productCartRepository.findProductCartByCartId(cartId)
+                .map(entity -> {
+                    productCartRepository.deleteByProductId(productId);
                     productCartRepository.flush();
                     return true;
                 })

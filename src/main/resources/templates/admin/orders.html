@@ -21,19 +21,23 @@
     </thead>
     <tbody>
     <tr th:each="order : ${orders}">
-      <td th:text="${order.id}"></td>
-      <td th:text="${order.userId}"></td>
-      <td th:text="${order.paymentId}"></td>
-      <td th:text="${order.addressId}"></td>
-      <td th:text="${#dates.format(order.date, 'yyyy-MM-dd')}"></td>
-      <td th:text="${order.status}"></td>
+      <td th:text="${order.getId()}"></td>
+      <td th:text="${order.getUserid()}"></td>
+      <td th:text="${order.getPaymentid()}"></td>
+      <td th:text="${order.getAddressid()}"></td>
+      <td th:text="${order.getDate()}"></td>
+      <td th:text="${order.getStatus()}"></td>
       <td>
         <form th:action="@{/orders/editOrder}" method="post">
-          <input type="hidden" name="orderId" th:value="${order.id}"/>
+          <input type="hidden" name="orderId" th:value="${order.getId()}"/>
+          <input type="hidden" name="userid"  th:value="${order.getUserid().getId()}">
+          <input type="hidden" name="paymentid" th:value="${order.getPaymentid().getId()}">
+          <input type="hidden" name="addressid" th:value="${order.getAddressid().getId()}">
+          <input type="hidden" name="date" th:value="${order.getDate()}">
           <label>
-            <select name="status" th:value="${order.status}">
-              <option value="d896b4b7-4876-4de4-a5ed-604ac1442ab2" th:selected="${order.status == 'd896b4b7-4876-4de4-a5ed-604ac1442ab2'}">Pending</option>
-              <option value="e451f19b-f880-4d66-8afc-db15eeb20643" th:selected="${order.status == 'e451f19b-f880-4d66-8afc-db15eeb20643'}">Completed</option>
+            <select name="status" th:value="${order.getStatus()}">
+              <option value="f294afcb-af1d-4e82-b438-6666d963b24c" th:selected="${order.status == 'f294afcb-af1d-4e82-b438-6666d963b24c'}">Pending</option>
+              <option value="035fae61-87ec-4e39-9ce5-d14d46bc437f" th:selected="${order.status == '035fae61-87ec-4e39-9ce5-d14d46bc437f'}">Completed</option>
             </select>
           </label>
           <button type="submit">Update Status</button>

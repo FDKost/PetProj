@@ -1,10 +1,7 @@
 package com.example.education.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -16,6 +13,7 @@ import java.util.UUID;
 @Entity
 public class Address {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
     @Column(name = "street")

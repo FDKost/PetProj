@@ -11,7 +11,7 @@ public class OrderCreateEditMapper implements Mapper<OrderCreateEditDTO, Order> 
     public Order map(OrderCreateEditDTO object) {
         Order order = new Order();
         copy(object, order);
-        return null;
+        return order;
     }
 
     @Override
@@ -21,10 +21,10 @@ public class OrderCreateEditMapper implements Mapper<OrderCreateEditDTO, Order> 
     }
 
     private void copy(OrderCreateEditDTO object, Order order) {
-        order.setUser(order.getUser());
-        order.setPayment(order.getPayment());
-        order.setAddress(order.getAddress());
-        order.setDate(order.getDate());
-        order.setStatus(order.getStatus());
+        order.setUser(object.getUserid());
+        order.setPayment(object.getPaymentid());
+        order.setAddress(object.getAddressid());
+        order.setDate(object.getDate());
+        order.setStatus(object.getStatus());
     }
 }

@@ -1,41 +1,43 @@
 package com.example.education.controllers;
 
-import com.example.education.dao.ProductsInOrderDao;
-import com.example.education.entity.ProductsInOrder;
+import com.example.education.dto.productsinorder.ProductsInOrderCreateEditDTO;
+import com.example.education.dto.productsinorder.ProductsInOrderReadDTO;
+import com.example.education.services.ProductsInOrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/productsInOrder")
 public class ProductsInOrderRestController {
-    private final ProductsInOrderDao productsInOrderDao;
+    private final ProductsInOrderService productsInOrderService;
 
     @PostMapping("/create")
-    public UUID createProductsInOrder(@RequestBody ProductsInOrder productsInOrder) {
-        return productsInOrderDao.createProductsInOrder(productsInOrder);
+    public ProductsInOrderReadDTO createProductsInOrder(@RequestBody ProductsInOrderCreateEditDTO productsInOrderCreateEditDTO) {
+        return productsInOrderService.create(productsInOrderCreateEditDTO);
     }
 
     @GetMapping("/read/{orderItemId}")
-    public ProductsInOrder readProductsInOrder(@PathVariable UUID orderItemId) {
-        return productsInOrderDao.getProductsInOrderById(orderItemId);
+    public Optional<ProductsInOrderReadDTO> readProductsInOrder(@PathVariable UUID orderItemId) {
+        return productsInOrderService.findById(orderItemId);
     }
 
     @GetMapping("/all")
-    public List<ProductsInOrder> getAllProductsInOrder() {
-        return productsInOrderDao.getAllProductsInOrder();
+    public List<ProductsInOrderReadDTO> getAllProductsInOrder() {
+        return productsInOrderService.getAllProductsInOrder();
     }
 
     @PutMapping("/edit")
-    public void editProductsInOrder(@RequestBody ProductsInOrder productsInOrder) {
-        productsInOrderDao.editProductsInOrder(productsInOrder);
+    public void editProductsInOrder(@RequestParam UUID productsInOrderId,@RequestBody ProductsInOrderCreateEditDTO productsInOrderCreateEditDTO) {
+        productsInOrderService.update(productsInOrderId, productsInOrderCreateEditDTO);
     }
 
     @DeleteMapping("/delete/{orderItemId}")
     public void deleteProductsInOrder(@PathVariable UUID orderItemId) {
-        productsInOrderDao.deleteProductsInOrder(orderItemId);
+        productsInOrderService.delete(orderItemId);
     }
 }

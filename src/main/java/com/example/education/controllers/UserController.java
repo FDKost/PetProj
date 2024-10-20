@@ -1,45 +1,45 @@
 package com.example.education.controllers;
 
-
-import com.example.education.dao.UserDao;
-import com.example.education.entity.User;
+import com.example.education.dto.user.UserCreateEditDTO;
+import com.example.education.dto.user.UserReadDTO;
+import com.example.education.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
 public class UserController {
-    private final UserDao userDao;
+    private final UserService userService;
 
     @PostMapping("/registration")
-    public ModelAndView createUser(User user) {
-        UUID userId = userDao.createUser(user);
+    public ModelAndView createUser(@RequestBody UserCreateEditDTO userCreateEditDTO) {
+        userService.create(userCreateEditDTO);
         String loginUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/login").toUriString();
         return new ModelAndView("redirect:" + loginUrl);
     }
 
     @GetMapping("/api/readUser")
-    public User readUser(@RequestParam UUID id){
-
-        return userDao.getUserById(id);
+    public Optional<UserReadDTO> readUser(@RequestParam UUID id){
+        return userService.findById(id);
     }
 
     @PutMapping("/api/editUser")
-    public void editUser(@RequestBody User user){
-        userDao.editUser(user);
+    public void editUser(@RequestParam UUID userId, UserCreateEditDTO userCreateEditDTO) {
+        userService.update(userId, userCreateEditDTO);
     }
 
     @DeleteMapping("/api/deleteUser")
     public void deleteUser(@RequestParam UUID id){
-        userDao.deleteUser(id);
+        userService.delete(id);
     }
 
     @GetMapping("/api/readLogin")
-    public User findByLogin(@RequestParam String login){
-        return userDao.getUserByLogin(login);
+    public Optional<UserReadDTO> findByLogin(@RequestParam String login){
+        return userService.findByUsername(login);
     }
 }

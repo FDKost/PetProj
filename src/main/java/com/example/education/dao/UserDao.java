@@ -1,4 +1,4 @@
-package com.example.education.dao;
+/*package com.example.education.dao;
 
 import com.example.education.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -76,4 +76,4 @@ public class UserDao {
         SqlParameterSource parameterSource = new MapSqlParameterSource("id",id);
         template.update(sql,parameterSource);
     }
-}
+}*/

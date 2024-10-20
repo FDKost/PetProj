@@ -26,7 +26,7 @@ public class OrderService {
     }
 
     public List<OrderReadDTO> getAllOrders(){
-        return orderRepository.getAllOrders().stream()
+        return orderRepository.findAllBy().stream()
                 .map(orderReadMapper::map)
                 .toList();
     }

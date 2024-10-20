@@ -2,8 +2,6 @@ package com.example.education.services;
 
 import com.example.education.dto.productsinorder.ProductsInOrderCreateEditDTO;
 import com.example.education.dto.productsinorder.ProductsInOrderReadDTO;
-import com.example.education.entity.Product;
-import com.example.education.entity.ProductsInOrder;
 import com.example.education.mapper.productsinorder.ProductsInOrderCreateEditMapper;
 import com.example.education.mapper.productsinorder.ProductsInOrderReadMapper;
 import com.example.education.repositories.ProductsInOrderRepository;
@@ -29,7 +27,7 @@ public class ProductsInOrderService {
     }
 
     public List<ProductsInOrderReadDTO> getAllProductsInOrder(){
-        return productsInOrderRepository.getAllProductsInOrder().stream()
+        return productsInOrderRepository.findAllBy().stream()
                 .map(productsInOrderReadMapper::map)
                 .toList();
     }

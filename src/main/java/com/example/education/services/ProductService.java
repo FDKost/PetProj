@@ -2,7 +2,6 @@ package com.example.education.services;
 
 import com.example.education.dto.product.ProductCreateEditDTO;
 import com.example.education.dto.product.ProductReadDTO;
-import com.example.education.entity.Product;
 import com.example.education.mapper.product.ProductCreateEditMapper;
 import com.example.education.mapper.product.ProductReadMapper;
 import com.example.education.repositories.ProductRepository;
@@ -33,7 +32,7 @@ public class ProductService {
     }
 
     public List<ProductReadDTO> getAllProducts() {
-        return productRepository.getAllProducts().stream()
+        return productRepository.findAllBy().stream()
                 .map(productReadMapper::map)
                 .toList();
     }

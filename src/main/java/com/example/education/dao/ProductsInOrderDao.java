@@ -1,4 +1,4 @@
-package com.example.education.dao;
+/*package com.example.education.dao;
 
 import com.example.education.entity.ProductsInOrder;
 import lombok.AllArgsConstructor;
@@ -79,4 +79,4 @@ public class ProductsInOrderDao {
         SqlParameterSource parameterSource = new MapSqlParameterSource("id", orderItemId);
         template.update(sql, parameterSource);
     }
-}
+}*/

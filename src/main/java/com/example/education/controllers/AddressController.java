@@ -1,9 +1,11 @@
 package com.example.education.controllers;
 
-import com.example.education.entity.Address;
-import com.example.education.dao.AddressDao;
-import com.example.education.dao.UserDao;
+import com.example.education.dto.address.AddressCreateEditDTO;
+import com.example.education.dto.address.AddressReadDTO;
+import com.example.education.dto.user.UserReadDTO;
 import com.example.education.entity.User;
+import com.example.education.services.AddressService;
+import com.example.education.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,16 +14,18 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
 @RestController
 @AllArgsConstructor
 public class AddressController {
-    private final AddressDao addressDao;
-    private final UserDao userDao;
+    private final AddressService addressService;
+    private final UserService userService;
 
-    @PostMapping("/profile/create")
+    /*@PostMapping("/profile/create")
     public ModelAndView createAddress(Address address, @AuthenticationPrincipal UserDetails userDetails, Model model){
         String orderUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/order").toUriString();
         String username = userDetails.getUsername();
@@ -41,18 +45,42 @@ public class AddressController {
         }
 
         return new ModelAndView("redirect:" + orderUrl);
+    }*/
+    @GetMapping("/profile/findAll")
+    public List<AddressReadDTO> findAll(Model model){
+        List<AddressReadDTO> allAddresses = addressService.findAll();
+        model.addAttribute("addresses", addressService.findAll());
+        return allAddresses;
+    }
+
+    @PostMapping("/profile/create")
+    public ModelAndView createAddress(AddressCreateEditDTO addressCreateEditDTO,
+                                      UserReadDTO userReadDTO,
+                                      @AuthenticationPrincipal UserDetails userDetails){
+        String orderUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/order").toUriString();
+
+        Optional<AddressReadDTO> existingAddress = addressService.findAddressByUserId(userService.findByUsername(userDetails.getUsername()).get().getId());
+
+        if (existingAddress.isPresent()) {
+            addressService.update(existingAddress.get().getId(), addressCreateEditDTO);
+        }else{
+            addressService.create(addressCreateEditDTO);
+        }
+
+        return new ModelAndView("redirect:" + orderUrl);
     }
 
     @GetMapping("/profile/read")
-    public Address readAddress(@RequestParam UUID addressId){
-        return addressDao.getAddressById(addressId);
+    public Optional<AddressReadDTO> readAddress(@RequestParam UUID addressId){
+        return addressService.findById(addressId);
     }
     @PutMapping("/profile/edit")
-    public void editAddress(@RequestBody Address address){
-        addressDao.editAddress(address);
+    public Optional<AddressReadDTO> editAddress(AddressCreateEditDTO addressCreateEditDTO,AddressReadDTO addressReadDTO){
+        return addressService.update(addressReadDTO.getId(), addressCreateEditDTO);
+        /*addressDao.editAddress(address);*/
     }
     @DeleteMapping("/profile/delete")
     public void deleteAddress(@RequestParam UUID addressId){
-        addressDao.deleteAddress(addressId);
+        addressService.delete(addressId);
     }
 }

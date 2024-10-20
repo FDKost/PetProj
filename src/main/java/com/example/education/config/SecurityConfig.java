@@ -1,6 +1,7 @@
 package com.example.education.config;
 
 import com.example.education.controllers.UserController;
+import com.example.education.entity.Role;
 import com.example.education.entity.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +27,7 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Bean
+    /*@Bean
     UserDetailsService userDetailsService(UserController userController) {
         return username -> {
             User user = userController.findByLogin(username);
@@ -69,7 +70,7 @@ public class SecurityConfig {
                 };
             throw new UsernameNotFoundException("User '" + username + "' not found");
         };
-    }
+    }*/
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -86,7 +87,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->authorizeRequests
                         .requestMatchers( "/static/**","/order/**",
                                         "/profile/create","/profile/**","/api/**","/cart","/orders/**","/payment/**","/productsInOrder/**").authenticated()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .requestMatchers("/styles.css","/home","/login/**", "/static/**","/registration","/logRegCSS.css","/images/**","/contact").permitAll()
 
 

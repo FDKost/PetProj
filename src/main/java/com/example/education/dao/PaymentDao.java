@@ -1,4 +1,4 @@
-package com.example.education.dao;
+/*package com.example.education.dao;
 
 import com.example.education.entity.Payment;
 import lombok.AllArgsConstructor;
@@ -54,4 +54,4 @@ public class PaymentDao {
         SqlParameterSource parameterSource = new MapSqlParameterSource("id", paymentId);
         template.update(sql, parameterSource);
     }
-}
+}*/

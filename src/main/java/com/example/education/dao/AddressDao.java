@@ -1,4 +1,4 @@
-package com.example.education.dao;
+/*package com.example.education.dao;
 
 import com.example.education.entity.Address;
 import lombok.AllArgsConstructor;
@@ -72,4 +72,4 @@ public class AddressDao {
         SqlParameterSource parameterSource = new MapSqlParameterSource("id",addressId);
         template.update(sql,parameterSource);
     }
-}
+}*/

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,6 +24,12 @@ public class AddressService {
     public Optional<AddressReadDTO> findById(UUID id){
         return addressRepository.findById(id)
                 .map(addressReadMapper::map);
+    }
+
+    public List<AddressReadDTO> findAll(){
+        return addressRepository.findAll().stream()
+                .map(addressReadMapper::map)
+                .toList();
     }
 
     public Optional<AddressReadDTO> findAddressByUserId(UUID userId){

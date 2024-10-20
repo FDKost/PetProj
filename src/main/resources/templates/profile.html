@@ -36,8 +36,8 @@
 <div class="address-form">
   <h2>Add or Update address</h2>
   <form th:action="@{/profile/create}" th:method="post">
-    <input type="hidden" id="id" name="id">
-    <input type="hidden" id="userId" name="userId" th:value="${userId}">
+    <input type="hidden" id="id" name="id" th:value="${addressId}">
+    <input type="hidden" id="userid" name="userid" th:value="${userId}">
     <label for="street">Street:</label>
     <input type="text" id="street" name="street" required><br>
 

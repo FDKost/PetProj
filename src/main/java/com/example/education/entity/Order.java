@@ -17,12 +17,9 @@ import java.util.UUID;
 @Entity
 public class Order {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
-    @Column(name = "date")
-    private LocalDate date;
-    @Column(name = "status")
-    private UUID status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid")
@@ -35,4 +32,9 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "addressid")
     private Address address;
+
+    @Column(name = "date")
+    private LocalDate date;
+    @Column(name = "status")
+    private UUID status;
 }
