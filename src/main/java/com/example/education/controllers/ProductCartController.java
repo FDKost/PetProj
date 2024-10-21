@@ -1,21 +1,15 @@
 package com.example.education.controllers;
 
-import com.example.education.dto.cart.CartCreateEditDTO;
-import com.example.education.dto.cart.CartReadDTO;
 import com.example.education.dto.productcart.ProductCartCreateEditDTO;
 import com.example.education.dto.productcart.ProductCartReadDTO;
 import com.example.education.services.CartService;
 import com.example.education.services.ProductCartService;
-import com.example.education.services.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -44,9 +38,9 @@ public class ProductCartController {
     }
 
     @PostMapping("/api/deleteProductCart")
-    public ModelAndView deleteProductCart(UUID cartId,UUID productId){
+    public ModelAndView deleteProductCart(@RequestParam UUID productId){
         String cartUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/cart").toUriString();
-        productCartService.deleteProductFromProductCart(productId, cartId);
+        productCartService.deleteProductFromProductCart(productId);
         return new ModelAndView("redirect:"+cartUrl);
     }
 }

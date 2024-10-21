@@ -7,8 +7,8 @@
 
 This project exists for my training in java and spring framework. Currently the application has the following frameworks:
 + ✅Spring
-    + JDBC
-    + ❌JPA
+    + ❌JDBC
+    + JPA
     + Security
     + Web
     + thymeleaf

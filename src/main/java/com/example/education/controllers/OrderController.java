@@ -4,7 +4,6 @@ import com.example.education.dto.cart.CartCreateEditDTO;
 import com.example.education.dto.cart.CartReadDTO;
 import com.example.education.dto.product.ProductReadDTO;
 import com.example.education.dto.user.UserReadDTO;
-import com.example.education.entity.Cart;
 import com.example.education.entity.User;
 import com.example.education.services.CartService;
 import com.example.education.services.ProductService;
@@ -32,7 +31,6 @@ public class OrderController {
 
     @GetMapping
     public String showOrderPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-        /*List<Product> products = productController.readAllProducts();*/
         List<ProductReadDTO> products = productService.getAllProducts();
         Optional<UserReadDTO> user = userService.findByUsername(userDetails.getUsername());
         Optional<CartReadDTO> existingCart=cartService.findCartByUserId(user.get().getId());

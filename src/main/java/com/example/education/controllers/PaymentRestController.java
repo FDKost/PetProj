@@ -16,7 +16,7 @@ public class PaymentRestController {
     private final PaymentService paymentService;
 
     @PostMapping
-    public PaymentReadDTO createPayment(@RequestBody PaymentCreateEditDTO paymentCreateEditDTO) {
+    public PaymentReadDTO createPayment(PaymentCreateEditDTO paymentCreateEditDTO) {
         return paymentService.create(paymentCreateEditDTO);
     }
 
@@ -26,7 +26,7 @@ public class PaymentRestController {
     }
 
     @PutMapping
-    public void editPayment(@RequestBody PaymentCreateEditDTO paymentCreateEditDTO,
+    public void editPayment(PaymentCreateEditDTO paymentCreateEditDTO,
                             @RequestParam UUID paymentId){
         paymentService.update(paymentId, paymentCreateEditDTO);
     }

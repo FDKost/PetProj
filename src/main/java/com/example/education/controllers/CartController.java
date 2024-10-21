@@ -1,10 +1,8 @@
 package com.example.education.controllers;
 
 import com.example.education.dto.cart.CartReadDTO;
-import com.example.education.dto.payment.PaymentCreateEditDTO;
 import com.example.education.dto.productcart.ProductCartReadDTO;
 import com.example.education.dto.user.UserReadDTO;
-import com.example.education.entity.User;
 import com.example.education.services.*;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,7 +24,6 @@ public class CartController {
     private final UserService userService;
     private final ProductCartService productCartService;
     private final CartService cartService;
-    private final PaymentService paymentService;
     private final AddressService addressService;
 
     @GetMapping

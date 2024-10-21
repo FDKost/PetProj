@@ -36,8 +36,8 @@
                     <img th:src="${cartItem.getProductid().getImageURL()}" th:alt="${cartItem.getProductid().getName()}" width="300" height="300"/>
                     <p th:text="'Quantity: ' + ${cartItem.getQuantity()}"></p>
                     <form th:action="@{/api/deleteProductCart}" method="post">
-                        <input type="hidden" name="cartid" th:value="${cartItem.getCartid().getId()}">
-                        <input type="hidden" name="productid" th:value="${cartItem.getProductid().getId()}">
+                        <input type="hidden" name="cartId" th:value="${cartItem.getCartid().getId()}">
+                        <input type="hidden" name="productId" th:value="${cartItem.getProductid().getId()}">
                         <input type="submit" class="cartButton" value="Remove">
                     </form>
                 </div>
@@ -55,7 +55,6 @@
             <input type="hidden" name="productIds" th:value="${cartItem.getProductid()}"/>
             <input type="hidden" name="quantities" th:value="${cartItem.getQuantity()}"/>
             <input type="hidden" name="userid" th:value="${userid}">
-            <input type="hidden" name="paymentid" th:value="${paymentid}">
             <input type="hidden" name="addressid" th:value="${addressid}">
             <input type="hidden" name="date" th:value="${date}">
             <input type="hidden" name="status" th:value="${status}">

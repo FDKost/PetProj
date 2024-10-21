@@ -16,11 +16,11 @@ public interface ProductCartRepository extends JpaRepository<ProductCart, UUID> 
 
     Optional<ProductCart> findProductCartByCartId(UUID cartId);
 
+    Optional<ProductCart> findProductCartByProductId(UUID productId);
+
     List<ProductCart> findAllProductCartByCartId(UUID cartId);
 
     void deleteAllByCartId(UUID cartId);
-
-    /*void deleteProductFromCart(UUID productId);*/
 
     void deleteByProductId(UUID productId);
 

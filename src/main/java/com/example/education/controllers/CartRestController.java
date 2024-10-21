@@ -18,17 +18,6 @@ import java.util.UUID;
 public class CartRestController {
     private final CartService cartService;
 
-    /*@PostMapping("/api/cart_create")
-    public ModelAndView createCart(Cart cart, @AuthenticationPrincipal UserDetails userDetails){
-        String username = userDetails.getUsername();
-        User user = userDao.getUserByLogin(username);
-        cart.setId_user(user.getId());
-        Date currentDate = new Date();
-        cart.setCreated_in(currentDate);
-        dao.createCart(cart);
-        String orderUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/order").toUriString();
-        return new ModelAndView("redirect:" + orderUrl);
-    }*/
     @PostMapping("/api/cart_create")
     public ModelAndView createCart(CartCreateEditDTO cartCreateEditDTO) {
         cartService.create(cartCreateEditDTO);

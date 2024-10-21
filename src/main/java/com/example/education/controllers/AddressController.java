@@ -3,7 +3,6 @@ package com.example.education.controllers;
 import com.example.education.dto.address.AddressCreateEditDTO;
 import com.example.education.dto.address.AddressReadDTO;
 import com.example.education.dto.user.UserReadDTO;
-import com.example.education.entity.User;
 import com.example.education.services.AddressService;
 import com.example.education.services.UserService;
 import lombok.AllArgsConstructor;
@@ -18,34 +17,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
 @RestController
 @AllArgsConstructor
 public class AddressController {
     private final AddressService addressService;
     private final UserService userService;
 
-    /*@PostMapping("/profile/create")
-    public ModelAndView createAddress(Address address, @AuthenticationPrincipal UserDetails userDetails, Model model){
-        String orderUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/order").toUriString();
-        String username = userDetails.getUsername();
-
-        // Найти пользователя по его имени
-        User user = userDao.getUserByLogin(username);
-
-        // Проверить, существует ли уже адрес для данного пользователя
-        Address existingAddress = addressDao.getAddressByUserId(user.getId());
-        if(existingAddress != null) {
-            // Если адрес уже существует, обновить его данные
-            address.setId(existingAddress.getId());
-            addressDao.editAddress(address);
-        } else {
-            // Если адрес не существует, создать новый адрес
-            addressDao.createAddress(address);
-        }
-
-        return new ModelAndView("redirect:" + orderUrl);
-    }*/
     @GetMapping("/profile/findAll")
     public List<AddressReadDTO> findAll(Model model){
         List<AddressReadDTO> allAddresses = addressService.findAll();

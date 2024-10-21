@@ -2,7 +2,6 @@ package com.example.education.services;
 
 import com.example.education.dto.productcart.ProductCartCreateEditDTO;
 import com.example.education.dto.productcart.ProductCartReadDTO;
-import com.example.education.entity.Product;
 import com.example.education.mapper.productcart.ProductCartCreateEditMapper;
 import com.example.education.mapper.productcart.ProductCartReadMapper;
 import com.example.education.repositories.ProductCartRepository;
@@ -69,19 +68,17 @@ public class ProductCartService {
     }
 
     @Transactional
-    public boolean deleteAllFromProductCartByCartId(UUID cartId){
-        return productCartRepository.findProductCartByCartId(cartId)
-                .map(entity -> {
+    public void deleteAllFromProductCartByCartId(UUID cartId){
+        productCartRepository.findAllProductCartByCartId(cartId)
+                .forEach(entity -> {
                     productCartRepository.deleteAllByCartId(entity.getCart().getId());
                     productCartRepository.flush();
-                    return true;
-                })
-                .orElse(false);
+                });
     }
 
     @Transactional
-    public boolean deleteProductFromProductCart(UUID productId, UUID cartId) {
-        return productCartRepository.findProductCartByCartId(cartId)
+    public boolean deleteProductFromProductCart(UUID productId) {
+        return productCartRepository.findProductCartByProductId(productId)
                 .map(entity -> {
                     productCartRepository.deleteByProductId(productId);
                     productCartRepository.flush();

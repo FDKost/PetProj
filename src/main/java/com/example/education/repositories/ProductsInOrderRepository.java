@@ -15,10 +15,6 @@ public interface ProductsInOrderRepository extends JpaRepository<ProductsInOrder
 
     List<ProductsInOrder> findAllBy();
 
-
-    /*Optional<ProductsInOrder> addProductsFromCart(UUID orderId,List<Product> cartItems);*/
-
-
     void deleteProductsInOrderById(UUID id);
 
 }

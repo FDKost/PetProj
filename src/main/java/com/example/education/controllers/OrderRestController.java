@@ -3,7 +3,9 @@ package com.example.education.controllers;
 import com.example.education.dto.order.OrderCreateEditDTO;
 import com.example.education.dto.order.OrderReadDTO;
 import com.example.education.dto.payment.PaymentCreateEditDTO;
+import com.example.education.dto.payment.PaymentReadDTO;
 import com.example.education.dto.productcart.ProductCartCreateEditDTO;
+import com.example.education.entity.Payment;
 import com.example.education.services.*;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +27,9 @@ public class OrderRestController {
     public ModelAndView createOrder(OrderCreateEditDTO orderCreateEditDTO,
                                     ProductCartCreateEditDTO productCartCreateEditDTO,
                                     PaymentCreateEditDTO paymentCreateEditDTO) {
-        paymentService.create(paymentCreateEditDTO);
+        PaymentReadDTO payment=paymentService.create(paymentCreateEditDTO);
+        Payment actualPayment = new Payment(payment.getId(),payment.getTotal(),payment.getCheckurl(),payment.getUserid());
+        orderCreateEditDTO.setPaymentid(actualPayment);
         orderService.create(orderCreateEditDTO);
         productCartService.deleteAllFromProductCartByCartId(productCartCreateEditDTO.getCartid().getId());
         return new ModelAndView("redirect:/home");
