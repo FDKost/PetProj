@@ -1,6 +1,5 @@
 package com.example.education.restControllers;
 
-import com.example.education.dao.UserDao;
 import com.example.education.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

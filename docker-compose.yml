@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_DB: cyberpizzaTest
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - cyberpizza-db:/var/lib/postgres/data/
+    ports:
+      - "127.0.0.1:5432:5432"
+  cyberpizza:
+    build: .
+    image: cyberpizza:0.0.1
+    container_name: cyberpizza
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/cyberpizzaTest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+volumes:
+  cyberpizza-db:
