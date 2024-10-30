@@ -247,3 +247,55 @@ html, body {
     background-color: red; /* Изменяем фон кнопки на красный при наведении */
 }
 
+.userBank-form {
+    background-color: black; /* Чёрный фон для формы */
+    border: 2px solid red; /* Красная обводка формы */
+    border-radius: 10px; /* Закруглённые углы */
+    padding: 20px; /* Внутренние отступы */
+    max-width: 600px; /* Максимальная ширина формы */
+    margin: 0 auto; /* Центрируем форму */
+    color: red; /* Красный цвет текста */
+    font-family: 'Pixel', sans-serif; /* Пиксельный шрифт */
+}
+
+.userBank-form h2 {
+    text-align: center; /* Центрируем заголовок */
+    color: red; /* Красный цвет заголовка */
+    font-size: 24px; /* Размер шрифта заголовка */
+    margin-bottom: 20px; /* Отступ снизу заголовка */
+}
+
+.userBank-form form {
+    display: flex;
+    flex-direction: column; /* Размещаем элементы формы в колонку */
+    align-items: center; /* Центрируем элементы формы */
+}
+
+.userBank-form select {
+    width: 100%; /* Ширина на всю доступную ширину */
+    padding: 10px; /* Внутренние отступы */
+    background-color: black; /* Чёрный фон */
+    border: 2px solid red; /* Красная обводка */
+    border-radius: 5px; /* Закруглённые углы */
+    color: red; /* Красный цвет текста */
+    font-family: 'Pixel', sans-serif; /* Пиксельный шрифт */
+    margin-bottom: 20px; /* Отступ снизу */
+    font-size: 18px; /* Размер шрифта */
+}
+
+.userBank-form input[type="submit"] {
+    background-color: red; /* Красный фон кнопки */
+    color: black; /* Чёрный цвет текста */
+    border: none; /* Без обводки */
+    padding: 10px 20px; /* Внутренние отступы */
+    border-radius: 5px; /* Закруглённые углы */
+    font-size: 16px; /* Размер шрифта */
+    cursor: pointer; /* Изменение курсора на pointer */
+    transition: background-color 0.3s ease; /* Плавное изменение фона при наведении */
+}
+
+.userBank-form input[type="submit"]:hover {
+    background-color: darkred; /* Темно-красный фон при наведении */
+}
+
+

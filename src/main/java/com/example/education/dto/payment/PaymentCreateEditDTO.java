@@ -1,6 +1,6 @@
 package com.example.education.dto.payment;
 
-import com.example.education.entity.User;
+import com.example.education.entity.UserEntity;
 import lombok.Value;
 import lombok.experimental.FieldNameConstants;
 
@@ -9,5 +9,5 @@ import lombok.experimental.FieldNameConstants;
 public class PaymentCreateEditDTO {
     Long total;
     String checkurl;
-    User userid;
+    UserEntity userid;
 }

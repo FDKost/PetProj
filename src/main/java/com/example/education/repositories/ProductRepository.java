@@ -1,6 +1,6 @@
 package com.example.education.repositories;
 
-import com.example.education.entity.Product;
+import com.example.education.entity.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,11 +9,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, UUID> {
+public interface ProductRepository extends JpaRepository<ProductEntity, UUID> {
 
-    Optional<Product> findProductById(UUID id);
+    Optional<ProductEntity> findProductById(UUID id);
 
-    Optional<Product> findProductByName(String name);
+    Optional<ProductEntity> findProductByName(String name);
 
-    List<Product> findAllBy();
+    List<ProductEntity> findAllBy();
 }

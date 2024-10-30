@@ -2,7 +2,7 @@ package com.example.education.controllers;
 
 import com.example.education.dto.product.ProductCreateEditDTO;
 import com.example.education.dto.product.ProductReadDTO;
-import com.example.education.services.ProductService;
+import com.example.education.services.product.ProductServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @RequestMapping("/order")
 public class ProductController {
-    private final ProductService productService;
+    private final ProductServiceImpl productService;
     @PostMapping("/createProduct")
     public ModelAndView createProduct(@RequestBody ProductCreateEditDTO productCreateEditDTO) {
         productService.create(productCreateEditDTO);

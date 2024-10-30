@@ -47,13 +47,9 @@ CREATE DATABASE cyberpizzaTest;
 
 ---
 
-### ❌I create a new user and I cant order anything:
+### ✅I create a new user and I cant order anything:
 
-1. go to url localhost:8080/**profile** and enter location address;
-2. go to url localhost:8080/**order** and add something to your cart.
-
-This happens because when we creating a **new user**, he dont have a personal address, therefore application cant create order.
-Will fix in future.
+    SOLVED
 
 ### ✅ I cant update personal address at my profile:
 

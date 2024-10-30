@@ -1,4 +1,4 @@
-package com.example.education.services;
+package com.example.education.services.productcart;
 
 import com.example.education.dto.productcart.ProductCartCreateEditDTO;
 import com.example.education.dto.productcart.ProductCartReadDTO;
@@ -16,29 +16,31 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class ProductCartService {
+public class ProductCartServiceImpl implements ProductCartService {
     private final ProductCartRepository productCartRepository;
     private final ProductCartReadMapper productCartReadMapper;
     private final ProductCartCreateEditMapper productCartCreateEditMapper;
 
+    @Override
     public Optional<ProductCartReadDTO> findById(UUID id) {
         return productCartRepository.findById(id)
                 .map(productCartReadMapper::map);
     }
 
+    @Override
     public Optional<ProductCartReadDTO> findProductCartByCartId(UUID cartId) {
         return productCartRepository.findProductCartByCartId(cartId)
                 .map(productCartReadMapper::map);
     }
 
+    @Override
     public List<ProductCartReadDTO> findAllProductCartByCartId(UUID cartId) {
         return productCartRepository.findAllProductCartByCartId(cartId).stream()
                 .map(productCartReadMapper::map)
                 .toList();
     }
 
-
-
+    @Override
     @Transactional
     public ProductCartReadDTO create(ProductCartCreateEditDTO productCartDTO) {
         return Optional.of(productCartDTO)
@@ -48,6 +50,7 @@ public class ProductCartService {
                 .orElseThrow();
     }
 
+    @Override
     @Transactional
     public Optional<ProductCartReadDTO> update(UUID id, ProductCartCreateEditDTO productCartDTO) {
         return productCartRepository.findById(id)
@@ -56,6 +59,7 @@ public class ProductCartService {
                 .map(productCartReadMapper::map);
     }
 
+    @Override
     @Transactional
     public boolean delete(UUID id) {
         return productCartRepository.findById(id)
@@ -67,6 +71,7 @@ public class ProductCartService {
                 .orElse(false);
     }
 
+    @Override
     @Transactional
     public void deleteAllFromProductCartByCartId(UUID cartId){
         productCartRepository.findAllProductCartByCartId(cartId)
@@ -76,6 +81,7 @@ public class ProductCartService {
                 });
     }
 
+    @Override
     @Transactional
     public boolean deleteProductFromProductCart(UUID productId) {
         return productCartRepository.findProductCartByProductId(productId)

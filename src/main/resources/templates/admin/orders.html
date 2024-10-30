@@ -35,9 +35,9 @@
           <input type="hidden" name="addressid" th:value="${order.getAddressid().getId()}">
           <input type="hidden" name="date" th:value="${order.getDate()}">
           <label>
-            <select name="status" th:value="${order.getStatus()}">
-              <option value="f294afcb-af1d-4e82-b438-6666d963b24c" th:selected="${order.status == 'f294afcb-af1d-4e82-b438-6666d963b24c'}">Pending</option>
-              <option value="035fae61-87ec-4e39-9ce5-d14d46bc437f" th:selected="${order.status == '035fae61-87ec-4e39-9ce5-d14d46bc437f'}">Completed</option>
+            <select  name="status" th:value="${order.getStatus()}">
+              <option th:value="${statusPending}" th:selected="${order.status == statusPending}">Pending</option>
+              <option th:value="${statusComplete}" th:selected="${order.status == statusComplete}">Completed</option>
             </select>
           </label>
           <button type="submit">Update Status</button>

@@ -1,19 +1,20 @@
 package com.example.education.dto.order;
 
-import com.example.education.entity.Address;
-import com.example.education.entity.Payment;
-import com.example.education.entity.User;
+import com.example.education.entity.AddressEntity;
+import com.example.education.entity.PaymentEntity;
+import com.example.education.entity.StatusEntity;
+import com.example.education.entity.UserEntity;
 import lombok.Data;
 import lombok.experimental.FieldNameConstants;
 
 import java.time.LocalDate;
-import java.util.UUID;
+
 @Data
 @FieldNameConstants
 public class OrderCreateEditDTO {
-    User userid;
-    Payment paymentid;
-    Address addressid;
+    UserEntity userid;
+    PaymentEntity paymentid;
+    AddressEntity addressid;
     LocalDate date;
-    UUID status;
+    StatusEntity status;
 }

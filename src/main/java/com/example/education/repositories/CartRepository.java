@@ -1,6 +1,6 @@
 package com.example.education.repositories;
 
-import com.example.education.entity.Cart;
+import com.example.education.entity.CartEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,9 +8,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface CartRepository extends JpaRepository<Cart, UUID> {
+public interface CartRepository extends JpaRepository<CartEntity, UUID> {
 
-    Optional<Cart> findCartById(UUID id);
+    Optional<CartEntity> findCartById(UUID id);
 
-    Optional<Cart> findCartByUserId(UUID userId);
+    Optional<CartEntity> findCartByUserId(UUID userId);
 }

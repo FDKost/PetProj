@@ -5,8 +5,10 @@ import com.example.education.dto.order.OrderReadDTO;
 import com.example.education.dto.payment.PaymentCreateEditDTO;
 import com.example.education.dto.payment.PaymentReadDTO;
 import com.example.education.dto.productcart.ProductCartCreateEditDTO;
-import com.example.education.entity.Payment;
-import com.example.education.services.*;
+import com.example.education.entity.PaymentEntity;
+import com.example.education.services.order.OrderServiceImpl;
+import com.example.education.services.payment.PaymentServiceImpl;
+import com.example.education.services.productcart.ProductCartServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,16 +21,16 @@ import java.util.UUID;
 @AllArgsConstructor
 @RequestMapping("/orders")
 public class OrderRestController {
-    private final OrderService orderService;
-    private final ProductCartService productCartService;
-    private final PaymentService paymentService;
+    private final OrderServiceImpl orderService;
+    private final ProductCartServiceImpl productCartService;
+    private final PaymentServiceImpl paymentService;
 
     @PostMapping("/createOrder")
     public ModelAndView createOrder(OrderCreateEditDTO orderCreateEditDTO,
                                     ProductCartCreateEditDTO productCartCreateEditDTO,
                                     PaymentCreateEditDTO paymentCreateEditDTO) {
         PaymentReadDTO payment=paymentService.create(paymentCreateEditDTO);
-        Payment actualPayment = new Payment(payment.getId(),payment.getTotal(),payment.getCheckurl(),payment.getUserid());
+        PaymentEntity actualPayment = new PaymentEntity(payment.getId(),payment.getTotal(),payment.getCheckurl(),payment.getUserid());
         orderCreateEditDTO.setPaymentid(actualPayment);
         orderService.create(orderCreateEditDTO);
         productCartService.deleteAllFromProductCartByCartId(productCartCreateEditDTO.getCartid().getId());
@@ -41,7 +43,8 @@ public class OrderRestController {
     }
 
     @PostMapping("/editOrder")
-    public ModelAndView editOrder(@RequestParam UUID orderId,OrderCreateEditDTO orderCreateEditDTO) {
+    public ModelAndView editOrder(@RequestParam UUID orderId,
+                                  OrderCreateEditDTO orderCreateEditDTO) {
         Optional<OrderReadDTO> order = orderService.findById(orderId);
         if (order.isPresent()) {
             orderService.update(orderId,orderCreateEditDTO);

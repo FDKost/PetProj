@@ -1,6 +1,6 @@
 package com.example.education.repositories;
 
-import com.example.education.entity.Address;
+import com.example.education.entity.AddressEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,9 +8,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface AddressRepository extends JpaRepository<Address, UUID> {
+public interface AddressRepository extends JpaRepository<AddressEntity, UUID> {
 
-    Optional<Address> findAddressById(UUID id);
+    Optional<AddressEntity> findAddressById(UUID id);
 
-    Optional<Address> findAddressByUserId(UUID id);
+    Optional<AddressEntity> findAddressByUserId(UUID id);
 }

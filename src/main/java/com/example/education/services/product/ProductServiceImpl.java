@@ -1,4 +1,4 @@
-package com.example.education.services;
+package com.example.education.services.product;
 
 import com.example.education.dto.product.ProductCreateEditDTO;
 import com.example.education.dto.product.ProductReadDTO;
@@ -16,27 +16,31 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class ProductService {
+public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductReadMapper productReadMapper;
     private final ProductCreateEditMapper productCreateEditMapper;
 
+    @Override
     public Optional<ProductReadDTO> findById(UUID id) {
         return productRepository.findById(id)
                 .map(productReadMapper::map);
     }
 
+    @Override
     public Optional<ProductReadDTO> findProductByName(String name) {
         return productRepository.findProductByName(name)
                 .map(productReadMapper::map);
     }
 
+    @Override
     public List<ProductReadDTO> getAllProducts() {
         return productRepository.findAllBy().stream()
                 .map(productReadMapper::map)
                 .toList();
     }
 
+    @Override
     @Transactional
     public ProductReadDTO create(ProductCreateEditDTO productDTO) {
         return Optional.of(productDTO)
@@ -46,6 +50,7 @@ public class ProductService {
                 .orElseThrow();
     }
 
+    @Override
     @Transactional
     public Optional<ProductReadDTO> update(UUID id, ProductCreateEditDTO productDTO) {
         return productRepository.findById(id)
@@ -54,6 +59,7 @@ public class ProductService {
                 .map(productReadMapper::map);
     }
 
+    @Override
     @Transactional
     public boolean delete(UUID id) {
         return productRepository.findById(id)

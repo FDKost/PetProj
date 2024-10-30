@@ -1,7 +1,7 @@
 package com.example.education.dto.productcart;
 
-import com.example.education.entity.Cart;
-import com.example.education.entity.Product;
+import com.example.education.entity.CartEntity;
+import com.example.education.entity.ProductEntity;
 import lombok.Value;
 
 import java.util.UUID;
@@ -9,7 +9,7 @@ import java.util.UUID;
 @Value
 public class ProductCartReadDTO {
     UUID id;
-    Product productid;
-    Cart cartid;
+    ProductEntity productid;
+    CartEntity cartid;
     Long quantity;
 }

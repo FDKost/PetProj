@@ -2,7 +2,7 @@ package com.example.education.controllers;
 
 import com.example.education.dto.payment.PaymentCreateEditDTO;
 import com.example.education.dto.payment.PaymentReadDTO;
-import com.example.education.services.PaymentService;
+import com.example.education.services.payment.PaymentServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @RequestMapping("/payment")
 public class PaymentRestController {
-    private final PaymentService paymentService;
+    private final PaymentServiceImpl paymentService;
 
     @PostMapping
     public PaymentReadDTO createPayment(PaymentCreateEditDTO paymentCreateEditDTO) {

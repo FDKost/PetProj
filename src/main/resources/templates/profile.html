@@ -49,19 +49,19 @@
 
     <input type="submit" value="Add or Update Address">
   </form>
-  <!--<h2>Update address</h2>
-  <form th:action="@{/profile/edit}" th:method="post">
-    <input type="hidden" name="user_id" th:value="${user_id}">
-    <label for="street">Street:</label>
-    <input type="text" name="street" required><br>
-
-    <label for="house">House:</label>
-    <input type="text" name="house" required><br>
-
-    <label for="apartment">Apartment:</label>
-    <input type="text" name="apartment" required><br>
-    <input type="submit" value="Update Address">
-  </form>-->
+</div>
+<div class="userBank-form">
+  <h2>Add or Update your bank with eddies</h2>
+  <form th:action="@{/api/userBank_edit}" th:method="post">
+    <input type="hidden" name="userId" th:value="${userId}">
+    <label>
+      <select name="bankId">
+        <option th:value="${Arasaka}" th:selected="${bankId == Arasaka}">Arasaka</option>
+        <option th:value="${Militech}" th:selected="${bankId == Militech}">Militech</option>
+      </select>
+    </label>
+    <input type="submit" value="Add/update">
+  </form>
 </div>
 </body>
 </html>

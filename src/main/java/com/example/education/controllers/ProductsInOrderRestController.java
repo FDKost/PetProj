@@ -2,7 +2,7 @@ package com.example.education.controllers;
 
 import com.example.education.dto.productsinorder.ProductsInOrderCreateEditDTO;
 import com.example.education.dto.productsinorder.ProductsInOrderReadDTO;
-import com.example.education.services.ProductsInOrderService;
+import com.example.education.services.productsinorder.ProductsInOrderServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @RequestMapping("/productsInOrder")
 public class ProductsInOrderRestController {
-    private final ProductsInOrderService productsInOrderService;
+    private final ProductsInOrderServiceImpl productsInOrderService;
 
     @PostMapping("/create")
     public ProductsInOrderReadDTO createProductsInOrder(@RequestBody ProductsInOrderCreateEditDTO productsInOrderCreateEditDTO) {

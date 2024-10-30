@@ -1,4 +1,4 @@
-package com.example.education.services;
+package com.example.education.services.order;
 
 import com.example.education.dto.order.OrderCreateEditDTO;
 import com.example.education.dto.order.OrderReadDTO;
@@ -16,11 +16,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class OrderService {
+public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderCreateEditMapper orderCreateEditMapper;
     private final OrderReadMapper orderReadMapper;
 
+    @Override
     public Optional<OrderReadDTO> findById(UUID id){
         return orderRepository.findById(id).map(orderReadMapper::map);
     }
@@ -31,6 +32,7 @@ public class OrderService {
                 .toList();
     }
 
+    @Override
     @Transactional
     public OrderReadDTO create(OrderCreateEditDTO orderDTO){
         return Optional.of(orderDTO)
@@ -40,6 +42,7 @@ public class OrderService {
                 .orElseThrow();
     }
 
+    @Override
     @Transactional
     public Optional<OrderReadDTO> update(UUID id, OrderCreateEditDTO orderDTO){
         return orderRepository.findById(id)
@@ -48,6 +51,7 @@ public class OrderService {
                 .map(orderReadMapper::map);
     }
 
+    @Override
     @Transactional
     public boolean delete(UUID id){
         return orderRepository.findById(id)

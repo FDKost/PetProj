@@ -15,7 +15,7 @@ import java.util.UUID;
 @Builder
 @Table(name = "orders")
 @Entity
-public class Order {
+public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
@@ -23,18 +23,20 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid")
-    private User user;
+    private UserEntity user;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paymentid")
-    private Payment payment;
+    private PaymentEntity payment;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "addressid")
-    private Address address;
+    private AddressEntity address;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status")
+    private StatusEntity status;
 
     @Column(name = "date")
     private LocalDate date;
-    @Column(name = "status")
-    private UUID status;
 }

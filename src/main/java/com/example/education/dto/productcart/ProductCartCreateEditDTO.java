@@ -1,14 +1,14 @@
 package com.example.education.dto.productcart;
 
-import com.example.education.entity.Cart;
-import com.example.education.entity.Product;
-import lombok.Value;
+import com.example.education.entity.CartEntity;
+import com.example.education.entity.ProductEntity;
+import lombok.Data;
 import lombok.experimental.FieldNameConstants;
 
-@Value
+@Data
 @FieldNameConstants
 public class ProductCartCreateEditDTO {
-    Product productid;
-    Cart cartid;
+    ProductEntity productid;
+    CartEntity cartid;
     Long quantity;
 }

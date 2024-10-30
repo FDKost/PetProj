@@ -1,4 +1,4 @@
-package com.example.education.services;
+package com.example.education.services.payment;
 
 import com.example.education.dto.payment.PaymentCreateEditDTO;
 import com.example.education.dto.payment.PaymentReadDTO;
@@ -15,16 +15,18 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class PaymentService {
+public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
     private final PaymentCreateEditMapper paymentCreateEditMapper;
     private final PaymentReadMapper paymentReadMapper;
 
+    @Override
     public Optional<PaymentReadDTO> findById(UUID id){
         return paymentRepository.findById(id)
                 .map(paymentReadMapper::map);
     }
 
+    @Override
     @Transactional
     public PaymentReadDTO create(PaymentCreateEditDTO paymentDTO){
         return Optional.of(paymentDTO)
@@ -34,6 +36,7 @@ public class PaymentService {
                 .orElseThrow();
     }
 
+    @Override
     @Transactional
     public Optional<PaymentReadDTO> update(UUID id, PaymentCreateEditDTO paymentDTO){
         return paymentRepository.findById(id)
@@ -42,6 +45,7 @@ public class PaymentService {
                 .map(paymentReadMapper::map);
     }
 
+    @Override
     @Transactional
     public boolean delete(UUID id){
         return paymentRepository.findById(id)

@@ -1,4 +1,4 @@
-package com.example.education.services;
+package com.example.education.services.address;
 
 import com.example.education.dto.address.AddressCreateEditDTO;
 import com.example.education.dto.address.AddressReadDTO;
@@ -16,27 +16,31 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class AddressService {
+public class AddressServiceImpl implements AddressService {
     private final AddressRepository addressRepository;
     private final AddressCreateEditMapper addressCreateEditMapper;
     private final AddressReadMapper addressReadMapper;
 
+    @Override
     public Optional<AddressReadDTO> findById(UUID id){
         return addressRepository.findById(id)
                 .map(addressReadMapper::map);
     }
 
+    @Override
     public List<AddressReadDTO> findAll(){
         return addressRepository.findAll().stream()
                 .map(addressReadMapper::map)
                 .toList();
     }
 
+    @Override
     public Optional<AddressReadDTO> findAddressByUserId(UUID userId){
         return addressRepository.findAddressByUserId(userId)
                 .map(addressReadMapper::map);
     }
 
+    @Override
     @Transactional
     public AddressReadDTO create(AddressCreateEditDTO addressDTO){
         return Optional.of(addressDTO)
@@ -46,6 +50,7 @@ public class AddressService {
                 .orElseThrow();
     }
 
+    @Override
     @Transactional
     public Optional<AddressReadDTO> update(UUID id, AddressCreateEditDTO addressDTO){
         return addressRepository.findById(id)
@@ -54,6 +59,7 @@ public class AddressService {
                 .map(addressReadMapper::map);
     }
 
+    @Override
     @Transactional
     public boolean delete(UUID id){
         return addressRepository.findById(id)

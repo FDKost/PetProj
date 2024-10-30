@@ -6,25 +6,24 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-@Table(name = "payment")
+@Table(name = "cart")
 @Entity
-public class Payment {
+public class CartEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
-    @Column(name = "total",nullable = false)
-    private Long total;
-    @Column(name = "checkurl",nullable = false)
-    private String checkURL;
+    @Column(name = "createdin",nullable = false)
+    private LocalDate createdIn;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userid")
-    private User user;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userid",nullable = false)
+    private UserEntity user;
 }

@@ -1,28 +1,28 @@
 package com.example.education.mapper.productsinorder;
 
 import com.example.education.dto.productsinorder.ProductsInOrderCreateEditDTO;
-import com.example.education.entity.ProductsInOrder;
+import com.example.education.entity.ProductsInOrderEntity;
 import com.example.education.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductsInOrderCreateEditMapper implements Mapper<ProductsInOrderCreateEditDTO, ProductsInOrder> {
+public class ProductsInOrderCreateEditMapper implements Mapper<ProductsInOrderCreateEditDTO, ProductsInOrderEntity> {
     @Override
-    public ProductsInOrder map(ProductsInOrderCreateEditDTO object) {
-        ProductsInOrder productsInOrder = new ProductsInOrder();
-        copy(object, productsInOrder);
+    public ProductsInOrderEntity map(ProductsInOrderCreateEditDTO object) {
+        ProductsInOrderEntity productsInOrder = new ProductsInOrderEntity();
+        fillProductsInOrderCreateEditDTO(object, productsInOrder);
 
         return productsInOrder;
     }
 
     @Override
-    public ProductsInOrder map(ProductsInOrderCreateEditDTO fromObject, ProductsInOrder toObject) {
-        copy(fromObject, toObject);
+    public ProductsInOrderEntity map(ProductsInOrderCreateEditDTO fromObject, ProductsInOrderEntity toObject) {
+        fillProductsInOrderCreateEditDTO(fromObject, toObject);
 
         return toObject;
     }
 
-    private void copy(ProductsInOrderCreateEditDTO object, ProductsInOrder productsInOrder) {
+    private void fillProductsInOrderCreateEditDTO(ProductsInOrderCreateEditDTO object, ProductsInOrderEntity productsInOrder) {
         productsInOrder.setOrder(object.getOrderid());
         productsInOrder.setProduct(object.getProductid());
         productsInOrder.setQuantity(object.getQuantity());

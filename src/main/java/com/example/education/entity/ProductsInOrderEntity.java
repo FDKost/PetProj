@@ -12,21 +12,21 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Builder
-@Table(name = "product_cart")
+@Table(name = "products_in_order")
 @Entity
-public class ProductCart {
+public class ProductsInOrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "quantity",nullable = false)
     private Long quantity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productid",nullable = false)
-    private Product product;
+    @JoinColumn(name = "orderid",nullable = false)
+    private OrderEntity order;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cartid",nullable = false)
-    private Cart cart;
+    @JoinColumn(name = "productid",nullable = false)
+    private ProductEntity product;
 }

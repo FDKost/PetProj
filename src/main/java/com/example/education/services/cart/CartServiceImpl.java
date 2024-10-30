@@ -1,4 +1,4 @@
-package com.example.education.services;
+package com.example.education.services.cart;
 
 import com.example.education.dto.cart.CartCreateEditDTO;
 import com.example.education.dto.cart.CartReadDTO;
@@ -15,21 +15,24 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class CartService {
+public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final CartCreateEditMapper cartCreateEditMapper;
     private final CartReadMapper cartReadMapper;
 
+    @Override
     public Optional<CartReadDTO> findById(UUID id) {
         return cartRepository.findById(id)
                 .map(cartReadMapper::map);
     }
 
+    @Override
     public Optional<CartReadDTO> findCartByUserId(UUID userId) {
         return cartRepository.findCartByUserId(userId)
                 .map(cartReadMapper::map);
     }
 
+    @Override
     @Transactional
     public CartReadDTO create(CartCreateEditDTO cartDTO) {
         return Optional.of(cartDTO)
@@ -39,6 +42,7 @@ public class CartService {
                 .orElseThrow();
     }
 
+    @Override
     @Transactional
     public Optional<CartReadDTO> update(UUID id,CartCreateEditDTO cartDTO) {
         return cartRepository.findById(id)
@@ -47,6 +51,7 @@ public class CartService {
                 .map(cartReadMapper::map);
     }
 
+    @Override
     @Transactional
     public boolean delete(UUID id) {
         return cartRepository.findById(id)

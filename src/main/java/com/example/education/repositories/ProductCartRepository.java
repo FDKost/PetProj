@@ -1,7 +1,6 @@
 package com.example.education.repositories;
 
-import com.example.education.entity.Product;
-import com.example.education.entity.ProductCart;
+import com.example.education.entity.ProductCartEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,15 +9,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface ProductCartRepository extends JpaRepository<ProductCart, UUID> {
+public interface ProductCartRepository extends JpaRepository<ProductCartEntity, UUID> {
 
-    Optional<ProductCart> findProductCartById(UUID id);
+    Optional<ProductCartEntity> findProductCartById(UUID id);
 
-    Optional<ProductCart> findProductCartByCartId(UUID cartId);
+    Optional<ProductCartEntity> findProductCartByCartId(UUID cartId);
 
-    Optional<ProductCart> findProductCartByProductId(UUID productId);
+    Optional<ProductCartEntity> findProductCartByProductId(UUID productId);
 
-    List<ProductCart> findAllProductCartByCartId(UUID cartId);
+    List<ProductCartEntity> findAllProductCartByCartId(UUID cartId);
 
     void deleteAllByCartId(UUID cartId);
 

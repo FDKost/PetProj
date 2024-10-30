@@ -1,12 +1,15 @@
 package com.example.education.controllers;
 
+import com.example.education.dto.address.AddressCreateEditDTO;
 import com.example.education.dto.user.UserCreateEditDTO;
 import com.example.education.dto.user.UserReadDTO;
-import com.example.education.services.UserService;
+import com.example.education.entity.UserEntity;
+import com.example.education.services.address.AddressServiceImpl;
+import com.example.education.services.user.UserServiceImpl;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -14,13 +17,25 @@ import java.util.UUID;
 @RestController
 @AllArgsConstructor
 public class UserController {
-    private final UserService userService;
+    private final UserServiceImpl userService;
+    private final AddressServiceImpl addressService;
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/registration")
-    public ModelAndView createUser(@RequestBody UserCreateEditDTO userCreateEditDTO) {
+    public ModelAndView createUser(UserCreateEditDTO userCreateEditDTO,
+                                   AddressCreateEditDTO addressCreateEditDTO) {
+        userCreateEditDTO.setPassword(passwordEncoder.encode(userCreateEditDTO.getPassword()));
         userService.create(userCreateEditDTO);
-        String loginUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/login").toUriString();
-        return new ModelAndView("redirect:" + loginUrl);
+        Optional<UserReadDTO> user = userService.findByUsername(userCreateEditDTO.getLogin());
+        user.ifPresent(userReadDTO ->
+                addressCreateEditDTO.setUserid(new UserEntity(
+                            userReadDTO.getId(),
+                            userCreateEditDTO.getLogin(),
+                            userCreateEditDTO.getPassword(),
+                            userCreateEditDTO.getRole()
+        )));
+        addressService.create(addressCreateEditDTO);
+        return new ModelAndView("redirect:/login");
     }
 
     @GetMapping("/api/readUser")

@@ -1,26 +1,26 @@
 package com.example.education.mapper.productcart;
 
 import com.example.education.dto.productcart.ProductCartCreateEditDTO;
-import com.example.education.entity.ProductCart;
+import com.example.education.entity.ProductCartEntity;
 import com.example.education.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductCartCreateEditMapper implements Mapper<ProductCartCreateEditDTO, ProductCart> {
+public class ProductCartCreateEditMapper implements Mapper<ProductCartCreateEditDTO, ProductCartEntity> {
     @Override
-    public ProductCart map(ProductCartCreateEditDTO object) {
-        ProductCart productCart = new ProductCart();
-        copy(object, productCart);
+    public ProductCartEntity map(ProductCartCreateEditDTO object) {
+        ProductCartEntity productCart = new ProductCartEntity();
+        fillProductCartCreateEditDTO(object, productCart);
         return productCart;
     }
 
     @Override
-    public ProductCart map(ProductCartCreateEditDTO fromObject, ProductCart toObject) {
-        copy(fromObject, toObject);
+    public ProductCartEntity map(ProductCartCreateEditDTO fromObject, ProductCartEntity toObject) {
+        fillProductCartCreateEditDTO(fromObject, toObject);
         return toObject;
     }
 
-    private void copy(ProductCartCreateEditDTO object, ProductCart productCart) {
+    private void fillProductCartCreateEditDTO(ProductCartCreateEditDTO object, ProductCartEntity productCart) {
         productCart.setProduct(object.getProductid());
         productCart.setCart(object.getCartid());
         productCart.setQuantity(object.getQuantity());

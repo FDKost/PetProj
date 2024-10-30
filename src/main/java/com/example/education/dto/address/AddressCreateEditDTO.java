@@ -1,14 +1,13 @@
 package com.example.education.dto.address;
 
-import com.example.education.entity.User;
-import lombok.Value;
+import com.example.education.entity.UserEntity;
+import lombok.Data;
 import lombok.experimental.FieldNameConstants;
 
-@Value
+@Data
 @FieldNameConstants
 public class AddressCreateEditDTO {
-    /*UUID id;*/
-    User userid;
+    UserEntity userid;
     String street;
     String house;
     String apartment;

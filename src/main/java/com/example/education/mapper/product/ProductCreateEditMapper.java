@@ -1,27 +1,27 @@
 package com.example.education.mapper.product;
 
 import com.example.education.dto.product.ProductCreateEditDTO;
-import com.example.education.entity.Product;
+import com.example.education.entity.ProductEntity;
 import com.example.education.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductCreateEditMapper implements Mapper<ProductCreateEditDTO, Product> {
+public class ProductCreateEditMapper implements Mapper<ProductCreateEditDTO, ProductEntity> {
     @Override
-    public Product map(ProductCreateEditDTO object) {
-        Product product = new Product();
-        copy(object, product);
+    public ProductEntity map(ProductCreateEditDTO object) {
+        ProductEntity product = new ProductEntity();
+        fillProductCreateEditDTO(object, product);
         return product;
     }
 
     @Override
-    public Product map(ProductCreateEditDTO fromObject, Product toObject) {
-        copy(fromObject, toObject);
+    public ProductEntity map(ProductCreateEditDTO fromObject, ProductEntity toObject) {
+        fillProductCreateEditDTO(fromObject, toObject);
 
         return toObject;
     }
 
-    private void copy(ProductCreateEditDTO object, Product product) {
+    private void fillProductCreateEditDTO(ProductCreateEditDTO object, ProductEntity product) {
         product.setName(object.getName());
         product.setPrice(product.getPrice());
         product.setDetails(object.getDetails());

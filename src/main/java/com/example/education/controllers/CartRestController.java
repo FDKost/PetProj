@@ -2,13 +2,12 @@ package com.example.education.controllers;
 
 import com.example.education.dto.cart.CartCreateEditDTO;
 import com.example.education.dto.cart.CartReadDTO;
-import com.example.education.services.CartService;
+import com.example.education.services.cart.CartServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -16,14 +15,12 @@ import java.util.UUID;
 @RestController
 @AllArgsConstructor
 public class CartRestController {
-    private final CartService cartService;
+    private final CartServiceImpl cartService;
 
     @PostMapping("/api/cart_create")
     public ModelAndView createCart(CartCreateEditDTO cartCreateEditDTO) {
         cartService.create(cartCreateEditDTO);
-
-        String orderUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/order").toUriString();
-        return new ModelAndView("redirect:" + orderUrl);
+        return new ModelAndView("redirect:/order");
     }
 
     @GetMapping("/api/cart_read")
@@ -32,7 +29,7 @@ public class CartRestController {
     }
 
     @PutMapping("/api/cart_edit")
-    public CartReadDTO editCart(@RequestBody CartCreateEditDTO cartCreateEditDTO,
+    public CartReadDTO editCart(CartCreateEditDTO cartCreateEditDTO,
                          @RequestParam UUID cartId){
         return cartService.update(cartId, cartCreateEditDTO)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

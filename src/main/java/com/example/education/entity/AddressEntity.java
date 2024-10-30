@@ -11,7 +11,7 @@ import java.util.UUID;
 @Table(name = "address")
 @Builder
 @Entity
-public class Address {
+public class AddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
@@ -25,6 +25,6 @@ public class Address {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid")
-    private User user;
+    private UserEntity user;
 
 }

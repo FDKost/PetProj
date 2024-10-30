@@ -1,4 +1,4 @@
-package com.example.education.services;
+package com.example.education.services.productsinorder;
 
 import com.example.education.dto.productsinorder.ProductsInOrderCreateEditDTO;
 import com.example.education.dto.productsinorder.ProductsInOrderReadDTO;
@@ -16,23 +16,25 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class ProductsInOrderService {
+public class ProductsInOrderServiceImpl implements ProductsInOrderService{
     private final ProductsInOrderRepository productsInOrderRepository;
     private final ProductsInOrderCreateEditMapper productsInOrderCreateEditMapper;
     private final ProductsInOrderReadMapper productsInOrderReadMapper;
 
+    @Override
     public Optional<ProductsInOrderReadDTO> findById(UUID id){
         return productsInOrderRepository.findById(id)
                 .map(productsInOrderReadMapper::map);
     }
 
+    @Override
     public List<ProductsInOrderReadDTO> getAllProductsInOrder(){
         return productsInOrderRepository.findAllBy().stream()
                 .map(productsInOrderReadMapper::map)
                 .toList();
     }
 
-
+    @Override
     @Transactional
     public ProductsInOrderReadDTO create(ProductsInOrderCreateEditDTO dto){
         return Optional.of(dto)
@@ -42,6 +44,7 @@ public class ProductsInOrderService {
                 .orElseThrow();
     }
 
+    @Override
     @Transactional
     public Optional<ProductsInOrderReadDTO> update(UUID id, ProductsInOrderCreateEditDTO dto){
         return productsInOrderRepository.findById(id)
@@ -50,6 +53,7 @@ public class ProductsInOrderService {
                 .map(productsInOrderReadMapper::map);
     }
 
+    @Override
     @Transactional
     public boolean delete(UUID id){
         return productsInOrderRepository.findById(id)

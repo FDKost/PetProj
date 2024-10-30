@@ -12,21 +12,19 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Builder
-@Table(name = "products_in_order")
+@Table(name = "payment")
 @Entity
-public class ProductsInOrder {
+public class PaymentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
-    @Column(name = "quantity",nullable = false)
-    private Long quantity;
+    @Column(name = "total",nullable = false)
+    private Long total;
+    @Column(name = "checkurl",nullable = false)
+    private String checkURL;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "orderid",nullable = false)
-    private Order order;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productid",nullable = false)
-    private Product product;
+    @JoinColumn(name = "userid")
+    private UserEntity user;
 }
