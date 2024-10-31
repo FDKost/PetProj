@@ -1,11 +1,15 @@
 package com.example.education.services.user;
 
+import com.example.education.dto.address.AddressCreateEditDTO;
 import com.example.education.dto.user.UserCreateEditDTO;
 import com.example.education.dto.user.UserReadDTO;
+import com.example.education.entity.UserEntity;
 import com.example.education.mapper.user.UserCreateEditMapper;
 import com.example.education.mapper.user.UserReadMapper;
 import com.example.education.repositories.UserRepository;
+import com.example.education.services.address.AddressServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +23,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserReadMapper userReadMapper;
     private final UserCreateEditMapper userCreateEditMapper;
+    private final AddressServiceImpl addressService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Optional<UserReadDTO> findById(UUID id){
@@ -61,5 +67,21 @@ public class UserServiceImpl implements UserService {
                     return true;
                 })
                 .orElse(false);
+    }
+
+    @Transactional
+    public void fillCreateUser(UserCreateEditDTO userCreateEditDTO,
+                               AddressCreateEditDTO addressCreateEditDTO){
+        userCreateEditDTO.setPassword(passwordEncoder.encode(userCreateEditDTO.getPassword()));
+        create(userCreateEditDTO);
+        Optional<UserReadDTO> user = findByUsername(userCreateEditDTO.getLogin());
+        user.ifPresent(userReadDTO ->
+                addressCreateEditDTO.setUserid(new UserEntity(
+                        userReadDTO.getId(),
+                        userCreateEditDTO.getLogin(),
+                        userCreateEditDTO.getPassword(),
+                        userCreateEditDTO.getRole()
+                )));
+        addressService.create(addressCreateEditDTO);
     }
 }

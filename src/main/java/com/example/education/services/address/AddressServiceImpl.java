@@ -70,4 +70,15 @@ public class AddressServiceImpl implements AddressService {
                 })
                 .orElse(false);
     }
+
+    @Transactional
+    public void fillCreateAddress(AddressCreateEditDTO addressCreateEditDTO) {
+        Optional<AddressReadDTO> existingAddress = findAddressByUserId(addressCreateEditDTO.getUserid().getId());
+
+        if (existingAddress.isPresent()) {
+            update(existingAddress.get().getId(), addressCreateEditDTO);
+        }else{
+            create(addressCreateEditDTO);
+        }
+    }
 }

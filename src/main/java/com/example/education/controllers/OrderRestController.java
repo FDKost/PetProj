@@ -29,11 +29,7 @@ public class OrderRestController {
     public ModelAndView createOrder(OrderCreateEditDTO orderCreateEditDTO,
                                     ProductCartCreateEditDTO productCartCreateEditDTO,
                                     PaymentCreateEditDTO paymentCreateEditDTO) {
-        PaymentReadDTO payment=paymentService.create(paymentCreateEditDTO);
-        PaymentEntity actualPayment = new PaymentEntity(payment.getId(),payment.getTotal(),payment.getCheckurl(),payment.getUserid());
-        orderCreateEditDTO.setPaymentid(actualPayment);
-        orderService.create(orderCreateEditDTO);
-        productCartService.deleteAllFromProductCartByCartId(productCartCreateEditDTO.getCartid().getId());
+        orderService.fillCreateOrder(orderCreateEditDTO, productCartCreateEditDTO, paymentCreateEditDTO);
         return new ModelAndView("redirect:/home");
     }
 
@@ -45,10 +41,7 @@ public class OrderRestController {
     @PostMapping("/editOrder")
     public ModelAndView editOrder(@RequestParam UUID orderId,
                                   OrderCreateEditDTO orderCreateEditDTO) {
-        Optional<OrderReadDTO> order = orderService.findById(orderId);
-        if (order.isPresent()) {
-            orderService.update(orderId,orderCreateEditDTO);
-        }
+        orderService.update(orderId, orderCreateEditDTO);
         return new ModelAndView("redirect:/admin/orders");
     }
 

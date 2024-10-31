@@ -17,28 +17,13 @@ public class ProductCartController {
 
     @PostMapping("/api/createProductCart")
     public ModelAndView createProductCart(ProductCartCreateEditDTO productCartCreateEditDTO) {
-        List<ProductCartReadDTO> carts = productCartService.findAllProductCartByCartId(productCartCreateEditDTO.getCartid().getId());
-        UUID productId = null;
-        Long quantity = 0L;
-        for (ProductCartReadDTO productCartReadDTO : carts) {
-            if(productCartCreateEditDTO.getProductid().getId().equals(productCartReadDTO.getProductid().getId())) {
-                productId = productCartReadDTO.getProductid().getId();
-                quantity += productCartReadDTO.getQuantity();
-            }
-        }
-        if (quantity == 0){
-            productCartService.create(productCartCreateEditDTO);
-        }else {
-            productCartService.deleteProductFromProductCart(productId);
-            productCartCreateEditDTO.setQuantity(quantity+productCartCreateEditDTO.getQuantity());
-            productCartService.create(productCartCreateEditDTO);
-        }
+        productCartService.fillCreateProductCart(productCartCreateEditDTO);
+
         return new ModelAndView("redirect:/order");
     }
 
     @GetMapping("/api/getProductCart")
     public List<ProductCartReadDTO> readProductCart(@RequestParam UUID cartItemId){
-        productCartService.findAllProductCartByCartId(cartItemId);
         return productCartService.findAllProductCartByCartId(cartItemId);
     }
 
@@ -50,6 +35,7 @@ public class ProductCartController {
     @PostMapping("/api/deleteProductCart")
     public ModelAndView deleteProductCart(@RequestParam UUID productId){
         productCartService.deleteProductFromProductCart(productId);
+
         return new ModelAndView("redirect:/cart");
     }
 }

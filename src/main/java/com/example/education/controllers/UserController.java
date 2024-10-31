@@ -3,11 +3,8 @@ package com.example.education.controllers;
 import com.example.education.dto.address.AddressCreateEditDTO;
 import com.example.education.dto.user.UserCreateEditDTO;
 import com.example.education.dto.user.UserReadDTO;
-import com.example.education.entity.UserEntity;
-import com.example.education.services.address.AddressServiceImpl;
 import com.example.education.services.user.UserServiceImpl;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,23 +15,12 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserController {
     private final UserServiceImpl userService;
-    private final AddressServiceImpl addressService;
-    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/registration")
     public ModelAndView createUser(UserCreateEditDTO userCreateEditDTO,
                                    AddressCreateEditDTO addressCreateEditDTO) {
-        userCreateEditDTO.setPassword(passwordEncoder.encode(userCreateEditDTO.getPassword()));
-        userService.create(userCreateEditDTO);
-        Optional<UserReadDTO> user = userService.findByUsername(userCreateEditDTO.getLogin());
-        user.ifPresent(userReadDTO ->
-                addressCreateEditDTO.setUserid(new UserEntity(
-                            userReadDTO.getId(),
-                            userCreateEditDTO.getLogin(),
-                            userCreateEditDTO.getPassword(),
-                            userCreateEditDTO.getRole()
-        )));
-        addressService.create(addressCreateEditDTO);
+        userService.fillCreateUser(userCreateEditDTO, addressCreateEditDTO);
+
         return new ModelAndView("redirect:/login");
     }
 

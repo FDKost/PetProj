@@ -14,7 +14,7 @@ services:
 
   cyberpizza:
     build: .
-    image: cyberpizza:0.1.0.9
+    image: cyberpizza:0.1.1.2
     container_name: cyberpizza
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/cyberpizzaTest

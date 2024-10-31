@@ -20,7 +20,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AddressController {
     private final AddressServiceImpl addressService;
-    private final UserServiceImpl userService;
 
     @GetMapping("/profile/findAll")
     public List<AddressReadDTO> findAll(Model model){
@@ -30,19 +29,8 @@ public class AddressController {
     }
 
     @PostMapping("/profile/create")
-    public ModelAndView createAddress(AddressCreateEditDTO addressCreateEditDTO,
-                                      @AuthenticationPrincipal UserDetails userDetails){
-        Optional<UserReadDTO> user = userService.findByUsername(userDetails.getUsername());
-        if (user.isPresent()){
-            Optional<AddressReadDTO> existingAddress = addressService.findAddressByUserId(user.get().getId());
-
-            if (existingAddress.isPresent()) {
-                addressService.update(existingAddress.get().getId(), addressCreateEditDTO);
-            }else{
-                addressService.create(addressCreateEditDTO);
-            }
-        }
-
+    public ModelAndView createAddress(AddressCreateEditDTO addressCreateEditDTO){
+        addressService.fillCreateAddress(addressCreateEditDTO);
 
         return new ModelAndView("redirect:/order");
     }

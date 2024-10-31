@@ -19,6 +19,7 @@ public class ProductController {
     @PostMapping("/createProduct")
     public ModelAndView createProduct(@RequestBody ProductCreateEditDTO productCreateEditDTO) {
         productService.create(productCreateEditDTO);
+
         return new ModelAndView("redirect:/admin/menu");
     }
 
@@ -34,7 +35,6 @@ public class ProductController {
 
     @GetMapping("/readAll")
     public List<ProductReadDTO> readAllProducts() {
-        productService.getAllProducts();
         return productService.getAllProducts();
     }
 

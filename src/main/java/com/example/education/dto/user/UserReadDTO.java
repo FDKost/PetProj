@@ -2,6 +2,7 @@ package com.example.education.dto.user;
 
 import com.example.education.entity.Role;
 import lombok.Value;
+import org.springframework.ui.Model;
 
 import java.util.UUID;
 
@@ -11,4 +12,9 @@ public class UserReadDTO {
     String login;
     String password;
     Role role;
+
+    public Model populateUserModel(Model model) {
+        model.addAttribute("userId", id);
+        return model;
+    }
 }

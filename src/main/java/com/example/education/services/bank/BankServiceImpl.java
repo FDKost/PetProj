@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -16,5 +17,9 @@ public class BankServiceImpl implements BankService {
     @Override
     public Optional<BankEntity> findBankEntityByBankName(String bankName) {
         return bankRepository.findBankEntityByBankName(bankName);
+    }
+
+    public List<BankEntity> findAll() {
+        return bankRepository.findAll();
     }
 }

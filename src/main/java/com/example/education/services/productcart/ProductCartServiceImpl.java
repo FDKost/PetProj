@@ -92,4 +92,24 @@ public class ProductCartServiceImpl implements ProductCartService {
                 })
                 .orElse(false);
     }
+
+    @Transactional
+    public void fillCreateProductCart(ProductCartCreateEditDTO productCartCreateEditDTO) {
+        List<ProductCartReadDTO> carts = findAllProductCartByCartId(productCartCreateEditDTO.getCartid().getId());
+        UUID productId = null;
+        Long quantity = 0L;
+        for (ProductCartReadDTO productCartReadDTO : carts) {
+            if(productCartCreateEditDTO.getProductid().getId().equals(productCartReadDTO.getProductid().getId())) {
+                productId = productCartReadDTO.getProductid().getId();
+                quantity += productCartReadDTO.getQuantity();
+            }
+        }
+        if (quantity == 0){
+            create(productCartCreateEditDTO);
+        }else {
+            deleteProductFromProductCart(productId);
+            productCartCreateEditDTO.setQuantity(quantity+productCartCreateEditDTO.getQuantity());
+            create(productCartCreateEditDTO);
+        }
+    }
 }
