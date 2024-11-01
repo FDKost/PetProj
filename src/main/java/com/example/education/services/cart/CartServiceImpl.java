@@ -9,11 +9,12 @@ import com.example.education.entity.StatusEntity;
 import com.example.education.mapper.cart.CartCreateEditMapper;
 import com.example.education.mapper.cart.CartReadMapper;
 import com.example.education.repositories.CartRepository;
-import com.example.education.services.address.AddressServiceImpl;
-import com.example.education.services.productcart.ProductCartServiceImpl;
-import com.example.education.services.status.StatusServiceImpl;
-import com.example.education.services.user.UserServiceImpl;
+import com.example.education.services.address.AddressService;
+import com.example.education.services.productcart.ProductCartService;
+import com.example.education.services.status.StatusService;
+import com.example.education.services.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,10 +32,14 @@ public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final CartCreateEditMapper cartCreateEditMapper;
     private final CartReadMapper cartReadMapper;
-    private final StatusServiceImpl statusService;
-    private final AddressServiceImpl addressService;
-    private final ProductCartServiceImpl productCartService;
-    private final UserServiceImpl userService;
+    @Qualifier("statusServiceImpl")
+    private final StatusService statusService;
+    @Qualifier("addressServiceImpl")
+    private final AddressService addressService;
+    @Qualifier("productCartServiceImpl")
+    private final ProductCartService productCartService;
+    @Qualifier("userServiceImpl")
+    private final UserService userService;
 
     @Override
     public Optional<CartReadDTO> findById(UUID id) {
@@ -49,7 +54,6 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    @Transactional
     public CartReadDTO create(CartCreateEditDTO cartDTO) {
         return Optional.of(cartDTO)
                 .map(cartCreateEditMapper::map)

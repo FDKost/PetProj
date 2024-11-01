@@ -8,10 +8,11 @@ import com.example.education.entity.UserEntity;
 import com.example.education.mapper.userbank.UserBankCreateEditMapper;
 import com.example.education.mapper.userbank.UserBankReadMapper;
 import com.example.education.repositories.UserBankRepository;
-import com.example.education.services.bank.BankServiceImpl;
-import com.example.education.services.user.UserServiceImpl;
+import com.example.education.services.bank.BankService;
+import com.example.education.services.user.UserService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,8 +30,10 @@ public class UserBankServiceImpl implements UserBankService {
     private final UserBankRepository userBankRepository;
     private final UserBankReadMapper userBankReadMapper;
     private final UserBankCreateEditMapper userBankCreateEditMapper;
-    private final UserServiceImpl userService;
-    private final BankServiceImpl bankService;
+    @Qualifier("userServiceImpl")
+    private final UserService userService;
+    @Qualifier("bankServiceImpl")
+    private final BankService bankService;
 
     @Override
     public Optional<UserBankReadDTO> findByBankId(UUID bankId) {
@@ -45,7 +48,6 @@ public class UserBankServiceImpl implements UserBankService {
     }
 
     @Override
-    @Transactional
     public UserBankReadDTO create(UserBankCreateEditDTO userBankCreateEditDTO) {
         return Optional.of(userBankCreateEditDTO)
                 .map(userBankCreateEditMapper::map)

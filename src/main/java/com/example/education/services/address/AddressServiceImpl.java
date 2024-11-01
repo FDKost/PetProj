@@ -6,6 +6,7 @@ import com.example.education.mapper.address.AddressCreateEditMapper;
 import com.example.education.mapper.address.AddressReadMapper;
 import com.example.education.repositories.AddressRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,8 @@ public class AddressServiceImpl implements AddressService {
     private final AddressRepository addressRepository;
     private final AddressCreateEditMapper addressCreateEditMapper;
     private final AddressReadMapper addressReadMapper;
+    @Qualifier("addressServiceImpl")
+    private final AddressService addressService;
 
     @Override
     public Optional<AddressReadDTO> findById(UUID id){
@@ -76,9 +79,9 @@ public class AddressServiceImpl implements AddressService {
         Optional<AddressReadDTO> existingAddress = findAddressByUserId(addressCreateEditDTO.getUserid().getId());
 
         if (existingAddress.isPresent()) {
-            update(existingAddress.get().getId(), addressCreateEditDTO);
+            addressService.update(existingAddress.get().getId(), addressCreateEditDTO);
         }else{
-            create(addressCreateEditDTO);
+            addressService.create(addressCreateEditDTO);
         }
     }
 }

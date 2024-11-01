@@ -14,11 +14,12 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class BankServiceImpl implements BankService {
     private final BankRepository bankRepository;
+
     @Override
     public Optional<BankEntity> findBankEntityByBankName(String bankName) {
         return bankRepository.findBankEntityByBankName(bankName);
     }
-
+    @Override
     public List<BankEntity> findAll() {
         return bankRepository.findAll();
     }

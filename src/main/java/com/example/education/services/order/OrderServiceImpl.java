@@ -15,13 +15,14 @@ import com.example.education.entity.UserEntity;
 import com.example.education.mapper.order.OrderCreateEditMapper;
 import com.example.education.mapper.order.OrderReadMapper;
 import com.example.education.repositories.OrderRepository;
-import com.example.education.services.cart.CartServiceImpl;
-import com.example.education.services.payment.PaymentServiceImpl;
-import com.example.education.services.product.ProductServiceImpl;
-import com.example.education.services.productcart.ProductCartServiceImpl;
+import com.example.education.services.cart.CartService;
+import com.example.education.services.payment.PaymentService;
+import com.example.education.services.product.ProductService;
+import com.example.education.services.productcart.ProductCartService;
 import com.example.education.services.status.StatusService;
-import com.example.education.services.user.UserServiceImpl;
+import com.example.education.services.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,12 +40,20 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderCreateEditMapper orderCreateEditMapper;
     private final OrderReadMapper orderReadMapper;
+    @Qualifier("statusServiceImpl")
     private final StatusService statusService;
-    private final ProductServiceImpl productService;
-    private final CartServiceImpl cartService;
-    private final UserServiceImpl userService;
-    private final PaymentServiceImpl paymentService;
-    private final ProductCartServiceImpl productCartService;
+    @Qualifier("productServiceImpl")
+    private final ProductService productService;
+    @Qualifier("cartServiceImpl")
+    private final CartService cartService;
+    @Qualifier("userServiceImpl")
+    private final UserService userService;
+    @Qualifier("paymentServiceImpl")
+    private final PaymentService paymentService;
+    @Qualifier("productCartServiceImpl")
+    private final ProductCartService productCartService;
+    @Qualifier("orderServiceImpl")
+    private final OrderService orderService;
 
     @Override
     public Optional<OrderReadDTO> findById(UUID id){
@@ -58,7 +67,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional
     public OrderReadDTO create(OrderCreateEditDTO orderDTO){
         return Optional.of(orderDTO)
                 .map(orderCreateEditMapper::map)
@@ -134,7 +142,7 @@ public class OrderServiceImpl implements OrderService {
                                                         payment.getCheckurl(),
                                                         payment.getUserid());
         orderCreateEditDTO.setPaymentid(actualPayment);
-        create(orderCreateEditDTO);
+        orderService.create(orderCreateEditDTO);
         productCartService.deleteAllFromProductCartByCartId(productCartCreateEditDTO.getCartid().getId());
     }
 

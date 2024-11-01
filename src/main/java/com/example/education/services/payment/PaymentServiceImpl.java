@@ -27,7 +27,6 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    @Transactional
     public PaymentReadDTO create(PaymentCreateEditDTO paymentDTO){
         return Optional.of(paymentDTO)
                 .map(paymentCreateEditMapper::map)

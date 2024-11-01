@@ -6,6 +6,7 @@ import com.example.education.mapper.productcart.ProductCartCreateEditMapper;
 import com.example.education.mapper.productcart.ProductCartReadMapper;
 import com.example.education.repositories.ProductCartRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,8 @@ public class ProductCartServiceImpl implements ProductCartService {
     private final ProductCartRepository productCartRepository;
     private final ProductCartReadMapper productCartReadMapper;
     private final ProductCartCreateEditMapper productCartCreateEditMapper;
+    @Qualifier("productCartServiceImpl")
+    private final ProductCartService productCartService;
 
     @Override
     public Optional<ProductCartReadDTO> findById(UUID id) {
@@ -41,7 +44,6 @@ public class ProductCartServiceImpl implements ProductCartService {
     }
 
     @Override
-    @Transactional
     public ProductCartReadDTO create(ProductCartCreateEditDTO productCartDTO) {
         return Optional.of(productCartDTO)
                 .map(productCartCreateEditMapper::map)
@@ -107,7 +109,7 @@ public class ProductCartServiceImpl implements ProductCartService {
         if (quantity == 0){
             create(productCartCreateEditDTO);
         }else {
-            deleteProductFromProductCart(productId);
+            productCartService.deleteProductFromProductCart(productId);
             productCartCreateEditDTO.setQuantity(quantity+productCartCreateEditDTO.getQuantity());
             create(productCartCreateEditDTO);
         }

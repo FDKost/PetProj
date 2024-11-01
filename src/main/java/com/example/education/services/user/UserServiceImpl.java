@@ -7,8 +7,9 @@ import com.example.education.entity.UserEntity;
 import com.example.education.mapper.user.UserCreateEditMapper;
 import com.example.education.mapper.user.UserReadMapper;
 import com.example.education.repositories.UserRepository;
-import com.example.education.services.address.AddressServiceImpl;
+import com.example.education.services.address.AddressService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserReadMapper userReadMapper;
     private final UserCreateEditMapper userCreateEditMapper;
-    private final AddressServiceImpl addressService;
+    @Qualifier("addressServiceImpl")
+    private final AddressService addressService;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -39,7 +41,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public UserReadDTO create(UserCreateEditDTO userDTO){
         return Optional.of(userDTO)
                 .map(userCreateEditMapper::map)

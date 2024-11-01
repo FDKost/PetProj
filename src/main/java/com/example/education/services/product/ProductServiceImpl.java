@@ -41,7 +41,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Transactional
     public ProductReadDTO create(ProductCreateEditDTO productDTO) {
         return Optional.of(productDTO)
                 .map(productCreateEditMapper::map)
