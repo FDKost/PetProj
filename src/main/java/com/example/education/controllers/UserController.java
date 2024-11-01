@@ -4,8 +4,7 @@ import com.example.education.dto.address.AddressCreateEditDTO;
 import com.example.education.dto.user.UserCreateEditDTO;
 import com.example.education.dto.user.UserReadDTO;
 import com.example.education.services.user.UserService;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,13 +12,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 public class UserController {
-    @Qualifier("userServiceImpl")
     private final UserService userService;
-
-    public UserController(@Lazy UserService userService) {
-        this.userService = userService;
-    }
 
     @PostMapping("/registration")
     public ModelAndView createUser(UserCreateEditDTO userCreateEditDTO,

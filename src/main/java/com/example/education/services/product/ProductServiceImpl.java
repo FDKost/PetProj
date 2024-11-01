@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductReadMapper productReadMapper;
@@ -50,7 +50,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Transactional
     public Optional<ProductReadDTO> update(UUID id, ProductCreateEditDTO productDTO) {
         return productRepository.findById(id)
                 .map(entity -> productCreateEditMapper.map(productDTO,entity))
@@ -59,7 +58,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Transactional
     public boolean delete(UUID id) {
         return productRepository.findById(id)
                 .map(entity -> {

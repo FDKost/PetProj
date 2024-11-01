@@ -5,8 +5,7 @@ import com.example.education.dto.productcart.ProductCartReadDTO;
 import com.example.education.mapper.productcart.ProductCartCreateEditMapper;
 import com.example.education.mapper.productcart.ProductCartReadMapper;
 import com.example.education.repositories.ProductCartRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,23 +14,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@Transactional(readOnly = true)
+@RequiredArgsConstructor
+@Transactional
 public class ProductCartServiceImpl implements ProductCartService {
     private final ProductCartRepository productCartRepository;
     private final ProductCartReadMapper productCartReadMapper;
     private final ProductCartCreateEditMapper productCartCreateEditMapper;
-    @Qualifier("productCartServiceImpl")
-    private final ProductCartService productCartService;
-
-    public ProductCartServiceImpl(ProductCartRepository productCartRepository,
-                                  ProductCartReadMapper productCartReadMapper,
-                                  ProductCartCreateEditMapper productCartCreateEditMapper,
-                                  @Lazy ProductCartService productCartService) {
-        this.productCartRepository = productCartRepository;
-        this.productCartReadMapper = productCartReadMapper;
-        this.productCartCreateEditMapper = productCartCreateEditMapper;
-        this.productCartService = productCartService;
-    }
 
     @Override
     public Optional<ProductCartReadDTO> findById(UUID id) {
@@ -62,7 +50,6 @@ public class ProductCartServiceImpl implements ProductCartService {
     }
 
     @Override
-    @Transactional
     public Optional<ProductCartReadDTO> update(UUID id, ProductCartCreateEditDTO productCartDTO) {
         return productCartRepository.findById(id)
                 .map(entity -> productCartCreateEditMapper.map(productCartDTO,entity))
@@ -71,7 +58,6 @@ public class ProductCartServiceImpl implements ProductCartService {
     }
 
     @Override
-    @Transactional
     public boolean delete(UUID id) {
         return productCartRepository.findById(id)
                 .map(entity ->{
@@ -83,7 +69,6 @@ public class ProductCartServiceImpl implements ProductCartService {
     }
 
     @Override
-    @Transactional
     public void deleteAllFromProductCartByCartId(UUID cartId){
         productCartRepository.findAllProductCartByCartId(cartId)
                 .forEach(entity -> {
@@ -93,7 +78,6 @@ public class ProductCartServiceImpl implements ProductCartService {
     }
 
     @Override
-    @Transactional
     public boolean deleteProductFromProductCart(UUID productId) {
         return productCartRepository.findProductCartByProductId(productId)
                 .map(entity -> {
@@ -104,9 +88,9 @@ public class ProductCartServiceImpl implements ProductCartService {
                 .orElse(false);
     }
 
-    @Transactional
+    @Override
     public void fillCreateProductCart(ProductCartCreateEditDTO productCartCreateEditDTO) {
-        List<ProductCartReadDTO> carts = productCartService.findAllProductCartByCartId(productCartCreateEditDTO.getCartid().getId());
+        List<ProductCartReadDTO> carts = findAllProductCartByCartId(productCartCreateEditDTO.getCartid().getId());
         UUID productId = null;
         Long quantity = 0L;
         for (ProductCartReadDTO productCartReadDTO : carts) {
@@ -116,11 +100,11 @@ public class ProductCartServiceImpl implements ProductCartService {
             }
         }
         if (quantity == 0){
-            productCartService.create(productCartCreateEditDTO);
+            create(productCartCreateEditDTO);
         }else {
-            productCartService.deleteProductFromProductCart(productId);
+            deleteProductFromProductCart(productId);
             productCartCreateEditDTO.setQuantity(quantity+productCartCreateEditDTO.getQuantity());
-            productCartService.create(productCartCreateEditDTO);
+            create(productCartCreateEditDTO);
         }
     }
 }

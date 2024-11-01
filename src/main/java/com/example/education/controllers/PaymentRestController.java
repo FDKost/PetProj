@@ -3,8 +3,7 @@ package com.example.education.controllers;
 import com.example.education.dto.payment.PaymentCreateEditDTO;
 import com.example.education.dto.payment.PaymentReadDTO;
 import com.example.education.services.payment.PaymentService;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -12,13 +11,9 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/payment")
+@RequiredArgsConstructor
 public class PaymentRestController {
-    @Qualifier("paymentServiceImpl")
     private final PaymentService paymentService;
-
-    public PaymentRestController(@Lazy PaymentService paymentService) {
-        this.paymentService = paymentService;
-    }
 
     @PostMapping
     public PaymentReadDTO createPayment(PaymentCreateEditDTO paymentCreateEditDTO) {

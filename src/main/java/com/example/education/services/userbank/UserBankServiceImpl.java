@@ -10,8 +10,7 @@ import com.example.education.mapper.userbank.UserBankReadMapper;
 import com.example.education.repositories.UserBankRepository;
 import com.example.education.services.bank.BankService;
 import com.example.education.services.user.UserService;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,31 +21,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@Transactional(readOnly = true)
+@RequiredArgsConstructor
+@Transactional
 public class UserBankServiceImpl implements UserBankService {
     private final UserBankRepository userBankRepository;
     private final UserBankReadMapper userBankReadMapper;
     private final UserBankCreateEditMapper userBankCreateEditMapper;
-    @Qualifier("userServiceImpl")
     private final UserService userService;
-    @Qualifier("bankServiceImpl")
     private final BankService bankService;
-    @Qualifier("userBankServiceImpl")
-    private final UserBankService userBankService;
-
-    public UserBankServiceImpl(UserBankRepository userBankRepository,
-                               UserBankReadMapper userBankReadMapper,
-                               UserBankCreateEditMapper userBankCreateEditMapper,
-                               @Lazy UserService userService,
-                               @Lazy BankService bankService,
-                               @Lazy UserBankService userBankService) {
-        this.userBankRepository = userBankRepository;
-        this.userBankReadMapper = userBankReadMapper;
-        this.userBankCreateEditMapper = userBankCreateEditMapper;
-        this.userService = userService;
-        this.bankService = bankService;
-        this.userBankService = userBankService;
-    }
 
     @Override
     public Optional<UserBankReadDTO> findByBankId(UUID bankId) {
@@ -70,7 +52,6 @@ public class UserBankServiceImpl implements UserBankService {
     }
 
     @Override
-    @Transactional
     public Optional<UserBankReadDTO> update(UUID userId, UserBankCreateEditDTO userBankCreateEditDTO) {
         return userBankRepository.findByUserId(userId)
                 .map(entity -> userBankCreateEditMapper.map(userBankCreateEditDTO,entity))
@@ -79,7 +60,6 @@ public class UserBankServiceImpl implements UserBankService {
     }
 
     @Override
-    @Transactional
     public Boolean delete(UUID id) {
         return userBankRepository.findById(id)
                 .map(entity -> {
@@ -90,7 +70,7 @@ public class UserBankServiceImpl implements UserBankService {
                 .orElse(false);
     }
 
-    @Transactional
+    @Override
     public void fillProfile(UserDetails userDetails, Model model) {
         String login = userDetails.getUsername();
         Optional<UserReadDTO> user = userService.findByUsername(login);
@@ -99,7 +79,7 @@ public class UserBankServiceImpl implements UserBankService {
         if(user.isPresent()) {
             user.get().populateUserModel(model);
 
-            Optional<UserBankReadDTO> userBank = userBankService.findByUserId(user.get().getId());
+            Optional<UserBankReadDTO> userBank = findByUserId(user.get().getId());
             userBank.ifPresent(userBankReadDTO -> userBankReadDTO.populateBankModel(model));
 
             List<BankEntity> banks = bankService.findAll();
@@ -109,10 +89,10 @@ public class UserBankServiceImpl implements UserBankService {
                 }
             }
 
-            if (userBankService.findByUserId(user.get().getId()).isPresent()) {
+            if (findByUserId(user.get().getId()).isPresent()) {
                 userBank.ifPresent(userBankReadDTO -> userBankReadDTO.populateUserBankModel(model));
             } else {
-                arasakaBank.ifPresent(bankEntity -> model.addAttribute("userBank", userBankService.create(new UserBankCreateEditDTO(
+                arasakaBank.ifPresent(bankEntity -> model.addAttribute("userBank", create(new UserBankCreateEditDTO(
                         new UserEntity(user.get().getId(),
                                 user.get().getLogin(),
                                 user.get().getPassword(),

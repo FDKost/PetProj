@@ -5,8 +5,7 @@ import com.example.education.dto.address.AddressReadDTO;
 import com.example.education.mapper.address.AddressCreateEditMapper;
 import com.example.education.mapper.address.AddressReadMapper;
 import com.example.education.repositories.AddressRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,23 +14,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@Transactional(readOnly = true)
+@RequiredArgsConstructor
+@Transactional
 public class AddressServiceImpl implements AddressService {
     private final AddressRepository addressRepository;
     private final AddressCreateEditMapper addressCreateEditMapper;
     private final AddressReadMapper addressReadMapper;
-    @Qualifier("addressServiceImpl")
-    private final AddressService addressService;
-
-    public AddressServiceImpl(AddressRepository addressRepository,
-                              AddressCreateEditMapper addressCreateEditMapper,
-                              AddressReadMapper addressReadMapper,
-                              @Lazy AddressService addressService) {
-        this.addressRepository = addressRepository;
-        this.addressCreateEditMapper = addressCreateEditMapper;
-        this.addressReadMapper = addressReadMapper;
-        this.addressService = addressService;
-    }
 
     @Override
     public Optional<AddressReadDTO> findById(UUID id){
@@ -62,7 +50,6 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    @Transactional
     public Optional<AddressReadDTO> update(UUID id, AddressCreateEditDTO addressDTO){
         return addressRepository.findById(id)
                 .map(entity -> addressCreateEditMapper.map(addressDTO,entity))
@@ -71,7 +58,6 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    @Transactional
     public boolean delete(UUID id){
         return addressRepository.findById(id)
                 .map(entity -> {
@@ -82,14 +68,13 @@ public class AddressServiceImpl implements AddressService {
                 .orElse(false);
     }
 
-    @Transactional
     public void fillCreateAddress(AddressCreateEditDTO addressCreateEditDTO) {
-        Optional<AddressReadDTO> existingAddress = addressService.findAddressByUserId(addressCreateEditDTO.getUserid().getId());
+        Optional<AddressReadDTO> existingAddress = findAddressByUserId(addressCreateEditDTO.getUserid().getId());
 
         if (existingAddress.isPresent()) {
-            addressService.update(existingAddress.get().getId(), addressCreateEditDTO);
+            update(existingAddress.get().getId(), addressCreateEditDTO);
         }else{
-            addressService.create(addressCreateEditDTO);
+            create(addressCreateEditDTO);
         }
     }
 }

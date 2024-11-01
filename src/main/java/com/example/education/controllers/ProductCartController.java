@@ -3,8 +3,7 @@ package com.example.education.controllers;
 import com.example.education.dto.productcart.ProductCartCreateEditDTO;
 import com.example.education.dto.productcart.ProductCartReadDTO;
 import com.example.education.services.productcart.ProductCartService;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,13 +11,9 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 public class ProductCartController {
-    @Qualifier("productCartServiceImpl")
     private final ProductCartService productCartService;
-
-    public ProductCartController(@Lazy ProductCartService productCartService) {
-        this.productCartService = productCartService;
-    }
 
     @PostMapping("/api/createProductCart")
     public ModelAndView createProductCart(ProductCartCreateEditDTO productCartCreateEditDTO) {

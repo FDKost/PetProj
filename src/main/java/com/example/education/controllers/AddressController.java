@@ -3,8 +3,7 @@ package com.example.education.controllers;
 import com.example.education.dto.address.AddressCreateEditDTO;
 import com.example.education.dto.address.AddressReadDTO;
 import com.example.education.services.address.AddressService;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,14 +13,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 public class AddressController {
-    @Qualifier("addressServiceImpl")
     private final AddressService addressService;
-
-    public AddressController(@Lazy AddressService addressService) {
-        this.addressService = addressService;
-    }
-
 
     @GetMapping("/profile/findAll")
     public List<AddressReadDTO> findAll(Model model){

@@ -3,8 +3,7 @@ package com.example.education.controllers;
 import com.example.education.dto.product.ProductCreateEditDTO;
 import com.example.education.dto.product.ProductReadDTO;
 import com.example.education.services.product.ProductService;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -14,13 +13,9 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/order")
+@RequiredArgsConstructor
 public class ProductController {
-    @Qualifier("productServiceImpl")
     private final ProductService productService;
-
-    public ProductController(@Lazy ProductService productService) {
-        this.productService = productService;
-    }
 
     @PostMapping("/createProduct")
     public ModelAndView createProduct(@RequestBody ProductCreateEditDTO productCreateEditDTO) {

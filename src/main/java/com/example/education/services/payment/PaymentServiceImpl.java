@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
     private final PaymentCreateEditMapper paymentCreateEditMapper;
@@ -36,7 +36,6 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    @Transactional
     public Optional<PaymentReadDTO> update(UUID id, PaymentCreateEditDTO paymentDTO){
         return paymentRepository.findById(id)
                 .map(entity -> paymentCreateEditMapper.map(paymentDTO,entity))
@@ -45,7 +44,6 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    @Transactional
     public boolean delete(UUID id){
         return paymentRepository.findById(id)
                 .map(entity -> {

@@ -3,8 +3,7 @@ package com.example.education.controllers;
 import com.example.education.dto.userbank.UserBankCreateEditDTO;
 import com.example.education.dto.userbank.UserBankReadDTO;
 import com.example.education.services.userbank.UserBankService;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,13 +13,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 public class UserBankController {
-    @Qualifier("userBankServiceImpl")
     private final UserBankService userBankService;
-
-    public UserBankController(@Lazy UserBankService userBankService) {
-        this.userBankService = userBankService;
-    }
 
     @PostMapping("/api/userBank_create")
     public ModelAndView createUserBank(UserBankCreateEditDTO userBankCreateEditDTO) {

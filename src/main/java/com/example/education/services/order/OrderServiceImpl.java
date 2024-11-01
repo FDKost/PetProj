@@ -21,8 +21,7 @@ import com.example.education.services.product.ProductService;
 import com.example.education.services.productcart.ProductCartService;
 import com.example.education.services.status.StatusService;
 import com.example.education.services.user.UserService;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,47 +33,18 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@Transactional(readOnly = true)
+@RequiredArgsConstructor
+@Transactional
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderCreateEditMapper orderCreateEditMapper;
     private final OrderReadMapper orderReadMapper;
-    @Qualifier("statusServiceImpl")
     private final StatusService statusService;
-    @Qualifier("productServiceImpl")
     private final ProductService productService;
-    @Qualifier("cartServiceImpl")
     private final CartService cartService;
-    @Qualifier("userServiceImpl")
     private final UserService userService;
-    @Qualifier("paymentServiceImpl")
     private final PaymentService paymentService;
-    @Qualifier("productCartServiceImpl")
     private final ProductCartService productCartService;
-    @Qualifier("orderServiceImpl")
-    private final OrderService orderService;
-
-    public OrderServiceImpl(OrderRepository orderRepository,
-                            OrderCreateEditMapper orderCreateEditMapper,
-                            OrderReadMapper orderReadMapper,
-                            @Lazy StatusService statusService,
-                            @Lazy ProductService productService,
-                            @Lazy CartService cartService,
-                            @Lazy UserService userService,
-                            @Lazy PaymentService paymentService,
-                            @Lazy ProductCartService productCartService,
-                            @Lazy OrderService orderService) {
-        this.orderRepository = orderRepository;
-        this.orderCreateEditMapper = orderCreateEditMapper;
-        this.orderReadMapper = orderReadMapper;
-        this.statusService = statusService;
-        this.productService = productService;
-        this.cartService = cartService;
-        this.userService = userService;
-        this.paymentService = paymentService;
-        this.productCartService = productCartService;
-        this.orderService = orderService;
-    }
 
     @Override
     public Optional<OrderReadDTO> findById(UUID id){
@@ -97,7 +67,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional
     public Optional<OrderReadDTO> update(UUID id, OrderCreateEditDTO orderDTO){
         Optional<OrderReadDTO> order = findById(id);
         if(order.isPresent()){
@@ -111,7 +80,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional
     public boolean delete(UUID id){
         return orderRepository.findById(id)
                 .map(entity -> {
@@ -122,9 +90,8 @@ public class OrderServiceImpl implements OrderService {
                 .orElse(false);
     }
 
-    @Transactional
     public void fillManageOrders(Model model){
-        List<OrderReadDTO> orders = orderService.getAllOrders();
+        List<OrderReadDTO> orders = getAllOrders();
         model.addAttribute("orders", orders);
         Optional<StatusEntity> statusComplete = statusService.findByDescription("Completed");
 
@@ -134,7 +101,6 @@ public class OrderServiceImpl implements OrderService {
         statusInProcess.ifPresent(statusEntity -> model.addAttribute("statusPending", statusEntity.getId()));
     }
 
-    @Transactional
     public void fillShowOrderPage(Model model, UserDetails userDetails){
         List<ProductReadDTO> products = productService.getAllProducts();
         Optional<UserReadDTO> user = userService.findByUsername(userDetails.getUsername());
@@ -154,7 +120,7 @@ public class OrderServiceImpl implements OrderService {
         model.addAttribute("products", products);
     }
 
-    @Transactional
+    @Override
     public void fillCreateOrder(OrderCreateEditDTO orderCreateEditDTO,
                                 ProductCartCreateEditDTO productCartCreateEditDTO,
                                 PaymentCreateEditDTO paymentCreateEditDTO){
@@ -164,8 +130,7 @@ public class OrderServiceImpl implements OrderService {
                                                         payment.getCheckurl(),
                                                         payment.getUserid());
         orderCreateEditDTO.setPaymentid(actualPayment);
-        orderService.create(orderCreateEditDTO);
+        create(orderCreateEditDTO);
         productCartService.deleteAllFromProductCartByCartId(productCartCreateEditDTO.getCartid().getId());
     }
-
 }
