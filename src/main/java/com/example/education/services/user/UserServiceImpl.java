@@ -8,6 +8,7 @@ import com.example.education.mapper.user.UserCreateEditMapper;
 import com.example.education.mapper.user.UserReadMapper;
 import com.example.education.repositories.UserRepository;
 import com.example.education.services.address.AddressServiceImpl;
+import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class UserServiceImpl implements UserService {
     private final UserCreateEditMapper userCreateEditMapper;
     private final AddressServiceImpl addressService;
     private final PasswordEncoder passwordEncoder;
+
+    @Resource
+    private UserServiceImpl userService;
 
     @Override
     public Optional<UserReadDTO> findById(UUID id){
@@ -73,7 +77,7 @@ public class UserServiceImpl implements UserService {
     public void fillCreateUser(UserCreateEditDTO userCreateEditDTO,
                                AddressCreateEditDTO addressCreateEditDTO){
         userCreateEditDTO.setPassword(passwordEncoder.encode(userCreateEditDTO.getPassword()));
-        create(userCreateEditDTO);
+        userService.create(userCreateEditDTO);
         Optional<UserReadDTO> user = findByUsername(userCreateEditDTO.getLogin());
         user.ifPresent(userReadDTO ->
                 addressCreateEditDTO.setUserid(new UserEntity(
