@@ -19,4 +19,6 @@ public interface AddressService {
     Optional<AddressReadDTO> update(UUID id, AddressCreateEditDTO addressDTO);
 
     boolean delete(UUID id);
+
+    void fillCreateAddress(AddressCreateEditDTO addressCreateEditDTO);
 }

@@ -5,8 +5,8 @@ import com.example.education.dto.address.AddressReadDTO;
 import com.example.education.mapper.address.AddressCreateEditMapper;
 import com.example.education.mapper.address.AddressReadMapper;
 import com.example.education.repositories.AddressRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class AddressServiceImpl implements AddressService {
@@ -23,6 +22,16 @@ public class AddressServiceImpl implements AddressService {
     private final AddressReadMapper addressReadMapper;
     @Qualifier("addressServiceImpl")
     private final AddressService addressService;
+
+    public AddressServiceImpl(AddressRepository addressRepository,
+                              AddressCreateEditMapper addressCreateEditMapper,
+                              AddressReadMapper addressReadMapper,
+                              @Lazy AddressService addressService) {
+        this.addressRepository = addressRepository;
+        this.addressCreateEditMapper = addressCreateEditMapper;
+        this.addressReadMapper = addressReadMapper;
+        this.addressService = addressService;
+    }
 
     @Override
     public Optional<AddressReadDTO> findById(UUID id){
@@ -44,7 +53,6 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    @Transactional
     public AddressReadDTO create(AddressCreateEditDTO addressDTO){
         return Optional.of(addressDTO)
                 .map(addressCreateEditMapper::map)
@@ -76,7 +84,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Transactional
     public void fillCreateAddress(AddressCreateEditDTO addressCreateEditDTO) {
-        Optional<AddressReadDTO> existingAddress = findAddressByUserId(addressCreateEditDTO.getUserid().getId());
+        Optional<AddressReadDTO> existingAddress = addressService.findAddressByUserId(addressCreateEditDTO.getUserid().getId());
 
         if (existingAddress.isPresent()) {
             addressService.update(existingAddress.get().getId(), addressCreateEditDTO);

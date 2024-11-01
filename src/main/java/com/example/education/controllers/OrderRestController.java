@@ -3,13 +3,10 @@ package com.example.education.controllers;
 import com.example.education.dto.order.OrderCreateEditDTO;
 import com.example.education.dto.order.OrderReadDTO;
 import com.example.education.dto.payment.PaymentCreateEditDTO;
-import com.example.education.dto.payment.PaymentReadDTO;
 import com.example.education.dto.productcart.ProductCartCreateEditDTO;
-import com.example.education.entity.PaymentEntity;
-import com.example.education.services.order.OrderServiceImpl;
-import com.example.education.services.payment.PaymentServiceImpl;
-import com.example.education.services.productcart.ProductCartServiceImpl;
-import lombok.AllArgsConstructor;
+import com.example.education.services.order.OrderService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,12 +15,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/orders")
 public class OrderRestController {
-    private final OrderServiceImpl orderService;
-    private final ProductCartServiceImpl productCartService;
-    private final PaymentServiceImpl paymentService;
+    @Qualifier("orderServiceImpl")
+    private final OrderService orderService;
+
+    public OrderRestController(@Lazy OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @PostMapping("/createOrder")
     public ModelAndView createOrder(OrderCreateEditDTO orderCreateEditDTO,

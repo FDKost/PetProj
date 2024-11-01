@@ -21,8 +21,8 @@ import com.example.education.services.product.ProductService;
 import com.example.education.services.productcart.ProductCartService;
 import com.example.education.services.status.StatusService;
 import com.example.education.services.user.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class OrderServiceImpl implements OrderService {
@@ -54,6 +53,28 @@ public class OrderServiceImpl implements OrderService {
     private final ProductCartService productCartService;
     @Qualifier("orderServiceImpl")
     private final OrderService orderService;
+
+    public OrderServiceImpl(OrderRepository orderRepository,
+                            OrderCreateEditMapper orderCreateEditMapper,
+                            OrderReadMapper orderReadMapper,
+                            @Lazy StatusService statusService,
+                            @Lazy ProductService productService,
+                            @Lazy CartService cartService,
+                            @Lazy UserService userService,
+                            @Lazy PaymentService paymentService,
+                            @Lazy ProductCartService productCartService,
+                            @Lazy OrderService orderService) {
+        this.orderRepository = orderRepository;
+        this.orderCreateEditMapper = orderCreateEditMapper;
+        this.orderReadMapper = orderReadMapper;
+        this.statusService = statusService;
+        this.productService = productService;
+        this.cartService = cartService;
+        this.userService = userService;
+        this.paymentService = paymentService;
+        this.productCartService = productCartService;
+        this.orderService = orderService;
+    }
 
     @Override
     public Optional<OrderReadDTO> findById(UUID id){
@@ -100,9 +121,10 @@ public class OrderServiceImpl implements OrderService {
                 })
                 .orElse(false);
     }
+
     @Transactional
     public void fillManageOrders(Model model){
-        List<OrderReadDTO> orders =getAllOrders();
+        List<OrderReadDTO> orders = orderService.getAllOrders();
         model.addAttribute("orders", orders);
         Optional<StatusEntity> statusComplete = statusService.findByDescription("Completed");
 

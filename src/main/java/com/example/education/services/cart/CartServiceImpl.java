@@ -13,8 +13,8 @@ import com.example.education.services.address.AddressService;
 import com.example.education.services.productcart.ProductCartService;
 import com.example.education.services.status.StatusService;
 import com.example.education.services.user.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class CartServiceImpl implements CartService {
@@ -40,6 +39,26 @@ public class CartServiceImpl implements CartService {
     private final ProductCartService productCartService;
     @Qualifier("userServiceImpl")
     private final UserService userService;
+    @Qualifier("cartServiceImpl")
+    private final CartService cartService;
+
+    public CartServiceImpl(CartRepository cartRepository,
+                           CartCreateEditMapper cartCreateEditMapper,
+                           CartReadMapper cartReadMapper,
+                           @Lazy StatusService statusService,
+                           @Lazy AddressService addressService,
+                           @Lazy ProductCartService productCartService,
+                           @Lazy UserService userService,
+                           @Lazy CartService cartService) {
+        this.cartRepository = cartRepository;
+        this.cartCreateEditMapper = cartCreateEditMapper;
+        this.cartReadMapper = cartReadMapper;
+        this.statusService = statusService;
+        this.addressService = addressService;
+        this.productCartService = productCartService;
+        this.userService = userService;
+        this.cartService = cartService;
+    }
 
     @Override
     public Optional<CartReadDTO> findById(UUID id) {
@@ -92,7 +111,7 @@ public class CartServiceImpl implements CartService {
             userAddress.ifPresent(addressReadDTO -> model.addAttribute("addressid", addressReadDTO.getId()));
 
             model.addAttribute("userid", user.get().getId());
-            Optional<CartReadDTO> cart = findCartByUserId(user.get().getId());
+            Optional<CartReadDTO> cart = cartService.findCartByUserId(user.get().getId());
             if(cart.isPresent()) {
                 List<ProductCartReadDTO> cartItems = productCartService.findAllProductCartByCartId(cart.get().getId());
                 long totalAmount = 0L;

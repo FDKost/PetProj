@@ -2,8 +2,9 @@ package com.example.education.controllers;
 
 import com.example.education.dto.cart.CartCreateEditDTO;
 import com.example.education.dto.cart.CartReadDTO;
-import com.example.education.services.cart.CartServiceImpl;
-import lombok.AllArgsConstructor;
+import com.example.education.services.cart.CartService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,9 +14,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@AllArgsConstructor
 public class CartRestController {
-    private final CartServiceImpl cartService;
+    @Qualifier("cartServiceImpl")
+    private final CartService cartService;
+
+    public CartRestController(@Lazy CartService cartService) {
+        this.cartService = cartService;
+    }
 
     @PostMapping("/api/cart_create")
     public ModelAndView createCart(CartCreateEditDTO cartCreateEditDTO) {

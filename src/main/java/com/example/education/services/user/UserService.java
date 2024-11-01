@@ -1,5 +1,6 @@
 package com.example.education.services.user;
 
+import com.example.education.dto.address.AddressCreateEditDTO;
 import com.example.education.dto.user.UserCreateEditDTO;
 import com.example.education.dto.user.UserReadDTO;
 
@@ -18,4 +19,5 @@ public interface UserService {
 
     Boolean delete(UUID id);
 
+    void fillCreateUser(UserCreateEditDTO userCreateEditDTO, AddressCreateEditDTO addressCreateEditDTO);
 }

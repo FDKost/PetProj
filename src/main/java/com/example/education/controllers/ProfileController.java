@@ -1,7 +1,8 @@
 package com.example.education.controllers;
 
-import com.example.education.services.userbank.UserBankServiceImpl;
-import lombok.RequiredArgsConstructor;
+import com.example.education.services.userbank.UserBankService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -11,9 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/profile")
-@RequiredArgsConstructor
 public class ProfileController {
-    private final UserBankServiceImpl userBankService;
+    @Qualifier("userBankServiceImpl")
+    private final UserBankService userBankService;
+
+    public ProfileController(@Lazy UserBankService userBankService) {
+        this.userBankService = userBankService;
+    }
 
     @GetMapping
     public String profile(@AuthenticationPrincipal UserDetails userDetails, Model model){

@@ -2,18 +2,23 @@ package com.example.education.controllers;
 
 import com.example.education.dto.payment.PaymentCreateEditDTO;
 import com.example.education.dto.payment.PaymentReadDTO;
-import com.example.education.services.payment.PaymentServiceImpl;
-import lombok.AllArgsConstructor;
+import com.example.education.services.payment.PaymentService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/payment")
 public class PaymentRestController {
-    private final PaymentServiceImpl paymentService;
+    @Qualifier("paymentServiceImpl")
+    private final PaymentService paymentService;
+
+    public PaymentRestController(@Lazy PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
 
     @PostMapping
     public PaymentReadDTO createPayment(PaymentCreateEditDTO paymentCreateEditDTO) {

@@ -2,8 +2,9 @@ package com.example.education.controllers;
 
 import com.example.education.dto.productsinorder.ProductsInOrderCreateEditDTO;
 import com.example.education.dto.productsinorder.ProductsInOrderReadDTO;
-import com.example.education.services.productsinorder.ProductsInOrderServiceImpl;
-import lombok.AllArgsConstructor;
+import com.example.education.services.productsinorder.ProductsInOrderService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,10 +12,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/productsInOrder")
 public class ProductsInOrderRestController {
-    private final ProductsInOrderServiceImpl productsInOrderService;
+    @Qualifier("productsInOrderServiceImpl")
+    private final ProductsInOrderService productsInOrderService;
+
+    public ProductsInOrderRestController(@Lazy ProductsInOrderService productsInOrderService) {
+        this.productsInOrderService = productsInOrderService;
+    }
 
     @PostMapping("/create")
     public ProductsInOrderReadDTO createProductsInOrder(@RequestBody ProductsInOrderCreateEditDTO productsInOrderCreateEditDTO) {

@@ -2,12 +2,9 @@ package com.example.education.controllers;
 
 import com.example.education.dto.address.AddressCreateEditDTO;
 import com.example.education.dto.address.AddressReadDTO;
-import com.example.education.dto.user.UserReadDTO;
-import com.example.education.services.address.AddressServiceImpl;
-import com.example.education.services.user.UserServiceImpl;
-import lombok.AllArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.example.education.services.address.AddressService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,9 +14,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@AllArgsConstructor
 public class AddressController {
-    private final AddressServiceImpl addressService;
+    @Qualifier("addressServiceImpl")
+    private final AddressService addressService;
+
+    public AddressController(@Lazy AddressService addressService) {
+        this.addressService = addressService;
+    }
+
 
     @GetMapping("/profile/findAll")
     public List<AddressReadDTO> findAll(Model model){

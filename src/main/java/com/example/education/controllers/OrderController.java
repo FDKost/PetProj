@@ -1,8 +1,8 @@
 package com.example.education.controllers;
 
-import com.example.education.services.order.OrderServiceImpl;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.education.services.order.OrderService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/order")
-@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class OrderController {
-    private final OrderServiceImpl orderService;
+    @Qualifier("orderServiceImpl")
+    private final OrderService orderService;
+
+    public OrderController(@Lazy OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @GetMapping
     public String showOrderPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {

@@ -8,8 +8,8 @@ import com.example.education.mapper.user.UserCreateEditMapper;
 import com.example.education.mapper.user.UserReadMapper;
 import com.example.education.repositories.UserRepository;
 import com.example.education.services.address.AddressService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
-@RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
@@ -26,7 +25,23 @@ public class UserServiceImpl implements UserService {
     private final UserCreateEditMapper userCreateEditMapper;
     @Qualifier("addressServiceImpl")
     private final AddressService addressService;
+    @Qualifier("userServiceImpl")
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(UserRepository userRepository,
+                           UserReadMapper userReadMapper,
+                           UserCreateEditMapper userCreateEditMapper,
+                           @Lazy AddressService addressService,
+                           @Lazy UserService userService,
+                           PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.userReadMapper = userReadMapper;
+        this.userCreateEditMapper = userCreateEditMapper;
+        this.addressService = addressService;
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public Optional<UserReadDTO> findById(UUID id){
@@ -74,8 +89,8 @@ public class UserServiceImpl implements UserService {
     public void fillCreateUser(UserCreateEditDTO userCreateEditDTO,
                                AddressCreateEditDTO addressCreateEditDTO){
         userCreateEditDTO.setPassword(passwordEncoder.encode(userCreateEditDTO.getPassword()));
-        create(userCreateEditDTO);
-        Optional<UserReadDTO> user = findByUsername(userCreateEditDTO.getLogin());
+        userService.create(userCreateEditDTO);
+        Optional<UserReadDTO> user = userService.findByUsername(userCreateEditDTO.getLogin());
         user.ifPresent(userReadDTO ->
                 addressCreateEditDTO.setUserid(new UserEntity(
                         userReadDTO.getId(),

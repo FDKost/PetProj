@@ -23,4 +23,6 @@ public interface ProductCartService {
     void deleteAllFromProductCartByCartId(UUID cartId);
 
     boolean deleteProductFromProductCart(UUID productId);
+
+    void fillCreateProductCart(ProductCartCreateEditDTO productCartCreateEditDTO);
 }

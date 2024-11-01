@@ -10,9 +10,8 @@ import com.example.education.mapper.userbank.UserBankReadMapper;
 import com.example.education.repositories.UserBankRepository;
 import com.example.education.services.bank.BankService;
 import com.example.education.services.user.UserService;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,8 +21,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Getter
-@RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class UserBankServiceImpl implements UserBankService {
@@ -34,6 +31,22 @@ public class UserBankServiceImpl implements UserBankService {
     private final UserService userService;
     @Qualifier("bankServiceImpl")
     private final BankService bankService;
+    @Qualifier("userBankServiceImpl")
+    private final UserBankService userBankService;
+
+    public UserBankServiceImpl(UserBankRepository userBankRepository,
+                               UserBankReadMapper userBankReadMapper,
+                               UserBankCreateEditMapper userBankCreateEditMapper,
+                               @Lazy UserService userService,
+                               @Lazy BankService bankService,
+                               @Lazy UserBankService userBankService) {
+        this.userBankRepository = userBankRepository;
+        this.userBankReadMapper = userBankReadMapper;
+        this.userBankCreateEditMapper = userBankCreateEditMapper;
+        this.userService = userService;
+        this.bankService = bankService;
+        this.userBankService = userBankService;
+    }
 
     @Override
     public Optional<UserBankReadDTO> findByBankId(UUID bankId) {
@@ -86,20 +99,20 @@ public class UserBankServiceImpl implements UserBankService {
         if(user.isPresent()) {
             user.get().populateUserModel(model);
 
-            Optional<UserBankReadDTO> userBank = findByUserId(user.get().getId());
+            Optional<UserBankReadDTO> userBank = userBankService.findByUserId(user.get().getId());
             userBank.ifPresent(userBankReadDTO -> userBankReadDTO.populateBankModel(model));
 
             List<BankEntity> banks = bankService.findAll();
             if (!banks.isEmpty()) {
                 for (BankEntity bankEntity : banks) {
-                        model.addAttribute(bankEntity.getBankName(),bankEntity.getId());
+                    model.addAttribute(bankEntity.getBankName(),bankEntity.getId());
                 }
             }
 
-            if (findByUserId(user.get().getId()).isPresent()) {
+            if (userBankService.findByUserId(user.get().getId()).isPresent()) {
                 userBank.ifPresent(userBankReadDTO -> userBankReadDTO.populateUserBankModel(model));
             } else {
-                arasakaBank.ifPresent(bankEntity -> model.addAttribute("userBank", create(new UserBankCreateEditDTO(
+                arasakaBank.ifPresent(bankEntity -> model.addAttribute("userBank", userBankService.create(new UserBankCreateEditDTO(
                         new UserEntity(user.get().getId(),
                                 user.get().getLogin(),
                                 user.get().getPassword(),
