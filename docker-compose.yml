@@ -12,6 +12,9 @@ services:
     ports:
       - "127.0.0.1:5432:5432"
 
+    networks:
+      - banknetwork
+
   cyberpizza:
     build: .
     image: cyberpizza:0.1.3.4
@@ -23,5 +26,12 @@ services:
     depends_on:
       - db
 
+    networks:
+      - banknetwork
+
 volumes:
   cyberpizza-db:
+
+networks:
+  banknetwork:
+    driver: bridge

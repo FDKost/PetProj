@@ -1,14 +1,20 @@
 package com.example.education.controllers;
 
+import com.example.consumingwebservice.wsdl.GetBankRequest;
+import com.example.consumingwebservice.wsdl.GetBankResponse;
+import com.example.education.client.BankClient;
 import com.example.education.dto.order.OrderCreateEditDTO;
 import com.example.education.dto.order.OrderReadDTO;
 import com.example.education.dto.payment.PaymentCreateEditDTO;
 import com.example.education.dto.productcart.ProductCartCreateEditDTO;
-import com.example.education.services.order.OrderService;
+import com.example.education.services.order.OrderService;/*
+import com.example.soap.ws.client.generated.GetBankRequest;
+import com.example.soap.ws.client.generated.GetBankResponse;*/
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,13 +24,22 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OrderRestController {
     private final OrderService orderService;
+    private final BankClient bankClient;
 
     @PostMapping("/createOrder")
     public ModelAndView createOrder(OrderCreateEditDTO orderCreateEditDTO,
                                     ProductCartCreateEditDTO productCartCreateEditDTO,
                                     PaymentCreateEditDTO paymentCreateEditDTO) {
-        orderService.fillCreateOrder(orderCreateEditDTO, productCartCreateEditDTO, paymentCreateEditDTO);
-        return new ModelAndView("redirect:/home");
+        GetBankRequest request = new GetBankRequest();
+        request.setSum(BigDecimal.valueOf(paymentCreateEditDTO.getTotal()));
+        GetBankResponse response = bankClient.getBank(request, orderCreateEditDTO.getUserid(),"Tom", BigDecimal.valueOf(paymentCreateEditDTO.getTotal()));
+
+        if(response.getStatus() == 200){
+            orderService.fillCreateOrder(orderCreateEditDTO, productCartCreateEditDTO, paymentCreateEditDTO);
+            return new ModelAndView("redirect:/home");
+        }else {
+            return new ModelAndView("redirect:/cart");
+        }
     }
 
     @GetMapping("/readOrder/{orderId}")

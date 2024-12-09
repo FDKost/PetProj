@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://soap.jee.fdkost.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://soap.jee.fdkost.com/" targetNamespace="http://soap.jee.fdkost.com/">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://soap.jee.fdkost.com/">
+
+
+    <xs:element name="getBankRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="sellerId" type="xs:string"/>
+                <xs:element name="sellerSecret" type="xs:string"/>
+                <xs:element name="sellerBankAccount" type="tns:sellerBankAccount"/>
+                <xs:element name="buyerId" type="xs:string"/>
+                <xs:element name="buyerSecret" type="xs:string"/>
+                <xs:element name="buyerBankAccount" type="tns:buyerBankAccount"/>
+                <xs:element name="sum" type="xs:decimal"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getBankResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:int"/>
+                <xs:element name="transactionId" type="xs:string"/>
+                <xs:element name="message" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="buyerBankAccount">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string"/>
+            <xs:element name="client" type="tns:client"/>
+            <xs:element name="number" type="xs:string"/>
+            <xs:element name="sum" type="xs:decimal"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="sellerBankAccount">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string"/>
+            <xs:element name="client" type="tns:client"/>
+            <xs:element name="number" type="xs:string"/>
+            <xs:element name="sum" type="xs:decimal"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="client">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="openKey" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getBankResponse">
+    <wsdl:part element="tns:getBankResponse" name="getBankResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBankRequest">
+    <wsdl:part element="tns:getBankRequest" name="getBankRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="BankPort">
+    <wsdl:operation name="getBank">
+      <wsdl:input message="tns:getBankRequest" name="getBankRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getBankResponse" name="getBankResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BankPortSoap11" type="tns:BankPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getBank">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="getBankRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getBankResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BankPortService">
+    <wsdl:port binding="tns:BankPortSoap11" name="BankPortSoap11">
+      <soap:address location="http://localhost:8081/ws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
