@@ -18,7 +18,7 @@ public class BankClientConfig {
     @Bean
     public BankClient bankClient(Jaxb2Marshaller marshaller) {
         BankClient bankClient = new BankClient();
-        bankClient.setDefaultUri("http://bankservice:8081/ws");
+        bankClient.setDefaultUri("http://bankservice:8080/ws");
         bankClient.setMarshaller(marshaller);
         bankClient.setUnmarshaller(marshaller);
         return bankClient;

@@ -15,12 +15,23 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
+		<spring-boot-jdbc.version>3.2.4</spring-boot-jdbc.version>
+		<postgre.version>42.7.0</postgre.version>
+		<spring-thymeleaf.version>3.1.5</spring-thymeleaf.version>
+		<google-api.version>2.4.0</google-api.version>
+		<liquibase.version>4.29.2</liquibase.version>
+		<spring-boot-docker-compose.version>3.3.5</spring-boot-docker-compose.version>
+		<jakarta-xml-ws.version>4.0.2</jakarta-xml-ws.version>
+		<jax-ws-rt.version>4.0.3</jax-ws-rt.version>
+		<jaxws-ri.version>4.0.3</jaxws-ri.version>
+		<maven-compiler.version>3.3</maven-compiler.version>
+		<jaxws-maven-plugin.version>4.0.3</jaxws-maven-plugin.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
-			<version>3.2.4</version>
+			<version>${spring-boot-jdbc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -33,7 +44,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.7.0</version>
+			<version>${postgre.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -43,7 +54,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-			<version>3.1.5</version>
+			<version>${spring-thymeleaf.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -58,7 +69,7 @@
 		<dependency>
 			<groupId>com.google.api-client</groupId>
 			<artifactId>google-api-client</artifactId>
-			<version>2.4.0</version>
+			<version>${google-api.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -68,7 +79,7 @@
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
-			<version>4.29.2</version>
+			<version>${liquibase.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -77,23 +88,23 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-docker-compose</artifactId>
-			<version>3.3.5</version>
+			<version>${spring-boot-docker-compose.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>jakarta.xml.ws</groupId>
 			<artifactId>jakarta.xml.ws-api</artifactId>
-			<version>4.0.2</version>
+			<version>${jakarta-xml-ws.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.ws</groupId>
 			<artifactId>jaxws-rt</artifactId>
-			<version>4.0.3</version>
+			<version>${jax-ws-rt.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.sun.xml.ws</groupId>
 			<artifactId>jaxws-ri</artifactId>
-			<version>4.0.3</version>
+			<version>${jaxws-ri.version}</version>
 			<type>pom</type>
 		</dependency>
 
@@ -108,44 +119,10 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<!--<plugin>
-				<groupId>com.sun.xml.ws</groupId>
-				<artifactId>jaxws-maven-plugin</artifactId>
-				<version>3.0.2</version>
-				<configuration>
-					<wsdlUrls>
-						<wsdlUrl>http://localhost:8081/ws/bank.wsdl</wsdlUrl>
-					</wsdlUrls>
-					<keep>true</keep>
-					<packageName>com.example.soap.ws.client.generated</packageName>
-					<sourceDestDir>src/main/java</sourceDestDir>
-				</configuration>
-			</plugin>-->
-			<!--<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
-				<version>0.15.3</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<schemaLanguage>WSDL</schemaLanguage>
-					<generateDirectory>${project.basedir}/src/main/java</generateDirectory>
-					<generatePackage>com.example.soap.ws.client.generated</generatePackage>
-					<schemaDirectory>${project.basedir}/src/main/resources</schemaDirectory>
-					<schemaIncludes>
-						<include>bank.wsdl</include>
-					</schemaIncludes>
-				</configuration>
-			</plugin>-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
+				<version>${maven-compiler.version}</version>
 				<configuration>
 					<compilerVersion>1.8</compilerVersion>
 					<source>16</source>
@@ -161,7 +138,7 @@
 			<plugin>
 				<groupId>com.sun.xml.ws</groupId>
 				<artifactId>jaxws-maven-plugin</artifactId>
-				<version>4.0.3</version>
+				<version>${jaxws-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<goals>
@@ -177,7 +154,6 @@
 					<sourceDestDir>src/main/java</sourceDestDir>
 					<extension>true</extension>
 					<verbose>true</verbose>
-					<debug>true</debug>
 				</configuration>
 			</plugin>
 		</plugins>

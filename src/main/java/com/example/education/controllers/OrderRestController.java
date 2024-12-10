@@ -11,6 +11,7 @@ import com.example.education.services.order.OrderService;/*
 import com.example.soap.ws.client.generated.GetBankRequest;
 import com.example.soap.ws.client.generated.GetBankResponse;*/
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,6 +27,7 @@ public class OrderRestController {
     private final OrderService orderService;
     private final BankClient bankClient;
 
+    @SneakyThrows
     @PostMapping("/createOrder")
     public ModelAndView createOrder(OrderCreateEditDTO orderCreateEditDTO,
                                     ProductCartCreateEditDTO productCartCreateEditDTO,
