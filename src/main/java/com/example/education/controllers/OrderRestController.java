@@ -7,9 +7,7 @@ import com.example.education.dto.order.OrderCreateEditDTO;
 import com.example.education.dto.order.OrderReadDTO;
 import com.example.education.dto.payment.PaymentCreateEditDTO;
 import com.example.education.dto.productcart.ProductCartCreateEditDTO;
-import com.example.education.services.order.OrderService;/*
-import com.example.soap.ws.client.generated.GetBankRequest;
-import com.example.soap.ws.client.generated.GetBankResponse;*/
+import com.example.education.services.order.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +32,8 @@ public class OrderRestController {
                                     PaymentCreateEditDTO paymentCreateEditDTO) {
         GetBankRequest request = new GetBankRequest();
         request.setSum(BigDecimal.valueOf(paymentCreateEditDTO.getTotal()));
-        GetBankResponse response = bankClient.getBank(request, orderCreateEditDTO.getUserid(),"Tom", BigDecimal.valueOf(paymentCreateEditDTO.getTotal()));
+        GetBankResponse response = bankClient.getBank(request, orderCreateEditDTO.getUserid(),"Tom",
+                BigDecimal.valueOf(paymentCreateEditDTO.getTotal()));
 
         if(response.getStatus() == 200){
             orderService.fillCreateOrder(orderCreateEditDTO, productCartCreateEditDTO, paymentCreateEditDTO);

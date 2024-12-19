@@ -23,7 +23,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .map(user -> new User(
                         user.getLogin(),
                         user.getPassword(),
-                        Collections.singleton(user.getRole())
+                        Collections.singleton(user.getRole()
+                        )
                 ))
                 .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: "+ username));
     }

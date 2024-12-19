@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.5</version>
+		<version>3.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -14,13 +14,15 @@
 	<name>Education</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
+		<bank-default-uri>http://bankservice:8080/ws</bank-default-uri>
 		<java.version>17</java.version>
-		<spring-boot-jdbc.version>3.2.4</spring-boot-jdbc.version>
+		<spring.version>3.4.0</spring.version>
+		<spring-boot-jdbc.version>3.4.0</spring-boot-jdbc.version>
 		<postgre.version>42.7.0</postgre.version>
 		<spring-thymeleaf.version>3.1.5</spring-thymeleaf.version>
 		<google-api.version>2.4.0</google-api.version>
 		<liquibase.version>4.29.2</liquibase.version>
-		<spring-boot-docker-compose.version>3.3.5</spring-boot-docker-compose.version>
+		<spring-boot-docker-compose.version>3.4.0</spring-boot-docker-compose.version>
 		<jakarta-xml-ws.version>4.0.2</jakarta-xml-ws.version>
 		<jax-ws-rt.version>4.0.3</jax-ws-rt.version>
 		<jaxws-ri.version>4.0.3</jaxws-ri.version>
@@ -31,15 +33,17 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
-			<version>${spring-boot-jdbc.version}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -49,12 +53,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-			<version>${spring-thymeleaf.version}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -64,6 +69,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -84,6 +90,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web-services</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -127,6 +134,9 @@
 					<compilerVersion>1.8</compilerVersion>
 					<source>16</source>
 					<target>16</target>
+					<compilerArgs>
+						<arg>-parameters</arg>
+					</compilerArgs>
 					<annotationProcessors>
 						<annotationProcessor>lombok.launch.AnnotationProcessorHider$AnnotationProcessor
 						</annotationProcessor>

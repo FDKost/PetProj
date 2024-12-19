@@ -4,7 +4,6 @@ import com.example.education.entity.BankEntity;
 import com.example.education.entity.UserEntity;
 import lombok.Value;
 import lombok.experimental.FieldNameConstants;
-import org.springframework.ui.Model;
 
 @Value
 @FieldNameConstants

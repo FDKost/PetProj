@@ -4,14 +4,14 @@ import com.example.education.dto.userbank.UserBankCreateEditDTO;
 import com.example.education.dto.userbank.UserBankReadDTO;
 import com.example.education.services.userbank.UserBankService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class UserBankController {
@@ -32,9 +32,11 @@ public class UserBankController {
     @PostMapping("/api/userBank_edit")
     public ModelAndView editUserBank(UserBankCreateEditDTO userBankCreateEditDTO,
                                         @RequestParam UUID userId) {
-        userBankService.update(userId,userBankCreateEditDTO)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
+        try {
+            userBankService.update(userId,userBankCreateEditDTO);
+        }catch (Exception e) {
+            log.error(e.getMessage());
+        }
         return new ModelAndView("redirect:/order");
     }
 

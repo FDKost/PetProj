@@ -74,8 +74,8 @@ public class UserBankServiceImpl implements UserBankService {
     public void fillProfile(UserDetails userDetails, Model model) {
         String login = userDetails.getUsername();
         Optional<UserReadDTO> user = userService.findByUsername(login);
-        String arasakaName = "Arasaka";
-        Optional<BankEntity> arasakaBank = bankService.findBankEntityByBankName(arasakaName);
+        String GMPBankName = "GMP";
+        Optional<BankEntity> GMPBank = bankService.findBankEntityByBankName(GMPBankName);
         if(user.isPresent()) {
             user.get().populateUserModel(model);
 
@@ -92,7 +92,7 @@ public class UserBankServiceImpl implements UserBankService {
             if (findByUserId(user.get().getId()).isPresent()) {
                 userBank.ifPresent(userBankReadDTO -> userBankReadDTO.populateUserBankModel(model));
             } else {
-                arasakaBank.ifPresent(bankEntity -> model.addAttribute("userBank", create(new UserBankCreateEditDTO(
+                GMPBank.ifPresent(bankEntity -> model.addAttribute("userBank", create(new UserBankCreateEditDTO(
                         new UserEntity(user.get().getId(),
                                 user.get().getLogin(),
                                 user.get().getPassword(),
