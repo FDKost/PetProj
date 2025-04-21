@@ -21,18 +21,18 @@ public class PaymentRestController {
     }
 
     @GetMapping
-    public Optional<PaymentReadDTO> readPayment(@RequestParam UUID paymentId){
+    public Optional<PaymentReadDTO> readPayment(@RequestParam UUID paymentId) {
         return paymentService.findById(paymentId);
     }
 
     @PutMapping
     public void editPayment(PaymentCreateEditDTO paymentCreateEditDTO,
-                            @RequestParam UUID paymentId){
+                            @RequestParam UUID paymentId) {
         paymentService.update(paymentId, paymentCreateEditDTO);
     }
 
     @DeleteMapping
-    public void deletePayment(@RequestParam UUID paymentId){
+    public void deletePayment(@RequestParam UUID paymentId) {
         paymentService.delete(paymentId);
     }
 }

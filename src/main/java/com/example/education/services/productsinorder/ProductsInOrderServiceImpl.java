@@ -16,26 +16,26 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class ProductsInOrderServiceImpl implements ProductsInOrderService{
+public class ProductsInOrderServiceImpl implements ProductsInOrderService {
     private final ProductsInOrderRepository productsInOrderRepository;
     private final ProductsInOrderCreateEditMapper productsInOrderCreateEditMapper;
     private final ProductsInOrderReadMapper productsInOrderReadMapper;
 
     @Override
-    public Optional<ProductsInOrderReadDTO> findById(UUID id){
+    public Optional<ProductsInOrderReadDTO> findById(UUID id) {
         return productsInOrderRepository.findById(id)
                 .map(productsInOrderReadMapper::map);
     }
 
     @Override
-    public List<ProductsInOrderReadDTO> getAllProductsInOrder(){
+    public List<ProductsInOrderReadDTO> getAllProductsInOrder() {
         return productsInOrderRepository.findAllBy().stream()
                 .map(productsInOrderReadMapper::map)
                 .toList();
     }
 
     @Override
-    public ProductsInOrderReadDTO create(ProductsInOrderCreateEditDTO dto){
+    public ProductsInOrderReadDTO create(ProductsInOrderCreateEditDTO dto) {
         return Optional.of(dto)
                 .map(productsInOrderCreateEditMapper::map)
                 .map(productsInOrderRepository::save)
@@ -44,15 +44,15 @@ public class ProductsInOrderServiceImpl implements ProductsInOrderService{
     }
 
     @Override
-    public Optional<ProductsInOrderReadDTO> update(UUID id, ProductsInOrderCreateEditDTO dto){
+    public Optional<ProductsInOrderReadDTO> update(UUID id, ProductsInOrderCreateEditDTO dto) {
         return productsInOrderRepository.findById(id)
-                .map(entity -> productsInOrderCreateEditMapper.map(dto,entity))
+                .map(entity -> productsInOrderCreateEditMapper.map(dto, entity))
                 .map(productsInOrderRepository::saveAndFlush)
                 .map(productsInOrderReadMapper::map);
     }
 
     @Override
-    public boolean delete(UUID id){
+    public boolean delete(UUID id) {
         return productsInOrderRepository.findById(id)
                 .map(entity -> {
                     productsInOrderRepository.delete(entity);

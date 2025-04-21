@@ -47,18 +47,18 @@ public class OrderServiceImpl implements OrderService {
     private final ProductCartService productCartService;
 
     @Override
-    public Optional<OrderReadDTO> findById(UUID id){
+    public Optional<OrderReadDTO> findById(UUID id) {
         return orderRepository.findById(id).map(orderReadMapper::map);
     }
 
-    public List<OrderReadDTO> getAllOrders(){
+    public List<OrderReadDTO> getAllOrders() {
         return orderRepository.findAllBy().stream()
                 .map(orderReadMapper::map)
                 .toList();
     }
 
     @Override
-    public OrderReadDTO create(OrderCreateEditDTO orderDTO){
+    public OrderReadDTO create(OrderCreateEditDTO orderDTO) {
         return Optional.of(orderDTO)
                 .map(orderCreateEditMapper::map)
                 .map(orderRepository::save)
@@ -67,20 +67,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Optional<OrderReadDTO> update(UUID id, OrderCreateEditDTO orderDTO){
+    public Optional<OrderReadDTO> update(UUID id, OrderCreateEditDTO orderDTO) {
         Optional<OrderReadDTO> order = findById(id);
-        if(order.isPresent()){
+        if (order.isPresent()) {
             return orderRepository.findById(id)
                     .map(entity -> orderCreateEditMapper.map(orderDTO, entity))
                     .map(orderRepository::saveAndFlush)
                     .map(orderReadMapper::map);
-        }else {
+        } else {
             return Optional.empty();
         }
     }
 
     @Override
-    public boolean delete(UUID id){
+    public boolean delete(UUID id) {
         return orderRepository.findById(id)
                 .map(entity -> {
                     orderRepository.delete(entity);
@@ -90,7 +90,7 @@ public class OrderServiceImpl implements OrderService {
                 .orElse(false);
     }
 
-    public void fillManageOrders(Model model){
+    public void fillManageOrders(Model model) {
         List<OrderReadDTO> orders = getAllOrders();
         model.addAttribute("orders", orders);
         Optional<StatusEntity> statusComplete = statusService.findByDescription("Completed");
@@ -101,14 +101,14 @@ public class OrderServiceImpl implements OrderService {
         statusInProcess.ifPresent(statusEntity -> model.addAttribute("statusPending", statusEntity.getId()));
     }
 
-    public void fillShowOrderPage(Model model, UserDetails userDetails){
+    public void fillShowOrderPage(Model model, UserDetails userDetails) {
         List<ProductReadDTO> products = productService.getAllProducts();
         Optional<UserReadDTO> user = userService.findByUsername(userDetails.getUsername());
         if (user.isPresent()) {
-            Optional<CartReadDTO> existingCart=cartService.findCartByUserId(user.get().getId());
-            if(existingCart.isPresent()){
+            Optional<CartReadDTO> existingCart = cartService.findCartByUserId(user.get().getId());
+            if (existingCart.isPresent()) {
                 model.addAttribute("cartid", existingCart.get().getId());
-            }else{
+            } else {
                 UserEntity actualUser = new UserEntity(user.get().getId(),
                         user.get().getLogin(),
                         user.get().getPassword(),
@@ -123,12 +123,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void fillCreateOrder(OrderCreateEditDTO orderCreateEditDTO,
                                 ProductCartCreateEditDTO productCartCreateEditDTO,
-                                PaymentCreateEditDTO paymentCreateEditDTO){
-        PaymentReadDTO payment=paymentService.create(paymentCreateEditDTO);
+                                PaymentCreateEditDTO paymentCreateEditDTO) {
+        PaymentReadDTO payment = paymentService.create(paymentCreateEditDTO);
         PaymentEntity actualPayment = new PaymentEntity(payment.getId(),
-                                                        payment.getTotal(),
-                                                        payment.getCheckurl(),
-                                                        payment.getUserid());
+                payment.getTotal(),
+                payment.getCheckurl(),
+                payment.getUserid());
         orderCreateEditDTO.setPaymentid(actualPayment);
         create(orderCreateEditDTO);
         productCartService.deleteAllFromProductCartByCartId(productCartCreateEditDTO.getCartid().getId());

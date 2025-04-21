@@ -22,7 +22,6 @@ public class AddressEntity {
     private String house;
     @Column(name = "apartment")
     private String apartment;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid")
     private UserEntity user;

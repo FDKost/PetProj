@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping("/api/readUser")
-    public Optional<UserReadDTO> readUser(@RequestParam UUID id){
+    public Optional<UserReadDTO> readUser(@RequestParam UUID id) {
         return userService.findById(id);
     }
 
@@ -35,12 +35,12 @@ public class UserController {
     }
 
     @DeleteMapping("/api/deleteUser")
-    public void deleteUser(@RequestParam UUID id){
+    public void deleteUser(@RequestParam UUID id) {
         userService.delete(id);
     }
 
     @GetMapping("/api/readLogin")
-    public Optional<UserReadDTO> findByLogin(@RequestParam String login){
+    public Optional<UserReadDTO> findByLogin(@RequestParam String login) {
         return userService.findByUsername(login);
     }
 }

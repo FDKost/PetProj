@@ -14,13 +14,13 @@ public class UserBankReadDTO {
     BankEntity bank;
 
     public Model populateBankModel(Model model) {
-        model.addAttribute("bankId",bank.getId());
+        model.addAttribute("bankId", bank.getId());
 
         return model;
     }
 
     public Model populateUserBankModel(Model model) {
-        model.addAttribute("userBank",id);
+        model.addAttribute("userBank", id);
 
         return model;
     }

@@ -19,14 +19,12 @@ public class ProductsInOrderEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
-    @Column(name = "quantity",nullable = false)
+    @Column(name = "quantity", nullable = false)
     private Long quantity;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "orderid",nullable = false)
+    @JoinColumn(name = "orderid", nullable = false)
     private OrderEntity order;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productid",nullable = false)
+    @JoinColumn(name = "productid", nullable = false)
     private ProductEntity product;
 }

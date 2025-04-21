@@ -26,19 +26,19 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public Optional<UserReadDTO> findById(UUID id){
+    public Optional<UserReadDTO> findById(UUID id) {
         return userRepository.findById(id)
                 .map(userReadMapper::map);
     }
 
     @Override
-    public Optional<UserReadDTO> findByUsername(String username){
+    public Optional<UserReadDTO> findByUsername(String username) {
         return userRepository.findByLogin(username)
                 .map(userReadMapper::map);
     }
 
     @Override
-    public UserReadDTO create(UserCreateEditDTO userDTO){
+    public UserReadDTO create(UserCreateEditDTO userDTO) {
         return Optional.of(userDTO)
                 .map(userCreateEditMapper::map)
                 .map(userRepository::save)
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserReadDTO> update(UUID id, UserCreateEditDTO userDTO){
+    public Optional<UserReadDTO> update(UUID id, UserCreateEditDTO userDTO) {
         return userRepository.findById(id)
                 .map(entity -> userCreateEditMapper.map(userDTO, entity))
                 .map(userRepository::saveAndFlush)
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public Boolean delete(UUID id){
+    public Boolean delete(UUID id) {
         return userRepository.findById(id)
                 .map(entity -> {
                     userRepository.delete(entity);
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void fillCreateUser(UserCreateEditDTO userCreateEditDTO,
-                               AddressCreateEditDTO addressCreateEditDTO){
+                               AddressCreateEditDTO addressCreateEditDTO) {
         userCreateEditDTO.setPassword(passwordEncoder.encode(userCreateEditDTO.getPassword()));
         create(userCreateEditDTO);
         Optional<UserReadDTO> user = findByUsername(userCreateEditDTO.getLogin());

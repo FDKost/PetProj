@@ -21,12 +21,10 @@ public class ProductCartEntity {
     private UUID id;
     @Column(name = "quantity", nullable = false)
     private Long quantity;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productid",nullable = false)
+    @JoinColumn(name = "productid", nullable = false)
     private ProductEntity product;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cartid",nullable = false)
+    @JoinColumn(name = "cartid", nullable = false)
     private CartEntity cart;
 }

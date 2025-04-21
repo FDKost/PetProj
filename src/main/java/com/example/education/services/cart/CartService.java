@@ -15,7 +15,7 @@ public interface CartService {
 
     CartReadDTO create(CartCreateEditDTO cartDTO);
 
-    Optional<CartReadDTO> update(UUID id,CartCreateEditDTO cartDTO);
+    Optional<CartReadDTO> update(UUID id, CartCreateEditDTO cartDTO);
 
     boolean delete(UUID id);
 

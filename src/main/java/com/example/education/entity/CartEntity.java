@@ -20,10 +20,9 @@ public class CartEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
-    @Column(name = "createdin",nullable = false)
+    @Column(name = "createdin", nullable = false)
     private LocalDate createdIn;
-
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userid",nullable = false)
+    @JoinColumn(name = "userid", nullable = false)
     private UserEntity user;
 }

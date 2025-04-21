@@ -52,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Optional<ProductReadDTO> update(UUID id, ProductCreateEditDTO productDTO) {
         return productRepository.findById(id)
-                .map(entity -> productCreateEditMapper.map(productDTO,entity))
+                .map(entity -> productCreateEditMapper.map(productDTO, entity))
                 .map(productRepository::saveAndFlush)
                 .map(productReadMapper::map);
     }

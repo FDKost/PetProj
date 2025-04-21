@@ -19,11 +19,10 @@ public class PaymentEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
-    @Column(name = "total",nullable = false)
+    @Column(name = "total", nullable = false)
     private Long total;
-    @Column(name = "checkurl",nullable = false)
+    @Column(name = "checkurl", nullable = false)
     private String checkURL;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid")
     private UserEntity user;

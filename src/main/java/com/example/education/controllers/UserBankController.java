@@ -31,10 +31,10 @@ public class UserBankController {
 
     @PostMapping("/api/userBank_edit")
     public ModelAndView editUserBank(UserBankCreateEditDTO userBankCreateEditDTO,
-                                        @RequestParam UUID userId) {
+                                     @RequestParam UUID userId) {
         try {
-            userBankService.update(userId,userBankCreateEditDTO);
-        }catch (Exception e) {
+            userBankService.update(userId, userBankCreateEditDTO);
+        } catch (Exception e) {
             log.error(e.getMessage());
         }
         return new ModelAndView("redirect:/order");

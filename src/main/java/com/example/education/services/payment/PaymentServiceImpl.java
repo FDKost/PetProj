@@ -21,13 +21,13 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentReadMapper paymentReadMapper;
 
     @Override
-    public Optional<PaymentReadDTO> findById(UUID id){
+    public Optional<PaymentReadDTO> findById(UUID id) {
         return paymentRepository.findById(id)
                 .map(paymentReadMapper::map);
     }
 
     @Override
-    public PaymentReadDTO create(PaymentCreateEditDTO paymentDTO){
+    public PaymentReadDTO create(PaymentCreateEditDTO paymentDTO) {
         return Optional.of(paymentDTO)
                 .map(paymentCreateEditMapper::map)
                 .map(paymentRepository::save)
@@ -36,15 +36,15 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Optional<PaymentReadDTO> update(UUID id, PaymentCreateEditDTO paymentDTO){
+    public Optional<PaymentReadDTO> update(UUID id, PaymentCreateEditDTO paymentDTO) {
         return paymentRepository.findById(id)
-                .map(entity -> paymentCreateEditMapper.map(paymentDTO,entity))
+                .map(entity -> paymentCreateEditMapper.map(paymentDTO, entity))
                 .map(paymentRepository::saveAndFlush)
                 .map(paymentReadMapper::map);
     }
 
     @Override
-    public boolean delete(UUID id){
+    public boolean delete(UUID id) {
         return paymentRepository.findById(id)
                 .map(entity -> {
                     paymentRepository.delete(entity);

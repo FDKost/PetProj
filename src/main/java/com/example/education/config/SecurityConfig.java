@@ -20,27 +20,27 @@ import org.springframework.ws.config.annotation.EnableWs;
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    HttpSessionCsrfTokenRepository csrfTokenRepository = new HttpSessionCsrfTokenRepository();
+        HttpSessionCsrfTokenRepository csrfTokenRepository = new HttpSessionCsrfTokenRepository();
         return http
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(csrf ->
-                        csrf.csrfTokenRequestHandler(new XorCsrfTokenRequestAttributeHandler())
-                                .csrfTokenRepository(csrfTokenRepository)
-                                .sessionAuthenticationStrategy(new CsrfAuthenticationStrategy(csrfTokenRepository))
-                                .ignoringRequestMatchers(new AntPathRequestMatcher("/static/**"))
-                                /*.requireCsrfProtectionMatcher(new AntPathRequestMatcher("/profile/create"))*/)
+                                csrf.csrfTokenRequestHandler(new XorCsrfTokenRequestAttributeHandler())
+                                        .csrfTokenRepository(csrfTokenRepository)
+                                        .sessionAuthenticationStrategy(new CsrfAuthenticationStrategy(csrfTokenRepository))
+                                        .ignoringRequestMatchers(new AntPathRequestMatcher("/static/**"))
+                        /*.requireCsrfProtectionMatcher(new AntPathRequestMatcher("/profile/create"))*/)
 
-                .authorizeHttpRequests(authorizeRequests ->authorizeRequests
-                        .requestMatchers( "/static/**","/order/**",
-                                        "/profile/create","/profile/**","/api/**","/cart","/orders/**","/payment/**","/productsInOrder/**").authenticated()
+                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers("/static/**", "/order/**",
+                                "/profile/create", "/profile/**", "/api/**", "/cart", "/orders/**", "/payment/**", "/productsInOrder/**").authenticated()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                        .requestMatchers("/styles.css","/home","/login/**", "/static/**","/registration","/logRegCSS.css","/images/**","/contact").permitAll()
+                        .requestMatchers("/styles.css", "/home", "/login/**", "/static/**", "/registration", "/logRegCSS.css", "/images/**", "/contact").permitAll()
 
 
                 )
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home",true)
+                        .defaultSuccessUrl("/home", true)
                         .permitAll()
                 )
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer
@@ -50,6 +50,7 @@ public class SecurityConfig {
                 )
                 .build();
     }
+
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder(8);

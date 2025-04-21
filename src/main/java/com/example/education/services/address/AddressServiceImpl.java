@@ -22,26 +22,26 @@ public class AddressServiceImpl implements AddressService {
     private final AddressReadMapper addressReadMapper;
 
     @Override
-    public Optional<AddressReadDTO> findById(UUID id){
+    public Optional<AddressReadDTO> findById(UUID id) {
         return addressRepository.findById(id)
                 .map(addressReadMapper::map);
     }
 
     @Override
-    public List<AddressReadDTO> findAll(){
+    public List<AddressReadDTO> findAll() {
         return addressRepository.findAll().stream()
                 .map(addressReadMapper::map)
                 .toList();
     }
 
     @Override
-    public Optional<AddressReadDTO> findAddressByUserId(UUID userId){
+    public Optional<AddressReadDTO> findAddressByUserId(UUID userId) {
         return addressRepository.findAddressByUserId(userId)
                 .map(addressReadMapper::map);
     }
 
     @Override
-    public AddressReadDTO create(AddressCreateEditDTO addressDTO){
+    public AddressReadDTO create(AddressCreateEditDTO addressDTO) {
         return Optional.of(addressDTO)
                 .map(addressCreateEditMapper::map)
                 .map(addressRepository::save)
@@ -50,15 +50,15 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Optional<AddressReadDTO> update(UUID id, AddressCreateEditDTO addressDTO){
+    public Optional<AddressReadDTO> update(UUID id, AddressCreateEditDTO addressDTO) {
         return addressRepository.findById(id)
-                .map(entity -> addressCreateEditMapper.map(addressDTO,entity))
+                .map(entity -> addressCreateEditMapper.map(addressDTO, entity))
                 .map(addressRepository::saveAndFlush)
                 .map(addressReadMapper::map);
     }
 
     @Override
-    public boolean delete(UUID id){
+    public boolean delete(UUID id) {
         return addressRepository.findById(id)
                 .map(entity -> {
                     addressRepository.delete(entity);
@@ -73,7 +73,7 @@ public class AddressServiceImpl implements AddressService {
 
         if (existingAddress.isPresent()) {
             update(existingAddress.get().getId(), addressCreateEditDTO);
-        }else{
+        } else {
             create(addressCreateEditDTO);
         }
     }

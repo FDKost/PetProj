@@ -17,6 +17,7 @@ public class BankServiceImpl implements BankService {
     public Optional<BankEntity> findBankEntityByBankName(String bankName) {
         return bankRepository.findBankEntityByBankName(bankName);
     }
+
     @Override
     public List<BankEntity> findAll() {
         return bankRepository.findAll();

@@ -19,12 +19,12 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
-    @Column(name = "name",nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "price",nullable = false)
+    @Column(name = "price", nullable = false)
     private Long price;
-    @Column(name = "details",nullable = false)
+    @Column(name = "details", nullable = false)
     private String details;
-    @Column(name = "imageurl",nullable = false)
+    @Column(name = "imageurl", nullable = false)
     private String imageURL;
 }

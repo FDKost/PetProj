@@ -54,7 +54,7 @@ public class UserBankServiceImpl implements UserBankService {
     @Override
     public Optional<UserBankReadDTO> update(UUID userId, UserBankCreateEditDTO userBankCreateEditDTO) {
         return userBankRepository.findByUserId(userId)
-                .map(entity -> userBankCreateEditMapper.map(userBankCreateEditDTO,entity))
+                .map(entity -> userBankCreateEditMapper.map(userBankCreateEditDTO, entity))
                 .map(userBankRepository::saveAndFlush)
                 .map(userBankReadMapper::map);
     }
@@ -76,7 +76,7 @@ public class UserBankServiceImpl implements UserBankService {
         Optional<UserReadDTO> user = userService.findByUsername(login);
         String GMPBankName = "GMP";
         Optional<BankEntity> GMPBank = bankService.findBankEntityByBankName(GMPBankName);
-        if(user.isPresent()) {
+        if (user.isPresent()) {
             user.get().populateUserModel(model);
 
             Optional<UserBankReadDTO> userBank = findByUserId(user.get().getId());
@@ -85,7 +85,7 @@ public class UserBankServiceImpl implements UserBankService {
             List<BankEntity> banks = bankService.findAll();
             if (!banks.isEmpty()) {
                 for (BankEntity bankEntity : banks) {
-                    model.addAttribute(bankEntity.getBankName(),bankEntity.getId());
+                    model.addAttribute(bankEntity.getBankName(), bankEntity.getId());
                 }
             }
 

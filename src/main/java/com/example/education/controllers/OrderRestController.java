@@ -7,7 +7,10 @@ import com.example.education.dto.order.OrderCreateEditDTO;
 import com.example.education.dto.order.OrderReadDTO;
 import com.example.education.dto.payment.PaymentCreateEditDTO;
 import com.example.education.dto.productcart.ProductCartCreateEditDTO;
+import com.example.education.dto.productcart.ProductCartReadDTO;
+import com.example.education.services.kafka.SendProductsService;
 import com.example.education.services.order.OrderService;
+import com.example.education.services.productcart.ProductCartService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +27,8 @@ import java.util.UUID;
 public class OrderRestController {
     private final OrderService orderService;
     private final BankClient bankClient;
+    private final SendProductsService sendProductsService;
+    private final ProductCartService productCartService;
 
     @SneakyThrows
     @PostMapping("/createOrder")
@@ -36,6 +41,7 @@ public class OrderRestController {
                 BigDecimal.valueOf(paymentCreateEditDTO.getTotal()));
 
         if(response.getStatus() == 200){
+            sendProductsService.sendProducts(productCartCreateEditDTO.getCartid().getId());
             orderService.fillCreateOrder(orderCreateEditDTO, productCartCreateEditDTO, paymentCreateEditDTO);
             return new ModelAndView("redirect:/home");
         }else {

@@ -18,11 +18,9 @@ public class UserBankEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     UserEntity user;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bank_id")
     BankEntity bank;

@@ -16,11 +16,11 @@ public class UserBankCreateEditMapper implements Mapper<UserBankCreateEditDTO, U
 
     @Override
     public UserBankEntity map(UserBankCreateEditDTO fromObject, UserBankEntity toObject) {
-        fillUserBankCreateEditDTO(fromObject,toObject);
+        fillUserBankCreateEditDTO(fromObject, toObject);
         return toObject;
     }
 
-    private void fillUserBankCreateEditDTO(UserBankCreateEditDTO object, UserBankEntity userBank){
+    private void fillUserBankCreateEditDTO(UserBankCreateEditDTO object, UserBankEntity userBank) {
         userBank.setBank(object.getBankId());
         userBank.setUser(object.getUserId());
     }

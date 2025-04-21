@@ -24,19 +24,19 @@ public class CartRestController {
     }
 
     @GetMapping("/api/cart_read")
-    public Optional<CartReadDTO> readCart(@RequestParam UUID cartId){
+    public Optional<CartReadDTO> readCart(@RequestParam UUID cartId) {
         return cartService.findById(cartId);
     }
 
     @PutMapping("/api/cart_edit")
     public CartReadDTO editCart(CartCreateEditDTO cartCreateEditDTO,
-                         @RequestParam UUID cartId){
+                                @RequestParam UUID cartId) {
         return cartService.update(cartId, cartCreateEditDTO)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping("/api/cart_delete")
-    public void deleteCart(@RequestParam UUID cartId){
+    public void deleteCart(@RequestParam UUID cartId) {
         cartService.delete(cartId);
     }
 }

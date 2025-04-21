@@ -16,9 +16,8 @@ public class ProfileController {
     private final UserBankService userBankService;
 
     @GetMapping
-    public String profile(@AuthenticationPrincipal UserDetails userDetails, Model model){
+    public String profile(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         userBankService.fillProfile(userDetails, model);
-
         return "profile";
     }
 }

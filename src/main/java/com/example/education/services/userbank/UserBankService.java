@@ -12,6 +12,7 @@ public interface UserBankService {
     Optional<UserBankReadDTO> findByBankId(UUID bankId);
 
     Optional<UserBankReadDTO> findByUserId(UUID userId);
+
     UserBankReadDTO create(UserBankCreateEditDTO userBankCreateEditDTO);
 
     Optional<UserBankReadDTO> update(UUID id, UserBankCreateEditDTO userBankCreateEditDTO);

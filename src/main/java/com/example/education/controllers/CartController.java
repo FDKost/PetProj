@@ -16,7 +16,7 @@ public class CartController {
     private final CartService cartService;
 
     @GetMapping
-    public String showCartPage(Model model,@AuthenticationPrincipal UserDetails userDetails) {
+    public String showCartPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         cartService.fillShowCartPage(model, userDetails);
 
         return "cart";

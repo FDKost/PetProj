@@ -23,17 +23,17 @@ public class ProductCartController {
     }
 
     @GetMapping("/api/getProductCart")
-    public List<ProductCartReadDTO> readProductCart(@RequestParam UUID cartItemId){
+    public List<ProductCartReadDTO> readProductCart(@RequestParam UUID cartItemId) {
         return productCartService.findAllProductCartByCartId(cartItemId);
     }
 
     @PutMapping("/api/editProductCart")
-    public void editProductCart(@RequestParam UUID productCartId,ProductCartCreateEditDTO productCartCreateEditDTO){
+    public void editProductCart(@RequestParam UUID productCartId, ProductCartCreateEditDTO productCartCreateEditDTO) {
         productCartService.update(productCartId, productCartCreateEditDTO);
     }
 
     @PostMapping("/api/deleteProductCart")
-    public ModelAndView deleteProductCart(@RequestParam UUID productId){
+    public ModelAndView deleteProductCart(@RequestParam UUID productId) {
         productCartService.deleteProductFromProductCart(productId);
 
         return new ModelAndView("redirect:/cart");

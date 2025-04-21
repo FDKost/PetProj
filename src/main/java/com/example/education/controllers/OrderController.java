@@ -18,7 +18,6 @@ public class OrderController {
     @GetMapping
     public String showOrderPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         orderService.fillShowOrderPage(model, userDetails);
-
         return "order";
     }
 }

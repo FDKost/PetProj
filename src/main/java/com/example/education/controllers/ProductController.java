@@ -25,12 +25,12 @@ public class ProductController {
     }
 
     @GetMapping("/read")
-    public Optional<ProductReadDTO> readProduct(@RequestParam UUID productId){
+    public Optional<ProductReadDTO> readProduct(@RequestParam UUID productId) {
         return productService.findById(productId);
     }
 
     @PutMapping("/editProduct")
-    public void editProduct(@RequestParam UUID productId,@RequestBody ProductCreateEditDTO productCreateEditDTO){
+    public void editProduct(@RequestParam UUID productId, @RequestBody ProductCreateEditDTO productCreateEditDTO) {
         productService.update(productId, productCreateEditDTO);
     }
 
@@ -40,7 +40,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/deleteProduct")
-    public void deleteProduct(@RequestParam UUID productId){
+    public void deleteProduct(@RequestParam UUID productId) {
         productService.delete(productId);
     }
 }

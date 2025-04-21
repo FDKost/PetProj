@@ -32,7 +32,7 @@ public class ProductsInOrderRestController {
     }
 
     @PutMapping("/edit")
-    public void editProductsInOrder(@RequestParam UUID productsInOrderId,@RequestBody ProductsInOrderCreateEditDTO productsInOrderCreateEditDTO) {
+    public void editProductsInOrder(@RequestParam UUID productsInOrderId, @RequestBody ProductsInOrderCreateEditDTO productsInOrderCreateEditDTO) {
         productsInOrderService.update(productsInOrderId, productsInOrderCreateEditDTO);
     }
 

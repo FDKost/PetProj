@@ -17,11 +17,11 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
-    @Column(name = "login",nullable = false)
+    @Column(name = "login", nullable = false)
     private String login;
-    @Column(name = "password",nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
     @Enumerated(EnumType.STRING)
-    @Column(name = "role",nullable = false)
+    @Column(name = "role", nullable = false)
     private Role role;
 }

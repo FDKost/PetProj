@@ -1,6 +1,5 @@
 package com.example.education.client;
 
-
 import com.example.consumingwebservice.wsdl.*;
 import com.example.education.entity.UserEntity;
 import lombok.SneakyThrows;
@@ -19,7 +18,7 @@ public class BankClient extends WebServiceGatewaySupport {
     private static final String KEYSTORE_PATH = "/keystore.jks";
 
     public GetBankResponse getBank(GetBankRequest request, UserEntity buyerId,
-                                   String sellerName, BigDecimal sum){
+                                   String sellerName, BigDecimal sum) {
         request.setBuyerId(String.valueOf(buyerId.getId()));
 
         BuyerBankAccount buyerBankAccount = new BuyerBankAccount();
@@ -29,7 +28,7 @@ public class BankClient extends WebServiceGatewaySupport {
         buyerBankAccount.setClient(buyerClient);
         buyerBankAccount.setSum(sum);
 
-        byte[] buyerSecretBytes = encryptBuyer(sum,buyerClient.getName());
+        byte[] buyerSecretBytes = encryptBuyer(sum, buyerClient.getName());
         String buyerSecret = Base64.getEncoder().encodeToString(buyerSecretBytes);
         request.setBuyerSecret(buyerSecret);
         request.setBuyerBankAccount(buyerBankAccount);
@@ -39,19 +38,17 @@ public class BankClient extends WebServiceGatewaySupport {
         sellerClient.setName(sellerName);
         sellerBankAccount.setClient(sellerClient);
 
-        byte[] sellerSecretBytes = encryptSeller(sum,sellerName);
+        byte[] sellerSecretBytes = encryptSeller(sum, sellerName);
         String sellerSecret = Base64.getEncoder().encodeToString(sellerSecretBytes);
         request.setSellerSecret(sellerSecret);
         request.setSellerBankAccount(sellerBankAccount);
 
-        GetBankResponse response = (GetBankResponse) getWebServiceTemplate()
+        return (GetBankResponse) getWebServiceTemplate()
                 .marshalSendAndReceive(request);
-
-        return response;
     }
 
     @SneakyThrows
-    private byte[] encryptSeller(BigDecimal sum, String sellerName){
+    private byte[] encryptSeller(BigDecimal sum, String sellerName) {
         KeyStore keyStore = KeyStore.getInstance("JKS");
         try (InputStream is = getClass().getResourceAsStream(KEYSTORE_PATH)) {
             keyStore.load(is, KEYSTORE_PASSWORD.toCharArray());
@@ -63,12 +60,13 @@ public class BankClient extends WebServiceGatewaySupport {
         }
 
         Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.ENCRYPT_MODE,privateKey);
-        String message = sum +"/"+sellerName;
+        cipher.init(Cipher.ENCRYPT_MODE, privateKey);
+        String message = sum + "/" + sellerName;
         byte[] messageBytes = message.getBytes(StandardCharsets.UTF_8);
 
         return cipher.doFinal(messageBytes);
     }
+
     @SneakyThrows
     private byte[] encryptBuyer(BigDecimal sum, String buyerName) {
         KeyStore keyStore = KeyStore.getInstance("JKS");
@@ -82,8 +80,8 @@ public class BankClient extends WebServiceGatewaySupport {
         }
 
         Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.ENCRYPT_MODE,privateKey);
-        String message = sum +"/"+buyerName;
+        cipher.init(Cipher.ENCRYPT_MODE, privateKey);
+        String message = sum + "/" + buyerName;
         byte[] messageBytes = message.getBytes(StandardCharsets.UTF_8);
 
         return cipher.doFinal(messageBytes);

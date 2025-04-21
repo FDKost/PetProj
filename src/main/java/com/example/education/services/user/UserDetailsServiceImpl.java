@@ -26,6 +26,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                         Collections.singleton(user.getRole()
                         )
                 ))
-                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: "+ username));
+                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
     }
 }

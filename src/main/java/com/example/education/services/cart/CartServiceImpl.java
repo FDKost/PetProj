@@ -58,9 +58,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Optional<CartReadDTO> update(UUID id,CartCreateEditDTO cartDTO) {
+    public Optional<CartReadDTO> update(UUID id, CartCreateEditDTO cartDTO) {
         return cartRepository.findById(id)
-                .map(entity -> cartCreateEditMapper.map(cartDTO,entity))
+                .map(entity -> cartCreateEditMapper.map(cartDTO, entity))
                 .map(cartRepository::saveAndFlush)
                 .map(cartReadMapper::map);
     }
@@ -76,7 +76,7 @@ public class CartServiceImpl implements CartService {
                 .orElse(false);
     }
 
-    public void fillShowCartPage(Model model, UserDetails userDetails){
+    public void fillShowCartPage(Model model, UserDetails userDetails) {
         String username = userDetails.getUsername();
         Optional<UserReadDTO> user = userService.findByUsername(username);
         if (user.isPresent()) {
@@ -85,7 +85,7 @@ public class CartServiceImpl implements CartService {
 
             model.addAttribute("userid", user.get().getId());
             Optional<CartReadDTO> cart = findCartByUserId(user.get().getId());
-            if(cart.isPresent()) {
+            if (cart.isPresent()) {
                 List<ProductCartReadDTO> cartItems = productCartService.findAllProductCartByCartId(cart.get().getId());
                 long totalAmount = 0L;
                 for (ProductCartReadDTO cartItem : cartItems) {
@@ -96,7 +96,7 @@ public class CartServiceImpl implements CartService {
             }
         }
         model.addAttribute("date", LocalDate.now());
-        model.addAttribute("checkurl","https://drive.google.com/thumbnail?id=1SK68T2d4rLGx8_VC-EuFFyhIWorpLIu_");
+        model.addAttribute("checkurl", "https://drive.google.com/thumbnail?id=1SK68T2d4rLGx8_VC-EuFFyhIWorpLIu_");
 
         Optional<StatusEntity> status = statusService.findByDescription("In process");
         status.ifPresent(statusEntity -> model.addAttribute("status", statusEntity.getId()));

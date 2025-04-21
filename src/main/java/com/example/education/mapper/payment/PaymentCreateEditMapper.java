@@ -10,13 +10,13 @@ public class PaymentCreateEditMapper implements Mapper<PaymentCreateEditDTO, Pay
     @Override
     public PaymentEntity map(PaymentCreateEditDTO object) {
         PaymentEntity payment = new PaymentEntity();
-        fillPaymentCreateEditDTO(object,payment);
+        fillPaymentCreateEditDTO(object, payment);
         return payment;
     }
 
     @Override
     public PaymentEntity map(PaymentCreateEditDTO fromObject, PaymentEntity toObject) {
-        fillPaymentCreateEditDTO(fromObject,toObject);
+        fillPaymentCreateEditDTO(fromObject, toObject);
         return toObject;
     }
 

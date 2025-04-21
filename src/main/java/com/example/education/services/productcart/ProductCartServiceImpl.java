@@ -52,7 +52,7 @@ public class ProductCartServiceImpl implements ProductCartService {
     @Override
     public Optional<ProductCartReadDTO> update(UUID id, ProductCartCreateEditDTO productCartDTO) {
         return productCartRepository.findById(id)
-                .map(entity -> productCartCreateEditMapper.map(productCartDTO,entity))
+                .map(entity -> productCartCreateEditMapper.map(productCartDTO, entity))
                 .map(productCartRepository::saveAndFlush)
                 .map(productCartReadMapper::map);
     }
@@ -60,7 +60,7 @@ public class ProductCartServiceImpl implements ProductCartService {
     @Override
     public boolean delete(UUID id) {
         return productCartRepository.findById(id)
-                .map(entity ->{
+                .map(entity -> {
                     productCartRepository.delete(entity);
                     productCartRepository.flush();
                     return true;
@@ -69,7 +69,7 @@ public class ProductCartServiceImpl implements ProductCartService {
     }
 
     @Override
-    public void deleteAllFromProductCartByCartId(UUID cartId){
+    public void deleteAllFromProductCartByCartId(UUID cartId) {
         productCartRepository.findAllProductCartByCartId(cartId)
                 .forEach(entity -> {
                     productCartRepository.deleteAllByCartId(entity.getCart().getId());
@@ -94,16 +94,16 @@ public class ProductCartServiceImpl implements ProductCartService {
         UUID productId = null;
         Long quantity = 0L;
         for (ProductCartReadDTO productCartReadDTO : carts) {
-            if(productCartCreateEditDTO.getProductid().getId().equals(productCartReadDTO.getProductid().getId())) {
+            if (productCartCreateEditDTO.getProductid().getId().equals(productCartReadDTO.getProductid().getId())) {
                 productId = productCartReadDTO.getProductid().getId();
                 quantity += productCartReadDTO.getQuantity();
             }
         }
-        if (quantity == 0){
+        if (quantity == 0) {
             create(productCartCreateEditDTO);
-        }else {
+        } else {
             deleteProductFromProductCart(productId);
-            productCartCreateEditDTO.setQuantity(quantity+productCartCreateEditDTO.getQuantity());
+            productCartCreateEditDTO.setQuantity(quantity + productCartCreateEditDTO.getQuantity());
             create(productCartCreateEditDTO);
         }
     }

@@ -6,7 +6,7 @@ import com.example.education.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AddressReadMapper implements Mapper<AddressEntity,AddressReadDTO> {
+public class AddressReadMapper implements Mapper<AddressEntity, AddressReadDTO> {
     @Override
     public AddressReadDTO map(AddressEntity object) {
         return new AddressReadDTO(
