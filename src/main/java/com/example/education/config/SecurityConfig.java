@@ -27,8 +27,7 @@ public class SecurityConfig {
                                 csrf.csrfTokenRequestHandler(new XorCsrfTokenRequestAttributeHandler())
                                         .csrfTokenRepository(csrfTokenRepository)
                                         .sessionAuthenticationStrategy(new CsrfAuthenticationStrategy(csrfTokenRepository))
-                                        .ignoringRequestMatchers(new AntPathRequestMatcher("/static/**"))
-                        /*.requireCsrfProtectionMatcher(new AntPathRequestMatcher("/profile/create"))*/)
+                                        .ignoringRequestMatchers(new AntPathRequestMatcher("/static/**")))
 
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/static/**", "/order/**",
