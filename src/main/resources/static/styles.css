@@ -1,12 +1,12 @@
 @font-face {
     font-family: 'Pixel';
-    src: url('https://static1.squarespace.com/static/635fe9a25a0434686a7689f3/t/635fef674523c7290c9c4c82/1667231591615/VCR_OSD_MONO_1.001.ttf');
+    src: url('/fonts/vcrosdmonorus_vhsicons.ttf');
 }
 
 html, body {
     background-color: black;
     color: red;
-    font-family: 'Pixel', sans-serif; /* Используем пиксельный шрифт для всего текста */
+    font-family: 'Pixel', sans-serif;
     position: fixed;
     overflow-y: auto;
     margin: 0;
@@ -22,23 +22,23 @@ html, body {
 .main-pic {
     display: flex;
     align-items: center;
-    background-color: black; /* Цвет фона, можете заменить на ваш желаемый цвет */
+    background-color: black;
     padding: 10px;
 }
 
 .main-part {
     display: flex;
     align-items: center;
-    margin-left:300px; /* Добавляем отступ для "ORDER" вправо на 300px */
+    margin-left:300px;
 }
 
 .main-part h5 {
-    color: white; /* Устанавливаем белый цвет текста */
-    margin: 50px; /* Убираем внешние отступы у h5 элементов */
+    color: white;
+    margin: 50px;
 }
 
 .main-part h5 + h5 + h5 {
-    margin-left: 50px; /* Добавляем отступ между двумя h5 элементами */
+    margin-left: 50px;
 }
 
 .about-us {
@@ -139,8 +139,7 @@ html, body {
     background-color: red; !* Изменяем фон кнопки на красный при наведении *!
 }*/
 .cartButton {
-    font-family: 'Pixel';
-    src: url('https://static1.squarespace.com/static/635fe9a25a0434686a7689f3/t/635fef674523c7290c9c4c82/1667231591615/VCR_OSD_MONO_1.001.ttf');
+    font-family: 'Pixel', sans-serif;
     color: red; /* Установим цвет текста красным */
     background-color: black; /* Установим фон кнопки чёрным */
     padding: 10px 20px; /* Добавим отступы вокруг текста кнопки */
@@ -230,8 +229,7 @@ html, body {
 
 /* Стили для кнопки выхода */
 .logout-button {
-    font-family: 'Pixel';
-    src: url('https://static1.squarespace.com/static/635fe9a25a0434686a7689f3/t/635fef674523c7290c9c4c82/1667231591615/VCR_OSD_MONO_1.001.ttf');
+    font-family: 'Pixel',sans-serif;
     color: red; /* Установим цвет текста красным */
     background-color: black; /* Установим фон кнопки чёрным */
     padding: 10px 20px; /* Добавим отступы вокруг текста кнопки */

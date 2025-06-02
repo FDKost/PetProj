@@ -1,4 +1,4 @@
-package com.example.education.services.kafka;
+package com.example.education.services.kafka.producer;
 
 import com.example.education.dto.productcart.ProductCartKafkaDTO;
 import com.example.education.dto.productcart.ProductCartReadDTO;
@@ -22,7 +22,7 @@ public class SendProductsServiceImpl implements SendProductsService {
 
     @SneakyThrows
     @Override
-    public String sendProducts(UUID cartId) {
+    public String sendProducts(UUID orderId,UUID cartId) {
         List<ProductCartReadDTO> products = productCartService.findAllProductCartByCartId(cartId);
         List<ProductCartKafkaDTO> productDTOList = products.stream()
                 .map(product -> new ProductCartKafkaDTO(
@@ -32,13 +32,13 @@ public class SendProductsServiceImpl implements SendProductsService {
                         product.getProductid().getPrice(),
                         product.getProductid().getDetails(),
                         product.getProductid().getImageURL(),
-                        product.getCartid().getId(),
+                        orderId,
                         product.getQuantity()
                 ))
                 .toList();
 
         for (ProductCartKafkaDTO dto : productDTOList) {
-            kafkaTemplate.send("cook-created-events-topic", cartId.toString(), dto);
+            kafkaTemplate.send("cook-created-events-topic", orderId.toString(), dto);
         }
 
         LOGGER.info("Return: {}", productDTOList);

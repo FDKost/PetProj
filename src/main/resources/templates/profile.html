@@ -15,43 +15,43 @@
 <div class="main-pic">
   <a th:href="@{/home}"><img th:src="@{https://drive.google.com/thumbnail?id=18TXcE9rAU2EYXnQFBE4haqnUGo4-Rtrj}" width="230px"/></a>
   <div class="main-part">
-    <h5><a th:href="@{/order}">ORDER</a></h5>
-    <h5><a th:href="@{/contact}">CONTACT</a></h5>
-    <h5><a th:href="@{/profile}">PROFILE</a></h5>
+    <h5><a th:href="@{/order}">ТОВАРЫ</a></h5>
+    <h5><a th:href="@{/contact}">КОНТАКТЫ</a></h5>
+    <h5><a th:href="@{/profile}">ПРОФИЛЬ</a></h5>
   </div>
   <div class="cart">
     <h5>
-      <a th:href="@{/cart}">CART</a>
+      <a th:href="@{/cart}">КОРЗИНА</a>
     </h5>
   </div>
 </div>
 <div class="logout-container">
   <form th:action="@{/logout}" method="post">
-    <button type="submit" class="logout-button">Logout</button>
+    <button type="submit" class="logout-button">Выйти</button>
   </form>
 </div>
 <div class="main-label">
-  <h1>Who are you SAMURAI?</h1>
+  <h1>Кто ты САМУРАЙ?</h1>
 </div>
 <div class="address-form">
-  <h2>Add or Update address</h2>
+  <h2>Добавить или обновить адрес</h2>
   <form th:action="@{/profile/create}" th:method="post">
     <input type="hidden" id="id" name="id" th:value="${addressId}">
     <input type="hidden" id="userid" name="userid" th:value="${userId}">
-    <label for="street">Street:</label>
+    <label for="street">Улица:</label>
     <input type="text" id="street" name="street" required><br>
 
-    <label for="house">House:</label>
+    <label for="house">Дом:</label>
     <input type="text" id="house" name="house" required><br>
 
-    <label for="apartment">Apartment:</label>
+    <label for="apartment">Квартира:</label>
     <input type="text" id="apartment" name="apartment" required><br>
 
-    <input type="submit" value="Add or Update Address">
+    <input type="submit" value="Добавить или обновить адрес">
   </form>
 </div>
 <div class="userBank-form">
-  <h2>Add or Update your bank with eddies</h2>
+  <h2>Добавь или обнови банк с своими эдди</h2>
   <form th:action="@{/api/userBank_edit}" th:method="post">
     <input type="hidden" name="userId" th:value="${userId}">
     <label>
@@ -60,7 +60,7 @@
         <option th:value="${VGU}" th:selected="${bankId == VGU}">VGU</option>
       </select>
     </label>
-    <input type="submit" value="Add/update">
+    <input type="submit" value="Добавить/обновить">
   </form>
 </div>
 </body>

@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Pixel';
-    src: url('https://static1.squarespace.com/static/635fe9a25a0434686a7689f3/t/635fef674523c7290c9c4c82/1667231591615/VCR_OSD_MONO_1.001.ttf');
+    src: url('/fonts/vcrosdmonorus_vhsicons.ttf');
 }
 
 html, body {

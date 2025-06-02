@@ -33,7 +33,8 @@ public class SecurityConfig {
                         .requestMatchers("/static/**", "/order/**",
                                 "/profile/create", "/profile/**", "/api/**", "/cart", "/orders/**", "/payment/**", "/productsInOrder/**").authenticated()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                        .requestMatchers("/styles.css", "/home", "/login/**", "/static/**", "/registration", "/logRegCSS.css", "/images/**", "/contact").permitAll()
+                        .requestMatchers("/courier/**","/order/**").hasAuthority("COURIER")
+                        .requestMatchers("/styles.css", "/home", "/login/**", "/static/**", "/registration", "/logRegCSS.css", "/images/**", "/contact","/fonts/**").permitAll()
 
 
                 )

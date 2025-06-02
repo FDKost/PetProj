@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-  <title>Please Log In</title>
+  <title>Вход</title>
   <link rel="stylesheet" th:href="@{/logRegCSS.css}"/>
 </head>
 <body>
@@ -10,18 +10,18 @@
 </div>
 <div class="container">
   <div class="form-container">
-    <h1>Please Log In</h1>
-    <p>New here? Click <a th:href="@{/registration}">here</a> to register.</p>
-    <div th:if="${param.error}">Invalid username and password.</div>
-    <div th:if="${param.logout}">You have been logged out.</div>
+    <h1>Пожалуйста войдите</h1>
+    <p>Не зарегистрированы? Нажмите <a th:href="@{/registration}">здесь</a> чтобы зарегистрироваться.</p>
+    <div th:if="${param.error}">Неправильное имя или пароль.</div>
+    <div th:if="${param.logout}">Вы вышли из аккаунта.</div>
     <form th:action="@{/login}" method="post">
       <div>
-        <input type="text" name="username" placeholder="Username"/>
+        <input type="text" name="username" placeholder="Логин"/>
       </div>
       <div>
-        <input type="password" name="password" placeholder="Password"/>
+        <input type="password" name="password" placeholder="Пароль"/>
       </div>
-      <input type="submit" value="Log in"/>
+      <input type="submit" value="Войти"/>
     </form>
   </div>
 </div>

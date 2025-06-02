@@ -4,6 +4,7 @@ import com.example.education.dto.order.OrderCreateEditDTO;
 import com.example.education.dto.order.OrderReadDTO;
 import com.example.education.dto.payment.PaymentCreateEditDTO;
 import com.example.education.dto.productcart.ProductCartCreateEditDTO;
+import com.example.education.dto.productsinorder.ProductsInOrderCreateEditDTO;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 
@@ -26,5 +27,8 @@ public interface OrderService {
 
     void fillShowOrderPage(Model model, UserDetails userDetails);
 
-    void fillCreateOrder(OrderCreateEditDTO orderCreateEditDTO, ProductCartCreateEditDTO productCartCreateEditDTO, PaymentCreateEditDTO paymentCreateEditDTO);
+    void fillCreateOrder(OrderCreateEditDTO orderCreateEditDTO,
+                         ProductCartCreateEditDTO productCartCreateEditDTO,
+                         PaymentCreateEditDTO paymentCreateEditDTO,
+                         ProductsInOrderCreateEditDTO productsInOrderCreateEditDTO);
 }

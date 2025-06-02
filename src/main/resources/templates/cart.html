@@ -14,19 +14,19 @@
 <div class="main-pic">
     <a th:href="@{home}"><img th:src="@{https://drive.google.com/thumbnail?id=18TXcE9rAU2EYXnQFBE4haqnUGo4-Rtrj}" width="230px"/></a>
     <div class="main-part">
-        <H5><a th:href="@{order}">ORDER</a></H5>
-        <H5><a th:href="@{contact}">CONTACT</a></H5>
-        <H5><a th:href="@{profile}">PROFILE</a></H5>
+        <H5><a th:href="@{order}">ТОВАРЫ</a></H5>
+        <H5><a th:href="@{contact}">КОНТАКТЫ</a></H5>
+        <H5><a th:href="@{profile}">ПРОФИЛЬ</a></H5>
     </div>
 </div>
 <div class="main-label">
-    <h1>Your cart SAMURAI</h1>
+    <h1>Твоя корзина</h1>
 </div>
 <div class="products-container">
     <div class="products">
         <ul th:if="${cartItems.empty}">
             <li>
-                <h2>Your cart is empty</h2>
+                <h2>Корзина пуста</h2>
             </li>
         </ul>
         <ul th:unless="${cartItems.empty}">
@@ -34,11 +34,11 @@
                 <div class="product-item">
                     <h3>Name: <span th:text="${cartItem.getProductid().getName()}"></span></h3>
                     <img th:src="${cartItem.getProductid().getImageURL()}" th:alt="${cartItem.getProductid().getName()}" width="300" height="300"/>
-                    <p th:text="'Quantity: ' + ${cartItem.getQuantity()}"></p>
+                    <p th:text="'Количество: ' + ${cartItem.getQuantity()}"></p>
                     <form th:action="@{/api/deleteProductCart}" method="post">
                         <input type="hidden" name="cartId" th:value="${cartItem.getCartid().getId()}">
                         <input type="hidden" name="productId" th:value="${cartItem.getProductid().getId()}">
-                        <input type="submit" class="cartButton" value="Remove">
+                        <input type="submit" class="cartButton" value="Удалить">
                     </form>
                 </div>
             </li>
@@ -46,7 +46,7 @@
     </div>
 </div>
 <div class="footer">
-    <p>Total Amount: <span th:text="${totalAmount}"></span></p>
+    <p>Итоговая сумма: <span th:text="${totalAmount}"></span></p>
     <form th:action="@{/orders/createOrder}" method="post" >
         <div th:each="cartItem, iter : ${cartItems}">
             <input type="hidden" name="total" th:value="${totalAmount}">
@@ -60,7 +60,7 @@
             <input type="hidden" name="status" th:value="${status}">
             <input type="hidden" name="totalAmount" th:value="${totalAmount}"/>
         </div>
-        <input type="submit" class="cartButton" value="Place Order" />
+        <input type="submit" class="cartButton" value="Заказать" />
     </form>
 </div>
 </body>

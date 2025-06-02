@@ -6,17 +6,17 @@
 </head>
 <body>
 <div class="admin-container">
-  <h1>Manage Orders</h1>
+  <h1>Панель заказов</h1>
   <table>
     <thead>
     <tr>
-      <th>Order ID</th>
-      <th>User ID</th>
-      <th>Payment ID</th>
-      <th>Address ID</th>
-      <th>Date</th>
-      <th>Status</th>
-      <th>Actions</th>
+      <th>ID Заказа</th>
+      <th>ID Пользователя</th>
+      <th>ID Оплаты</th>
+      <th>ID Адреса</th>
+      <th>Дата</th>
+      <th>Статус</th>
+      <th>Действие</th>
     </tr>
     </thead>
     <tbody>
@@ -36,11 +36,11 @@
           <input type="hidden" name="date" th:value="${order.getDate()}">
           <label>
             <select  name="status" th:value="${order.getStatus()}">
-              <option th:value="${statusPending}" th:selected="${order.status == statusPending}">Pending</option>
-              <option th:value="${statusComplete}" th:selected="${order.status == statusComplete}">Completed</option>
+              <option th:value="${statusPending}" th:selected="${order.status == statusPending}">В работе</option>
+              <option th:value="${statusComplete}" th:selected="${order.status == statusComplete}">Завершён</option>
             </select>
           </label>
-          <button type="submit">Update Status</button>
+          <button type="submit">Обновить статус</button>
         </form>
     </tr>
     </tbody>

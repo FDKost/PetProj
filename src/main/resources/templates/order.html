@@ -25,24 +25,24 @@
 <div class="main-pic" >
   <a th:href="@{home}"><img  th:src="@{https://drive.google.com/thumbnail?id=18TXcE9rAU2EYXnQFBE4haqnUGo4-Rtrj}" width="230px"/></a >
   <div class="main-part">
-    <H5><a th:href="@{order}">ORDER</a></H5>
-    <H5><a th:href="@{contact}">CONTACT</a></H5>
-    <H5><a th:href="@{profile}">PROFILE</a></H5>
+    <H5><a th:href="@{order}">ТОВАРЫ</a></H5>
+    <H5><a th:href="@{contact}">КОНТАКТЫ</a></H5>
+    <H5><a th:href="@{profile}">ПРОФИЛЬ</a></H5>
   </div>
   <div class="cart">
     <H5>
-      <a th:href="@{cart}">CART</a>
+      <a th:href="@{cart}">КОРЗИНА</a>
     </H5>
   </div>
 </div>
 <div class = "about-us">
   <h1>
-    Finish  your freebie pizza and delta from here
+    Доедаем халявную пиццу и дельтуем отсюда
   </h1>
 </div>
 
 <div class="products" >
-  <h2>Products</h2>
+  <h2>Товары</h2>
   <ul>
     <li th:each="product : ${products}">
       <div class="product-item">
@@ -50,10 +50,10 @@
 
           <h3 th:text="${product.name}"></h3>
           <img th:src="${product.imageurl}" th:alt="${product.name}" width="300" height="300"/>
-          <p class="price" th:text="'Price: ' + ${product.price}"></p>
+          <p class="price" th:text="'Цена: ' + ${product.price}"></p>
           <p th:text="${product.details}"></p>
           <input type="hidden" name="productid" th:value="${product.id}">
-          <label for="quantity">Quantity:</label>
+          <label for="quantity">Количество:</label>
           <input class="quantity-input" type="number" id="quantity" name="quantity" value="1" min="1">
           <input type="hidden" name="productId" th:value="${product.id}">
           <input type="hidden" name="productName" th:value="${product.name}">
@@ -62,7 +62,7 @@
           <input type="hidden" name="productDetails" th:value="${product.details}">
           <input type="hidden" name="cartid" th:value="${cartid}">
 
-          <button class="cartButton" type="submit">Add to Cart</button>
+          <button class="cartButton" type="submit">Добавить в корзину</button>
         </form>
       </div>
     </li>

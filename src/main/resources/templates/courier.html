@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Courier Orders</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<div class="admin-container">
+    <h1>Панель курьера</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>ID Заказа</th>
+            <th>ID Адреса</th>
+            <th>Дата</th>
+            <th>Текущий статус</th>
+            <th>Обновить статус</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.getId()}"></td>
+            <td th:text="${order.getAddressid()}"></td>
+            <td th:text="${order.getDate()}"></td>
+            <td th:text="${order.getStatus()}"></td>
+            <td>
+                <form th:action="@{/orders/editOrder}" method="post">
+                    <input type="hidden" name="orderId" th:value="${order.getId()}"/>
+                    <input type="hidden" name="userid"  th:value="${order.getUserid().getId()}">
+                    <input type="hidden" name="paymentid" th:value="${order.getPaymentid().getId()}">
+                    <input type="hidden" name="addressid" th:value="${order.getAddressid().getId()}">
+                    <input type="hidden" name="date" th:value="${order.getDate()}">
+
+                    <label>
+                        <select name="status" th:value="${order.getStatus()}">
+                            <option th:value="${statusDelivering}" th:selected="${order.status == statusDelivering}">В пути</option>
+                            <option th:value="${statusComplete}" th:selected="${order.status == statusComplete}">Доставлено</option>
+                        </select>
+                    </label>
+                    <button type="submit">Обновить</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

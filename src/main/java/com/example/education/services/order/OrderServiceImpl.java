@@ -8,7 +8,10 @@ import com.example.education.dto.payment.PaymentCreateEditDTO;
 import com.example.education.dto.payment.PaymentReadDTO;
 import com.example.education.dto.product.ProductReadDTO;
 import com.example.education.dto.productcart.ProductCartCreateEditDTO;
+import com.example.education.dto.productcart.ProductCartReadDTO;
+import com.example.education.dto.productsinorder.ProductsInOrderCreateEditDTO;
 import com.example.education.dto.user.UserReadDTO;
+import com.example.education.entity.OrderEntity;
 import com.example.education.entity.PaymentEntity;
 import com.example.education.entity.StatusEntity;
 import com.example.education.entity.UserEntity;
@@ -16,9 +19,11 @@ import com.example.education.mapper.order.OrderCreateEditMapper;
 import com.example.education.mapper.order.OrderReadMapper;
 import com.example.education.repositories.OrderRepository;
 import com.example.education.services.cart.CartService;
+import com.example.education.services.kafka.producer.SendProductsService;
 import com.example.education.services.payment.PaymentService;
 import com.example.education.services.product.ProductService;
 import com.example.education.services.productcart.ProductCartService;
+import com.example.education.services.productsinorder.ProductsInOrderService;
 import com.example.education.services.status.StatusService;
 import com.example.education.services.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +50,8 @@ public class OrderServiceImpl implements OrderService {
     private final UserService userService;
     private final PaymentService paymentService;
     private final ProductCartService productCartService;
+    private final ProductsInOrderService productsInOrderService;
+    private final SendProductsService sendProductsService;
 
     @Override
     public Optional<OrderReadDTO> findById(UUID id) {
@@ -99,6 +106,9 @@ public class OrderServiceImpl implements OrderService {
 
         Optional<StatusEntity> statusInProcess = statusService.findByDescription("In process");
         statusInProcess.ifPresent(statusEntity -> model.addAttribute("statusPending", statusEntity.getId()));
+
+        Optional<StatusEntity> statusDelivering = statusService.findByDescription("Delivering");
+        statusDelivering.ifPresent(statusEntity -> model.addAttribute("statusDelivering", statusEntity.getId()));
     }
 
     public void fillShowOrderPage(Model model, UserDetails userDetails) {
@@ -123,14 +133,35 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void fillCreateOrder(OrderCreateEditDTO orderCreateEditDTO,
                                 ProductCartCreateEditDTO productCartCreateEditDTO,
-                                PaymentCreateEditDTO paymentCreateEditDTO) {
+                                PaymentCreateEditDTO paymentCreateEditDTO,
+                                ProductsInOrderCreateEditDTO productsInOrderCreateEditDTO) {
         PaymentReadDTO payment = paymentService.create(paymentCreateEditDTO);
         PaymentEntity actualPayment = new PaymentEntity(payment.getId(),
                 payment.getTotal(),
                 payment.getCheckurl(),
                 payment.getUserid());
         orderCreateEditDTO.setPaymentid(actualPayment);
-        create(orderCreateEditDTO);
+        OrderReadDTO order= create(orderCreateEditDTO);
+        OrderEntity actualOrder = new OrderEntity(
+                order.getId(),
+                order.getUserid(),
+                order.getPaymentid(),
+                order.getAddressid(),
+                order.getStatus(),
+                order.getDate()
+        );
+        List<ProductCartReadDTO> productsInCart = productCartService.
+                findAllProductCartByCartId(productCartCreateEditDTO.getCartid().getId());
+        for(int i = 0;i<productsInCart.size();i++){
+            productsInOrderCreateEditDTO = new ProductsInOrderCreateEditDTO(
+                    actualOrder,
+                    productsInCart.get(i).getProductid(),
+                    productsInCart.get(i).getQuantity()
+            );
+            productsInOrderService.create(productsInOrderCreateEditDTO);
+        }
+
+        sendProductsService.sendProducts(order.getId(),productCartCreateEditDTO.getCartid().getId());
         productCartService.deleteAllFromProductCartByCartId(productCartCreateEditDTO.getCartid().getId());
     }
 }

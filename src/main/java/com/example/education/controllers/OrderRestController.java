@@ -7,7 +7,8 @@ import com.example.education.dto.order.OrderCreateEditDTO;
 import com.example.education.dto.order.OrderReadDTO;
 import com.example.education.dto.payment.PaymentCreateEditDTO;
 import com.example.education.dto.productcart.ProductCartCreateEditDTO;
-import com.example.education.services.kafka.SendProductsService;
+import com.example.education.dto.productsinorder.ProductsInOrderCreateEditDTO;
+import com.example.education.services.kafka.producer.SendProductsService;
 import com.example.education.services.order.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -31,15 +32,16 @@ public class OrderRestController {
     @PostMapping("/createOrder")
     public ModelAndView createOrder(OrderCreateEditDTO orderCreateEditDTO,
                                     ProductCartCreateEditDTO productCartCreateEditDTO,
-                                    PaymentCreateEditDTO paymentCreateEditDTO) {
+                                    PaymentCreateEditDTO paymentCreateEditDTO,
+                                    ProductsInOrderCreateEditDTO productsInOrderCreateEditDTO) {
         GetBankRequest request = new GetBankRequest();
         request.setSum(BigDecimal.valueOf(paymentCreateEditDTO.getTotal()));
         GetBankResponse response = bankClient.getBank(request, orderCreateEditDTO.getUserid(),"Tom",
                 BigDecimal.valueOf(paymentCreateEditDTO.getTotal()));
 
         if(response.getStatus() == 200){
-            sendProductsService.sendProducts(productCartCreateEditDTO.getCartid().getId());
-            orderService.fillCreateOrder(orderCreateEditDTO, productCartCreateEditDTO, paymentCreateEditDTO);
+            orderService.fillCreateOrder(orderCreateEditDTO, productCartCreateEditDTO,
+                    paymentCreateEditDTO,productsInOrderCreateEditDTO);
             return new ModelAndView("redirect:/home");
         }else {
             return new ModelAndView("redirect:/cart");
@@ -55,7 +57,7 @@ public class OrderRestController {
     public ModelAndView editOrder(@RequestParam UUID orderId,
                                   OrderCreateEditDTO orderCreateEditDTO) {
         orderService.update(orderId, orderCreateEditDTO);
-        return new ModelAndView("redirect:/admin/orders");
+        return new ModelAndView("redirect:/home");
     }
 
     @DeleteMapping("/deleteOrder/{orderId}")
