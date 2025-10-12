@@ -55,9 +55,9 @@ CREATE DATABASE cyberpizzaTest;
 
     SOLVED
 
-### ❌How can I look at my orders?
+### ✅How can I look at my orders?
 
-Right now only users with role ADMIN can look at orders. In future will add this function to authorized users. 
+    SOLVED 
 
 ## Author Socials 🌍
 
